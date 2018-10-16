@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Title="MainWindow" MaxWidth="700" MinWidth="700" MaxHeight="250" MinHeight="250" >
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         
+        <Label Name="lbl_loginLabel"
+               Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"
+               HorizontalAlignment="Center"
+               FontSize="20"
+               Content="Please enter your username and password"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,20">
+            <Label Content="Username" Margin="0,10"/>
+            <Label Content="Password" Margin="0,10"/>
+        </StackPanel >
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+            <TextBox Name="tbxUsername" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="0" ToolTip="Enter your User ID"/>
+            <PasswordBox Name="tbxPassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="1" ToolTip="Enter your Password"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10">
+            <Button Name="btnClose" Content="Close" Height="26" Width="130" Margin="10,1" TabIndex="3"/>
+            <Button Name="btnLogin" Content="Login" Height="26" Width="130" Margin="10,1" TabIndex="2"/>            
+        </StackPanel>
+        
+        <Image Grid.Row="1" Grid.Column="2" Margin="20" Grid.RowSpan="2" Stretch="None"/>
+
     </Grid>
 </Window>
