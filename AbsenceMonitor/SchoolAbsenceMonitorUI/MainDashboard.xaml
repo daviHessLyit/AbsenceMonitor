@@ -42,11 +42,11 @@
             </Grid>
         </StackPanel>
         <!-- Main dashboard menu bar - Attendance enabled by default -->
-        <TabControl Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="12" FontWeight="Medium">
+        <TabControl Name="Tab_MainTabControl" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="12" FontWeight="Medium">
             <TabItem  Name="tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" MouseLeftButtonDown="tbi_Attendance_MouseLeftButtonDown" >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Name="tbi_Reporting" Height="26" Width="100" Header="Reporting" IsEnabled="False" MouseLeftButtonDown="tbi_Reporting_MouseLeftButtonDown"   >
+            <TabItem Name="tbi_Reporting" Height="26" Width="100" Header="Reports" IsEnabled="False" MouseLeftButtonDown="tbi_Reporting_MouseLeftButtonDown"   >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Name="tbi_Admin" Height="26" Width="100" Header="Administration" IsEnabled="False" MouseLeftButtonDown="tbi_Admin_MouseLeftButtonDown">
@@ -58,7 +58,7 @@
         </TabControl>
         
         <!-- DockPanel containing the main frame -->
-        <DockPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >           
+        <DockPanel Name="dp_Main" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >           
             <Border BorderThickness="3" BorderBrush="Blue" CornerRadius="12" Padding="5">
                 <Border.Effect>
                     <DropShadowEffect Color="AliceBlue"
