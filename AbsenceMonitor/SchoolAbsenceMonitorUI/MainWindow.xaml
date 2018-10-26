@@ -43,7 +43,7 @@
             <Button Name="btnLogin" Content="Login" Height="26" Width="130" Margin="10,1" TabIndex="2"/>            
         </StackPanel>
         
-        <Image Grid.Row="1" Grid.Column="2" Margin="20" Grid.RowSpan="2" Stretch="None"/>
+        <Image Grid.Row="1" Grid.Column="2" Margin="19.742,20.392,189.082,20.443" Stretch="None"/>
 
     </Grid>
 </Window>
