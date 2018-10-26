@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="SchoolAbsenceMonitor" Height="800" Width="1000" >
+        WindowStyle="None"
+        WindowState="Normal"
+        Title="SchoolAbsenceMonitor" Height="800" Width="1000" MaxHeight="800" MinHeight="800" MaxWidth="1000" MinWidth="1000" >
     <Grid>
+        <!-- Add the column and row definitions for the main dashboard--> 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"/>
             <ColumnDefinition Width="50*"/>
@@ -18,44 +21,53 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!-- Add the background image for the main dashboard-->
         <Grid.Background>
-            <ImageBrush ImageSource="Images/background.png"/> 
-
+            <ImageBrush ImageSource="Images/background.png" Opacity=".5" Stretch="UniformToFill"/> 
         </Grid.Background>
-
-        <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Label Content="School Absence Monitor" FontFamily="Calibri" FontSize="20" FontWeight="Bold" Margin="10,0"/>
-
+        <!-- StackPanel containing MainLabel and application exit button -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <Grid>
+                <Label Content="School Absence Monitor" FontFamily="Calibri" FontSize="20" FontWeight="Bold" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="btnExitApp"
+                        Content="Exit Application" 
+                        Height="26" 
+                        Width="120" 
+                        FontFamily="Calibri" 
+                        FontSize="16" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center"  
+                        Margin="0,0,10,0"
+                        Click="btnExitApp_Click"/>
+            </Grid>
         </StackPanel>
-        
+        <!-- Main dashboard menu bar - Attendance enabled by default -->
         <TabControl Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="12" FontWeight="Medium">
-            <TabItem  Height="26" Width="100" Header="Attendance" IsEnabled="True">
+            <TabItem  Name="tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" MouseLeftButtonDown="tbi_Attendance_MouseLeftButtonDown" >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Height="26" Width="100" Header="Reporting" IsEnabled="False">
+            <TabItem Name="tbi_Reporting" Height="26" Width="100" Header="Reporting" IsEnabled="False" MouseLeftButtonDown="tbi_Reporting_MouseLeftButtonDown"   >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Height="26" Width="100" Header="Administration" IsEnabled="False">
+            <TabItem Name="tbi_Admin" Height="26" Width="100" Header="Administration" IsEnabled="False" MouseLeftButtonDown="tbi_Admin_MouseLeftButtonDown">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Height="26" Width="100" Header="System" IsEnabled="False">
+            <TabItem Name="tbi_System" Height="26" Width="100" Header="System" IsEnabled="False" MouseLeftButtonDown="tbi_System_MouseLeftButtonDown">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-
-        <DockPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >
-           
+        
+        <!-- DockPanel containing the main frame -->
+        <DockPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >           
             <Border BorderThickness="3" BorderBrush="Blue" CornerRadius="12" Padding="5">
                 <Border.Effect>
                     <DropShadowEffect Color="AliceBlue"
                                       Opacity=".5"
                                       ShadowDepth="3"/>
                 </Border.Effect>
-
-
+                <!-- Main Frame - all other application pages will reside at this point -->
                 <Frame Name="frmMain"/>
             </Border>
-        </DockPanel>
-       
+        </DockPanel>       
     </Grid>
 </Window>

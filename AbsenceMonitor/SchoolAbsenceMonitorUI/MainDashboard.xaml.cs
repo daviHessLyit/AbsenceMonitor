@@ -23,5 +23,30 @@ namespace SchoolAbsenceMonitorUI
         {
             InitializeComponent();
         }
+
+        private void btnExitApp_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void tbi_Attendance_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void tbi_Reporting_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tbi_Admin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tbi_System_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
