@@ -24,5 +24,30 @@ namespace SchoolAbsenceMonitorUI
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Reset_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Submit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chkPresent_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chkAbsent_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

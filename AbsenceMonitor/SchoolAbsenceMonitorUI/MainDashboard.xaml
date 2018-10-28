@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        WindowState="Normal"
         Title="SchoolAbsenceMonitor" Height="800" Width="1000" MaxHeight="800" MinHeight="800" MaxWidth="1000" MinWidth="1000" >
     <Grid>
         <!-- Add the column and row definitions for the main dashboard--> 
@@ -43,7 +42,7 @@
         </StackPanel>
         <!-- Main dashboard menu bar - Attendance enabled by default -->
         <TabControl Name="Tab_MainTabControl" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="12" FontWeight="Medium">
-            <TabItem  Name="tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" MouseLeftButtonDown="tbi_Attendance_MouseLeftButtonDown" >
+            <TabItem Name="tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" IsSelected="True" MouseDown="tbi_Admin_MouseLeftButtonDown" MouseLeftButtonDown="tbi_Attendance_MouseLeftButtonDown" >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Name="tbi_Reporting" Height="26" Width="100" Header="Reports" IsEnabled="False" MouseLeftButtonDown="tbi_Reporting_MouseLeftButtonDown"   >
@@ -66,7 +65,7 @@
                                       ShadowDepth="3"/>
                 </Border.Effect>
                 <!-- Main Frame - all other application pages will reside at this point -->
-                <Frame Name="frmMain"/>
+                <Frame Name="frmMain" NavigationUIVisibility="Hidden"/>
             </Border>
         </DockPanel>       
     </Grid>

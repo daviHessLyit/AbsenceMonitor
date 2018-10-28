@@ -9,6 +9,101 @@
       Title="Attendance">
 
     <Grid>
-        <Label Content="Attendance" FontSize="24"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Page Title  -->
+        <Label Content="Attendance Reporting" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <!-- Stack Panel containing the Class selection dropdown list  -->
+        <StackPanel Name="stk_MenuPanel" Visibility="Visible" Grid.Column="0" Grid.Row="1">
+                <Menu Name="menu_ClassSelector">
+                    <MenuItem Header="Select Class" AllowDrop="True" >
+                        <MenuItem Header="Junior Infants" Name="menuItem_Junior"/>
+                        <MenuItem Header="Seniior Infants" Name="menuItem_Senior"/>
+                        <MenuItem Header="Ist Class" Name="menuItem_First"/>
+                        <MenuItem Header="2nd Class" Name="menuItem_Second"/>
+                        <MenuItem Header="3rd Class" Name="menuItem_Third"/>
+                        <MenuItem Header="4th Class" Name="menuItem_Fourth"/>
+                        <MenuItem Header="5th Class" Name="menuItem_Fifth"/>
+                        <MenuItem Header="6th Class" Name="menuItem_Sixth"/>
+                        <MenuItem Header="Special Educational Needs" Name="menuItem_Special"/>
+                    </MenuItem>
+                </Menu>
+        </StackPanel>
+        <!-- Stack Panel with dynamically created list of Pupil Names for the selected class -->
+        <StackPanel Name="stk_ClassList" Visibility="Hidden" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <ListView Name="lstClassList" Grid.Row="0" Height="24" Margin="0,0,-0.33,-0.247" Grid.RowSpan="2" VerticalAlignment="Top">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Pupil Name" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>   
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Present" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="chkPresent" IsChecked="True" Click="chkPresent_Click"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Absent" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="chkAbsent" IsChecked="True" Click="chkAbsent_Click"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Absence Reason" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Menu Name="menuAbsenceReason">
+                                            <MenuItem Header="Select Absence Type" AllowDrop="True" >
+                                                <MenuItem Header="" Name="menuItemReasonType"/>
+                                            </MenuItem>
+                                        </Menu>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>   
+                </ListView>                
+            </Grid>
+        </StackPanel>
+
+
+
+        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Column="0" Content="Reset" Height="26" Width="150" Name="btn_Reset" Click="btn_Reset_Click" Margin="10,0"/>
+                <Button Grid.Column="1" Content="Submit" Height="26" Width="150" Name="btn_Submit" Click="btn_Submit_Click" Margin="10,0"/>               
+            </Grid>
+           
+        </StackPanel>
+        
+
     </Grid>
 </Page>

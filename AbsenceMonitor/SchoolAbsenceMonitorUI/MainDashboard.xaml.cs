@@ -26,12 +26,13 @@ namespace SchoolAbsenceMonitorUI
 
         private void btnExitApp_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private void tbi_Attendance_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
+            Attendance attendance = new Attendance();
+            frmMain.Navigate(attendance);
         }
 
         private void tbi_Reporting_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
