@@ -1,0 +1,25 @@
+﻿<Page x:Class="SchoolAbsenceMonitorUI.Reports"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Reports">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Page Title  -->
+        <Label Content="Pupil Absence Reports" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+    </Grid>
+</Page>

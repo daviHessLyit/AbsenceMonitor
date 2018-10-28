@@ -30,24 +30,45 @@ namespace SchoolAbsenceMonitorUI
 
         }
 
-        private void btn_Reset_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_Submit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void chkPresent_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void chkAbsent_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void lstClassList_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+            
+        }
+
+        private void DatePAbsenceDate_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
+
+        private void BtnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnReset_Click(object sender, RoutedEventArgs e)
+        {
+            stk_MenuPanel.Visibility = Visibility.Visible;
+            stk_ClassList.Visibility = Visibility.Hidden;
+            StkConfirmationPanel.Visibility = Visibility.Hidden;
+            BtnSubmit.Visibility = Visibility.Visible;
+            BtnConfirm.Visibility = Visibility.Hidden;
+        }
+
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            BtnSubmit.Visibility = Visibility.Hidden;
+            BtnConfirm.Visibility = Visibility.Visible;
+            StkConfirmationPanel.Visibility = Visibility.Visible;
         }
     }
 }
