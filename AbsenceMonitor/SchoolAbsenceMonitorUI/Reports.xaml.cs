@@ -24,5 +24,46 @@ namespace SchoolAbsenceMonitorUI
         {
             InitializeComponent();
         }
+
+        private void BtnReset_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Visible;
+            Stk_AbsenceWarnings.Visibility = Visibility.Hidden;
+            Stk_AbsenceBreaches.Visibility = Visibility.Hidden;
+            Stk_ClassReportMenu.Visibility = Visibility.Hidden;
+        }
+
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItemWarnings_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AbsenceWarnings.Visibility = Visibility.Visible;
+        }
+
+        private void MenuItemBreaches_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AbsenceBreaches.Visibility = Visibility.Visible;
+        }
+
+        private void MenuItemPupil_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void MenuItemSchool_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItemClass_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_ClassReportMenu.Visibility = Visibility.Visible;
+        }
     }
 }

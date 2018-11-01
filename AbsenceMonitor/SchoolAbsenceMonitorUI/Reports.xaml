@@ -10,8 +10,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -21,5 +22,212 @@
 
         <!-- Page Title  -->
         <Label Content="Pupil Absence Reports" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+
+        <!-- Stack Panel containing the list of available report options -->
+        <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Select the Report Required" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+               
+                <Menu Name="MenuReportType" AllowDrop="True" Width="200" Grid.Row="1" HorizontalAlignment="Left" Visibility="Visible">
+                    <MenuItem Header="Select Report Type" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="Class Report" Name="MenuItemClass" Click="MenuItemClass_Click"/>
+                        <MenuItem Header="Whole School" Name="MenuItemSchool" Click="MenuItemSchool_Click"/>
+                        <MenuItem Header="Individual Pupil" Name="MenuItemPupil" Click="MenuItemPupil_Click"/>
+                        <MenuItem Header="Absence Warnings" Name="MenuItemWarnings" Click="MenuItemWarnings_Click"/>
+                        <MenuItem Header="Absence Breaches" Name="MenuItemBreaches" Click="MenuItemBreaches_Click"/>
+                    </MenuItem>
+                </Menu>
+            </Grid>
+        </StackPanel>
+
+        <!-- Stack Panel containing the list of Pupils who have exceeded 10 absences but haven't reached 20 days yet -->
+        <StackPanel Name="Stk_AbsenceWarnings" Visibility="Hidden" Grid.Column="1" Grid.Row="1"  >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Absence Warnings" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Name="LblClassListError" 
+                       Content="Unable to Create the Absence Warning List" 
+                       FontSize="14" 
+                       Grid.Row="0" 
+                       HorizontalAlignment="Left" 
+                       FontWeight="Bold"
+                       Foreground="Red"
+                       Visibility="Hidden"/>
+                <ListView Name="LstVAbsenceWarnings" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Pupil Name" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Class" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Total Days Absence" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </StackPanel>
+
+        <!-- Stack Panel containing the list of Pupils who have breached permitted absences -->
+        <StackPanel Name="Stk_AbsenceBreaches" Visibility="Hidden" Grid.Column="1" Grid.Row="1"  >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Absence Breaches" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Name="LblBreachesError" 
+                       Content="Unable to Create the Absence Breaches List" 
+                       FontSize="14" 
+                       Grid.Row="0" 
+                       HorizontalAlignment="Left" 
+                       FontWeight="Bold"
+                       Foreground="Red"
+                       Visibility="Hidden"/>
+                <ListView Name="LstVAbsenceBreaches" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Pupil Name" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Class" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Total Days Absence" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </StackPanel>
+
+        <!-- Stack Panel containing the Class selection dropdown list  -->
+        <StackPanel Name="Stk_ClassReportMenu" Visibility="Hidden" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Select Class From the List" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Name="LblDropDownError" 
+                       Content="Error Creating the Class List" 
+                       FontSize="14" 
+                       Grid.Row="0" 
+                       HorizontalAlignment="Left" 
+                       FontWeight="Bold"
+                       Foreground="Red"
+                       Visibility="Hidden"/>
+
+                <Menu Name="Menu_ClassSelector" AllowDrop="True" Width="200" Grid.Row="1" HorizontalAlignment="Left">
+                    <MenuItem Header="Select Class" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="Junior Infants" Name="menuItem_Junior"/>
+                        <MenuItem Header="Seniior Infants" Name="menuItem_Senior"/>
+                        <MenuItem Header="Ist Class" Name="menuItem_First"/>
+                        <MenuItem Header="2nd Class" Name="menuItem_Second"/>
+                        <MenuItem Header="3rd Class" Name="menuItem_Third"/>
+                        <MenuItem Header="4th Class" Name="menuItem_Fourth"/>
+                        <MenuItem Header="5th Class" Name="menuItem_Fifth"/>
+                        <MenuItem Header="6th Class" Name="menuItem_Sixth"/>
+                        <MenuItem Header="Special Educational Needs" Name="menuItem_Special"/>
+                    </MenuItem>
+                </Menu>
+            </Grid>
+        </StackPanel>
+
+        <!-- Stack Panel containing the Class absence report -->
+        <StackPanel Name="Stk_ClassReport" Visibility="Hidden" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Absence Report for Class" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Name="LblClassReportError" 
+                       Content="Error Creating the Class List" 
+                       FontSize="14" 
+                       Grid.Row="0" 
+                       HorizontalAlignment="Left" 
+                       FontWeight="Bold"
+                       Foreground="Red"
+                       Visibility="Hidden"/>
+                <ListView Name="LstVClassAbsence" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Pupil Name" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Class" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Total Days Absence" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Column="0" Content="Reset" Height="26" Width="150" Name="BtnReset" Click="BtnReset_Click" Margin="10,0"/>
+                <Button Grid.Column="1" Content="Submit" Height="26" Width="150" Name="BtnSubmit" Click="BtnSubmit_Click" Margin="10,0"/>
+            </Grid>
+
+        </StackPanel>
     </Grid>
 </Page>

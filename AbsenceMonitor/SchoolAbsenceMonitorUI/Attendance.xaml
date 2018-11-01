@@ -10,8 +10,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -22,13 +23,13 @@
         <!-- Page Title  -->
         <Label Content="Attendance Reporting" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
         <!-- Stack Panel containing the Class selection dropdown list  -->
-        <StackPanel Name="stk_MenuPanel" Visibility="Hidden" Grid.Column="0" Grid.Row="1" >
+        <StackPanel Name="stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
-                <Label Content="Select Class From the List" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Hidden"/>
+                <Label Content="Select Class From the List" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
                 <Label Name="LblDropDownError" 
                        Content="Error Creating the Class List" 
                        FontSize="14" 
@@ -51,14 +52,10 @@
                         <MenuItem Header="Special Educational Needs" Name="menuItem_Special"/>
                     </MenuItem>
                 </Menu>
-            </Grid>
-            
-            
-            
-            
+            </Grid>   
         </StackPanel>
         <!-- Stack Panel with dynamically created list of Pupil Names for the selected class -->
-        <StackPanel Name="stk_ClassList" Visibility="Visible" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+        <StackPanel Name="stk_ClassList" Visibility="Hidden" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
@@ -115,12 +112,13 @@
                 </ListView>                
             </Grid>
         </StackPanel>
-
-        <StackPanel Name="StkConfirmationPanel"  Visibility="Hidden" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+        <!-- Stack Panel with dynamically created list of pupils who have been marked absent with the absence reason, list is reviewed and date is added and confimed -->
+        <StackPanel Name="StkConfirmationPanel"  Visibility="Hidden" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="45*"/>
+                    <RowDefinition Height="45*"/>
+                    <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
                 <Label Name="LblDatePickerError" 
                        Content="Error with Date selection" 
@@ -152,17 +150,11 @@
                 </ListView>
                 <Label Content="Absence Report for: " FontFamily="Calibri" FontSize="16" Grid.Row="1" HorizontalAlignment="Left"/>
                 <DatePicker Name="DatePAbsenceDate" AllowDrop="True" Grid.Row="1" HorizontalAlignment="Right" Width="250" MouseLeftButtonUp="DatePAbsenceDate_MouseLeftButtonUp"/>
-
-
-
+                <Label Name="LblSubmitted" Content="Absence Report Submitted" FontFamily="Calibri" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
-
-
-
-
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Right" VerticalAlignment="Center">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*"/>
