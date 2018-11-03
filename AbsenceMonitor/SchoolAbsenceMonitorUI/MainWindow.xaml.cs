@@ -32,6 +32,9 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            MainDashboard mainDashboard = new MainDashboard();
+            mainDashboard.Show();
+            this.Close();
 
         }
     }

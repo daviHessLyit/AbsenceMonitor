@@ -96,7 +96,7 @@
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Invalid username or password"
-                                   Visibility="Visible"/>
+                                   Visibility="Hidden"/>
                           </Grid>
                     </StackPanel>                        
                     </Grid>
