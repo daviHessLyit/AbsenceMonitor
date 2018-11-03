@@ -31,6 +31,7 @@ namespace SchoolAbsenceMonitorUI
             Stk_AbsenceWarnings.Visibility = Visibility.Hidden;
             Stk_AbsenceBreaches.Visibility = Visibility.Hidden;
             Stk_ClassReportMenu.Visibility = Visibility.Hidden;
+            Stk_ClassReport.Visibility = Visibility.Hidden;
         }
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
@@ -64,6 +65,12 @@ namespace SchoolAbsenceMonitorUI
         {
             Stk_MenuPanel.Visibility = Visibility.Hidden;
             Stk_ClassReportMenu.Visibility = Visibility.Visible;
+        }
+
+        private void menuItem_Special_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_ClassReport.Visibility = Visibility.Visible;
+            Stk_ClassReportMenu.Visibility = Visibility.Hidden;
         }
     }
 }
