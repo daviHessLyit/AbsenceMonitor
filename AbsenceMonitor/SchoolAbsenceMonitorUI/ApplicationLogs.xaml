@@ -10,8 +10,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -22,17 +23,77 @@
         <!-- Page Title  -->
         <Label Content="System Log Events" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
 
+        <!-- Stack Panel in which system reports will be generated, contain a list view for the reports and buttons to filter each column -->
+        <StackPanel Name="Stk_SytemLogReports" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Label Content="System Log Reports" FontSize="14" Grid.Row="0" HorizontalAlignment="Center" Visibility="Visible" Name="LblReportHeader"/>
+                <Label Name="LblSystemLogError" 
+                       Content="Unable to populate System Logs" 
+                       FontSize="14" 
+                       Grid.Row="0" 
+                       HorizontalAlignment="Left" 
+                       FontWeight="Bold"
+                       Foreground="Red"
+                       Visibility="Hidden"/>
+                <ListView Name="LstSystemEvents" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1000" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Date / Time" Width="200"  DisplayMemberBinding="{Binding DateTime}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center"  TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="System Event" Width="550"  DisplayMemberBinding="{Binding SystemEvent}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="UserName" Width="250"  DisplayMemberBinding="{Binding UserName}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Height="26"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Name="Stk_FilterButtons" Grid.Row="2" HorizontalAlignment="Center">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="550"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Name="Btn_Date" Height="26" Width="150" Content="FilterByDate" Click="Btn_Date_Click"/>
+                        <Button Grid.Column="1" Name="Btn_Event" Height="26" Width="150" Content="FilterByEvent" Click="Btn_Event_Click"/>
+                        <Button Grid.Column="2" Name="Btn_User" Height="26" Width="150" Content="FilterByUser" Click="Btn_User_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
         <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*"/>
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Column="0" Content="Reset" Height="26" Width="150" Name="BtnReset" Click="BtnReset_Click" Margin="10,0"/>
-                <Button Grid.Column="1" Content="Submit" Height="26" Width="150" Name="BtnSubmit" Click="BtnSubmit_Click" Margin="10,0"/>
             </Grid>
 
         </StackPanel>

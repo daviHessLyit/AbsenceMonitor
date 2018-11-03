@@ -60,7 +60,7 @@
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ListView Name="LstVAbsenceWarnings" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Name="LstVAbsenceWarnings" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="1000" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Pupil Name" Width="250">
@@ -106,7 +106,7 @@
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ListView Name="LstVAbsenceBreaches" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Name="LstVAbsenceBreaches" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="1000" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Pupil Name" Width="250">
@@ -185,7 +185,7 @@
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ListView Name="LstVClassAbsence" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Name="LstVClassAbsence" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="1000" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Pupil Name" Width="250">
@@ -231,7 +231,7 @@
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ListView Name="LstVPupilAbsence" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Name="LstVPupilAbsence" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="1000" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Pupil Name" Width="250">

@@ -34,5 +34,20 @@ namespace SchoolAbsenceMonitorUI
         {
 
         }
+
+        private void Btn_Date_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Event_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_User_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
