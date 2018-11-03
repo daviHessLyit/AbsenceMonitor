@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        WindowState="Maximized"
+        Width="1200"
+        MaxWidth="1200"
+        MinWidth="1200"
+        Height="1000"
+        MaxHeight="1000"
+        MinHeight="1000"        
         Title="SchoolAbsenceMonitor">
     <Grid>
         <!-- Add the column and row definitions for the main dashboard--> 

@@ -67,7 +67,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <StackPanel Name="Stk_FilterButtons" Grid.Row="2" HorizontalAlignment="Center">
+                <StackPanel Name="Stk_FilterButtons" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
