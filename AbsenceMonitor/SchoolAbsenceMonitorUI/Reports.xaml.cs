@@ -32,6 +32,10 @@ namespace SchoolAbsenceMonitorUI
             Stk_AbsenceBreaches.Visibility = Visibility.Hidden;
             Stk_ClassReportMenu.Visibility = Visibility.Hidden;
             Stk_ClassReport.Visibility = Visibility.Hidden;
+            Stk_PupilReportMenu.Visibility = Visibility.Hidden;
+            Stk_PupilList.Visibility = Visibility.Hidden;
+            Stk_PupilReport.Visibility = Visibility.Hidden;
+            Stk_SchoolReport.Visibility = Visibility.Hidden;
         }
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
@@ -53,12 +57,14 @@ namespace SchoolAbsenceMonitorUI
 
         private void MenuItemPupil_Click(object sender, RoutedEventArgs e)
         {
-           
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_PupilReportMenu.Visibility = Visibility.Visible;
         }
 
         private void MenuItemSchool_Click(object sender, RoutedEventArgs e)
         {
-
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SchoolReport.Visibility = Visibility.Visible;
         }
 
         private void MenuItemClass_Click(object sender, RoutedEventArgs e)
@@ -67,10 +73,23 @@ namespace SchoolAbsenceMonitorUI
             Stk_ClassReportMenu.Visibility = Visibility.Visible;
         }
 
-        private void menuItem_Special_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Special_Click(object sender, RoutedEventArgs e)
         {
             Stk_ClassReport.Visibility = Visibility.Visible;
             Stk_ClassReportMenu.Visibility = Visibility.Hidden;
+        }
+
+        private void MenuItem_PupilSpecial_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_PupilList.Visibility = Visibility.Visible;
+            Stk_PupilReportMenu.Visibility = Visibility.Hidden;
+        } 
+        
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_PupilReport.Visibility = Visibility.Visible;
+            Stk_PupilList.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -80,8 +80,8 @@
                     </StackPanel >
 
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                        <TextBox Name="TbxUsername" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="0" ToolTip="Enter your Username"/>
-                        <PasswordBox Name="TbxPassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="1" ToolTip="Enter your Password"/>
+                        <TextBox Name="TbxUsername" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0" ToolTip="Enter your Username"/>
+                            <PasswordBox Name="TbxPassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1" ToolTip="Enter your Password"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10">
