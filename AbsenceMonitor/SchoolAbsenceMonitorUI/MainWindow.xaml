@@ -7,43 +7,103 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Title="MainWindow" MaxWidth="700" MinWidth="700" MaxHeight="250" MinHeight="250" >
+        Width="900"
+        MaxWidth="900"
+        MinWidth="900"
+        Height="600"
+        MaxHeight="600"
+        MinHeight="600" >
     <Grid>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        
-        <Label Name="lbl_loginLabel"
-               Grid.Row="0"
-               Grid.Column="0"
-               Grid.ColumnSpan="3"
-               HorizontalAlignment="Center"
-               FontSize="20"
-               Content="Please enter your username and password"/>
-
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,20">
-            <Label Content="Username" Margin="0,10"/>
-            <Label Content="Password" Margin="0,10"/>
-        </StackPanel >
-        
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-            <TextBox Name="tbxUsername" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="0" ToolTip="Enter your User ID"/>
-            <PasswordBox Name="tbxPassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="1" ToolTip="Enter your Password"/>
+        <!-- Add the background image for the main dashboard-->
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/background.png" Opacity=".5" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <!-- StackPanel containing MainLabel and application exit button -->
+        <StackPanel Name="Stk_HeaderPanel" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <Grid>
+                <Label Content="School Absence Monitor" FontFamily="Calibri" FontSize="20" FontWeight="Bold" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Name="BtnExitApp"
+                        Content="Exit Application" 
+                        Height="26" 
+                        Width="120" 
+                        FontFamily="Calibri" 
+                        FontSize="16" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center"  
+                        Margin="0,0,10,0"
+                        Click="BtnExitApp_Click"/>
+            </Grid>
         </StackPanel>
-        
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10">
-            <Button Name="btnClose" Content="Close" Height="26" Width="130" Margin="10,1" TabIndex="3"/>
-            <Button Name="btnLogin" Content="Login" Height="26" Width="130" Margin="10,1" TabIndex="2"/>            
-        </StackPanel>
-        
-        <Image Grid.Row="1" Grid.Column="2" Margin="19.742,20.392,189.082,20.443" Stretch="None"/>
+        <DockPanel Name="DP_LoginPanel" Grid.Row="1" Grid.Column="1">
+            <Border BorderThickness="2" BorderBrush="Blue" CornerRadius="12" Padding="5">
+                <Border.Effect>
+                    <DropShadowEffect Color="AliceBlue"
+                                      Opacity=".4"
+                                      ShadowDepth="4"/>
+                </Border.Effect>
 
+                <StackPanel Name="Stk_LoginPanel" VerticalAlignment="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="60*"/>
+                            <ColumnDefinition Width="20*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="60*"/>
+                            <RowDefinition Height="20*"/>
+                        </Grid.RowDefinitions>
+                        <Label Name="Lbl_loginLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Please enter your username and password"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                        <Label Content="Username" Margin="0,10"/>
+                        <Label Content="Password" Margin="0,10"/>
+                    </StackPanel >
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                        <TextBox Name="TbxUsername" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="0" ToolTip="Enter your Username"/>
+                        <PasswordBox Name="TbxPassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" TabIndex="1" ToolTip="Enter your Password"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10">
+                         <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="90*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <Button Name="BtnLogin" Content="Login" Height="26" Width="130" TabIndex="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,10" Click="BtnLogin_Click"/>
+                            <Label Grid.Row="1" Name="Lbl_ErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Invalid username or password"
+                                   Visibility="Visible"/>
+                          </Grid>
+                    </StackPanel>                        
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </DockPanel>
+
+       
     </Grid>
 </Window>

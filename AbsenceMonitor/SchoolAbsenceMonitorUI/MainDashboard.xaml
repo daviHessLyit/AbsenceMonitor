@@ -31,10 +31,10 @@
             <ImageBrush ImageSource="Images/background.png" Opacity=".5" Stretch="UniformToFill"/> 
         </Grid.Background>
         <!-- StackPanel containing MainLabel and application exit button -->
-        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+        <StackPanel Name="Stk_HeaderPanel" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
             <Grid>
                 <Label Content="School Absence Monitor" FontFamily="Calibri" FontSize="20" FontWeight="Bold" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Name="btnExitApp"
+                <Button Name="BtnExitApp"
                         Content="Exit Application" 
                         Height="26" 
                         Width="120" 
@@ -48,7 +48,7 @@
         </StackPanel>
         <!-- Main dashboard menu bar - Attendance enabled by default -->
         <TabControl Name="Tab_MainTabControl" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="12" FontWeight="Medium">
-            <TabItem Name="tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" IsSelected="True" MouseLeftButtonUp="Tbi_Attendance_MouseLeftButtonDown" >
+            <TabItem Name="Tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" IsSelected="True" MouseLeftButtonUp="Tbi_Attendance_MouseLeftButtonDown" >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Name="Tbi_Reporting" Height="26" Width="100" Header="Reports" IsEnabled="True" MouseLeftButtonUp="Tbi_Reporting_MouseLeftButtonDown"   >
@@ -63,7 +63,7 @@
         </TabControl>
         
         <!-- DockPanel containing the main frame -->
-        <DockPanel Name="dp_Main" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >           
+        <DockPanel Name="DP_Main" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >           
             <Border BorderThickness="3" BorderBrush="Blue" CornerRadius="12" Padding="5">
                 <Border.Effect>
                     <DropShadowEffect Color="AliceBlue"
