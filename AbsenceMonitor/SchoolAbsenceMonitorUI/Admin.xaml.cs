@@ -28,89 +28,199 @@ namespace SchoolAbsenceMonitorUI
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
             Stk_MenuPanel.Visibility = Visibility.Visible;
-            Stk_UserPanel.Visibility = Visibility.Hidden;
-            Stk_TeacherPanel.Visibility = Visibility.Hidden;
-            Stk_PupilPanel.Visibility = Visibility.Hidden;
-            Stk_GuardianPanel.Visibility = Visibility.Hidden;
-            Stk_AbsencePanel.Visibility = Visibility.Hidden;
-            Stk_ClassPanel.Visibility = Visibility.Hidden;
+            Stk_AddPupil.Visibility = Visibility.Hidden;
+            Stk_AddTeacher.Visibility = Visibility.Hidden;
+            Stk_AddUser.Visibility = Visibility.Hidden;
+            Stk_AddGuardian.Visibility = Visibility.Hidden;
+            Stk_AddClass.Visibility = Visibility.Hidden;
+            Stk_AddAbsence.Visibility = Visibility.Hidden;
+            Stk_UpdateClass.Visibility = Visibility.Hidden;
+            Stk_UpdateAbsence.Visibility = Visibility.Hidden;
+            Stk_UpdateTeacher.Visibility = Visibility.Hidden;
+            Stk_UpdateGuardianForm.Visibility = Visibility.Hidden;
+            Stk_UpdateUserForm.Visibility = Visibility.Hidden;
+            Stk_UpdatePupilAbsenceForm.Visibility = Visibility.Hidden;
         }
 
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        private void BtnUserDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SearchUser.Visibility = Visibility.Visible;
         }
 
-        private void MenuItemUser_Click(object sender, RoutedEventArgs e)
+        private void BtnUserUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Stk_UserPanel.Visibility = Visibility.Visible;
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SearchUser.Visibility = Visibility.Visible;
+        }
+
+        private void BtnUserAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_AddUser.Visibility = Visibility.Visible;
             Stk_MenuPanel.Visibility = Visibility.Hidden;
         }
 
-        private void MenuItemGuardian_Click(object sender, RoutedEventArgs e)
+        private void BtnGuardDelete_Click(object sender, RoutedEventArgs e)
         {
-            Stk_GuardianPanel.Visibility = Visibility.Visible;
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SearchGuardian.Visibility = Visibility.Visible;
+        }
+
+        private void BtnGuardUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SearchGuardian.Visibility = Visibility.Visible;
+        }
+
+        private void BtnGuardAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AddGuardian.Visibility = Visibility.Visible;
+        }
+
+        private void BtnPupilAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AddPupil.Visibility = Visibility.Visible;
+        }
+
+        private void BtnPupilUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SearchPupil.Visibility = Visibility.Visible;
+        }
+
+        private void BtnPupilDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_SearchPupil.Visibility = Visibility.Visible;
+        }
+
+        private void BtnTeacherAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AddTeacher.Visibility = Visibility.Visible;
+        }
+
+        private void BtnTeacherUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_UpdateTeacher.Visibility = Visibility.Visible;
+        }
+
+        private void BtnTeacherDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_DeleteTeacher.Visibility = Visibility.Visible;
+        }
+
+        private void BtnClassAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AddClass.Visibility = Visibility.Visible;
+        }
+
+        private void BtnAbsenceAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_MenuPanel.Visibility = Visibility.Hidden;
+            Stk_AddAbsence.Visibility = Visibility.Visible;
+        }
+
+        private void BtnAbsenceUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_UpdateAbsence.Visibility = Visibility.Visible;
             Stk_MenuPanel.Visibility = Visibility.Hidden;
         }
 
-        private void MenuItemPupil_Click(object sender, RoutedEventArgs e)
+        private void BtnAbsenceDelete_Click(object sender, RoutedEventArgs e)
         {
             Stk_MenuPanel.Visibility = Visibility.Hidden;
-            Stk_PupilPanel.Visibility = Visibility.Visible;
+            Stk_DeleteAbsence.Visibility = Visibility.Visible;
         }
 
-        private void MenuItemAbsence_Click(object sender, RoutedEventArgs e)
+        private void BtnClassUpdate_Click(object sender, RoutedEventArgs e)
         {
             Stk_MenuPanel.Visibility = Visibility.Hidden;
-            Stk_AbsencePanel.Visibility = Visibility.Visible;
+            Stk_UpdateClass.Visibility = Visibility.Visible;
         }
 
-        private void MenuItemClass_Click(object sender, RoutedEventArgs e)
+        private void BtnClassDelete_Click(object sender, RoutedEventArgs e)
         {
             Stk_MenuPanel.Visibility = Visibility.Hidden;
-            Stk_ClassPanel.Visibility = Visibility.Visible;
+            Stk_DeleteClass.Visibility = Visibility.Visible;
         }
 
-        private void MenuItemTeacher_Click(object sender, RoutedEventArgs e)
+        private void MnuI_AbsenceType_Click(object sender, RoutedEventArgs e)
         {
-            Stk_MenuPanel.Visibility = Visibility.Hidden;
-            Stk_TeacherPanel.Visibility = Visibility.Visible;
+            TbxUpdateAbsenceDescription.Text = MnuI_AbsenceType.Header.ToString();
+            //Mnu_ClassSelector.Visibility = Visibility.Hidden;
         }
 
-        private void Chk_AddUser_Checked(object sender, RoutedEventArgs e)
+        private void MnuI_ClassType_Click(object sender, RoutedEventArgs e)
         {
-            Chk_UpdateUser.IsEnabled = false;
-            Chk_DeleteUser.IsEnabled = false;
+            TbxUpdateClassDescription.Text = MnuI_ClassType.Header.ToString();
         }
 
-        private void Chk_UpdateUser_Checked(object sender, RoutedEventArgs e)
+        private void MnuI_TeacherType_Click(object sender, RoutedEventArgs e)
         {
-            Chk_DeleteUser.IsEnabled = false;
-            Chk_AddUser.IsEnabled = false;
+            TbxUpdateTeacherGiven.Text = MnuI_TeacherType.Header.ToString();
+            TbxUpdateTeacherSurname.Text = MnuI_TeacherType.Header.ToString();
+            TbxUpdateTeacherClassID.Text = MnuI_TeacherType.Header.ToString();
+            TbxUpdateTeacherID.Text = MnuI_TeacherType.Header.ToString();
         }
 
-        private void Chk_DeleteUser_Checked(object sender, RoutedEventArgs e)
+        private void MnuIUpdateUser_Click(object sender, RoutedEventArgs e)
         {
-            Chk_UpdateUser.IsEnabled = false;
-            Chk_AddUser.IsEnabled = false;
+            Stk_SearchUser.Visibility = Visibility.Hidden;
+            Stk_UpdateUserForm.Visibility = Visibility.Visible;
         }
 
-        private void Chk_AddUser_Unchecked(object sender, RoutedEventArgs e)
+        private void MnuIDeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            Chk_DeleteUser.IsEnabled = true;
-            Chk_UpdateUser.IsEnabled = true;
+            Stk_SearchUser.Visibility = Visibility.Hidden;
+            Stk_DeleteUserForm.Visibility = Visibility.Visible;
+
         }
 
-        private void Chk_UpdateUser_Unchecked(object sender, RoutedEventArgs e)
+        private void MnuIUpdateGuardian_Click(object sender, RoutedEventArgs e)
         {
-            Chk_DeleteUser.IsEnabled = true;
-            Chk_AddUser.IsEnabled = true;
+            Stk_SearchGuardian.Visibility = Visibility.Hidden;
+            Stk_UpdateGuardianForm.Visibility = Visibility.Visible;
         }
 
-        private void Chk_DeleteUser_Unchecked(object sender, RoutedEventArgs e)
+        private void MnuIDeleteGuardian_Click(object sender, RoutedEventArgs e)
         {
-            Chk_UpdateUser.IsEnabled = true;
-            Chk_AddUser.IsEnabled = true;
+            Stk_SearchGuardian.Visibility = Visibility.Hidden;
+            Stk_DeleteGuardianForm.Visibility = Visibility.Visible;
+        }
+
+        private void MnuIUpdatePupil_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_SearchPupil.Visibility = Visibility.Hidden;
+            Stk_UpdatePupilForm.Visibility = Visibility.Visible;
+        }
+
+        private void MnuIUpdatePupilAbsence_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_SearchPupil.Visibility = Visibility.Hidden;
+            Stk_UpdatePupilAbsenceForm.Visibility = Visibility.Visible;
+        }
+
+        private void MnuIDeletePupil_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_SearchPupil.Visibility = Visibility.Hidden;
+            Stk_DeletePupilForm.Visibility = Visibility.Visible;
+        }
+
+        private void BtnDeleteTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_DeleteTeacher.Visibility = Visibility.Hidden;
+
+            string title = "Confirmation Box";
+            string messsage = "Confirm Teacher Deletion";
+            MessageBox.Show(messsage,title,MessageBoxButton.YesNo);
+
+
         }
     }
 }
