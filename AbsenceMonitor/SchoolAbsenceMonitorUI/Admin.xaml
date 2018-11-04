@@ -136,9 +136,9 @@
                     <Label Content="User ID:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Email" Margin="0,10"/>
-                    <Label Content="Mobile No." Margin="0,10"/>
-                    <Label Content="Password" Margin="0,10"/>
+                    <Label Content="Email:" Margin="0,10"/>
+                    <Label Content="Mobile No:" Margin="0,10"/>
+                    <Label Content="Password:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -389,7 +389,7 @@
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
-                                   Content="Error Updating the User"
+                                   Content="Error Deleting the User"
                                    Visibility="Hidden"/>
             </Grid>
         </StackPanel>
@@ -421,12 +421,12 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Email" Margin="0,10"/>
+                    <Label Content="Email:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
                     <Label Content="Mobile No:" Margin="0,10"/>
                     <Label Content="Emergency No:" Margin="0,10"/>
-                    <Label Content="Address" Margin="0,10"/>
+                    <Label Content="Address:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -874,7 +874,7 @@
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
-                                   Content="Error Updating the Pupil"
+                                   Content="Error Updating the Pupil Absence"
                                    Visibility="Hidden"/>
             </Grid>
         </StackPanel>
@@ -924,7 +924,7 @@
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
-                                   Content="Error Updating the Pupil"
+                                   Content="Error Deleting the Pupil"
                                    Visibility="Hidden"/>
             </Grid>
         </StackPanel>
