@@ -1,0 +1,789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SMA_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Absence">
+          <Key>
+            <PropertyRef Name="AbsenceId" />
+          </Key>
+          <Property Name="AbsenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AbsenceTypeId" Type="int" Nullable="false" />
+          <Property Name="AbsenceDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AbsenceType">
+          <Key>
+            <PropertyRef Name="AbsenceTypeId" />
+          </Key>
+          <Property Name="AbsenceTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AbsenceType" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccessLevel">
+          <Key>
+            <PropertyRef Name="AccessLevelId" />
+          </Key>
+          <Property Name="AccessLevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccessLevel" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttendanceDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventTypeId" />
+          </Key>
+          <Property Name="EventTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventType" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Guardian">
+          <Key>
+            <PropertyRef Name="GuardianId" />
+          </Key>
+          <Property Name="GuardianId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GivenName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="EmergencyNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pupil">
+          <Key>
+            <PropertyRef Name="PupilId" />
+          </Key>
+          <Property Name="PupilId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GivenName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="GuardianId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PupilAbsence">
+          <Key>
+            <PropertyRef Name="PupilAbsenceId" />
+          </Key>
+          <Property Name="PupilAbsenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AbsenceId" Type="int" Nullable="false" />
+          <Property Name="PupilId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PupilAttendance">
+          <Key>
+            <PropertyRef Name="PupilAttendanceId" />
+          </Key>
+          <Property Name="PupilAttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PupilId" Type="int" Nullable="false" />
+          <Property Name="AttendanceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemEvent">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventDateTime" Type="datetime" Nullable="false" />
+          <Property Name="EventTypeId" Type="int" Nullable="false" />
+          <Property Name="EventData" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="GivenName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="AccessLevelId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GivenName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Absence_ToAbsenceType">
+          <End Role="AbsenceType" Type="Self.AbsenceType" Multiplicity="1" />
+          <End Role="Absence" Type="Self.Absence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AbsenceType">
+              <PropertyRef Name="AbsenceTypeId" />
+            </Principal>
+            <Dependent Role="Absence">
+              <PropertyRef Name="AbsenceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_ToGuardian">
+          <End Role="Guardian" Type="Self.Guardian" Multiplicity="1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guardian">
+              <PropertyRef Name="GuardianId" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="GuardianId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAbsence_ToAbsence">
+          <End Role="Absence" Type="Self.Absence" Multiplicity="1" />
+          <End Role="PupilAbsence" Type="Self.PupilAbsence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Absence">
+              <PropertyRef Name="AbsenceId" />
+            </Principal>
+            <Dependent Role="PupilAbsence">
+              <PropertyRef Name="AbsenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAbsence_ToPupil">
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+          <End Role="PupilAbsence" Type="Self.PupilAbsence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupil">
+              <PropertyRef Name="PupilId" />
+            </Principal>
+            <Dependent Role="PupilAbsence">
+              <PropertyRef Name="PupilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAttendance_ToAttendance">
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1" />
+          <End Role="PupilAttendance" Type="Self.PupilAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance">
+              <PropertyRef Name="AttendanceId" />
+            </Principal>
+            <Dependent Role="PupilAttendance">
+              <PropertyRef Name="AttendanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAttendance_ToPupil">
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+          <End Role="PupilAttendance" Type="Self.PupilAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupil">
+              <PropertyRef Name="PupilId" />
+            </Principal>
+            <Dependent Role="PupilAttendance">
+              <PropertyRef Name="PupilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemEvent_ToEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="SystemEvent" Type="Self.SystemEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventTypeId" />
+            </Principal>
+            <Dependent Role="SystemEvent">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemEvent_ToSystemUser">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemEvent" Type="Self.SystemEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SystemEvent">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUser_ToAccessLevel">
+          <End Role="AccessLevel" Type="Self.AccessLevel" Multiplicity="1" />
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccessLevel">
+              <PropertyRef Name="AccessLevelId" />
+            </Principal>
+            <Dependent Role="SystemUser">
+              <PropertyRef Name="AccessLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMA_DBModelStoreContainer">
+          <EntitySet Name="Absence" EntityType="Self.Absence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AbsenceType" EntityType="Self.AbsenceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccessLevel" EntityType="Self.AccessLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guardian" EntityType="Self.Guardian" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pupil" EntityType="Self.Pupil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PupilAbsence" EntityType="Self.PupilAbsence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PupilAttendance" EntityType="Self.PupilAttendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemEvent" EntityType="Self.SystemEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Absence_ToAbsenceType" Association="Self.FK_Absence_ToAbsenceType">
+            <End Role="AbsenceType" EntitySet="AbsenceType" />
+            <End Role="Absence" EntitySet="Absence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_ToClass" Association="Self.FK_Pupil_ToClass">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Pupil" EntitySet="Pupil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_ToGuardian" Association="Self.FK_Pupil_ToGuardian">
+            <End Role="Guardian" EntitySet="Guardian" />
+            <End Role="Pupil" EntitySet="Pupil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAbsence_ToAbsence" Association="Self.FK_PupilAbsence_ToAbsence">
+            <End Role="Absence" EntitySet="Absence" />
+            <End Role="PupilAbsence" EntitySet="PupilAbsence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAbsence_ToPupil" Association="Self.FK_PupilAbsence_ToPupil">
+            <End Role="Pupil" EntitySet="Pupil" />
+            <End Role="PupilAbsence" EntitySet="PupilAbsence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAttendance_ToAttendance" Association="Self.FK_PupilAttendance_ToAttendance">
+            <End Role="Attendance" EntitySet="Attendance" />
+            <End Role="PupilAttendance" EntitySet="PupilAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAttendance_ToPupil" Association="Self.FK_PupilAttendance_ToPupil">
+            <End Role="Pupil" EntitySet="Pupil" />
+            <End Role="PupilAttendance" EntitySet="PupilAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemEvent_ToEvent" Association="Self.FK_SystemEvent_ToEvent">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="SystemEvent" EntitySet="SystemEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemEvent_ToSystemUser" Association="Self.FK_SystemEvent_ToSystemUser">
+            <End Role="SystemUser" EntitySet="SystemUser" />
+            <End Role="SystemEvent" EntitySet="SystemEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUser_ToAccessLevel" Association="Self.FK_SystemUser_ToAccessLevel">
+            <End Role="AccessLevel" EntitySet="AccessLevel" />
+            <End Role="SystemUser" EntitySet="SystemUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_ToClass" Association="Self.FK_Teacher_ToClass">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SMA_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Absence">
+          <Key>
+            <PropertyRef Name="AbsenceId" />
+          </Key>
+          <Property Name="AbsenceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AbsenceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="AbsenceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AbsenceType" Relationship="Self.FK_Absence_ToAbsenceType" FromRole="Absence" ToRole="AbsenceType" />
+          <NavigationProperty Name="PupilAbsences" Relationship="Self.FK_PupilAbsence_ToAbsence" FromRole="Absence" ToRole="PupilAbsence" />
+        </EntityType>
+        <EntityType Name="AbsenceType">
+          <Key>
+            <PropertyRef Name="AbsenceTypeId" />
+          </Key>
+          <Property Name="AbsenceTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AbsenceType1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Absences" Relationship="Self.FK_Absence_ToAbsenceType" FromRole="AbsenceType" ToRole="Absence" />
+        </EntityType>
+        <EntityType Name="AccessLevel">
+          <Key>
+            <PropertyRef Name="AccessLevelId" />
+          </Key>
+          <Property Name="AccessLevelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccessLevel1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SystemUsers" Relationship="Self.FK_SystemUser_ToAccessLevel" FromRole="AccessLevel" ToRole="SystemUser" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="PupilAttendances" Relationship="Self.FK_PupilAttendance_ToAttendance" FromRole="Attendance" ToRole="PupilAttendance" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pupils" Relationship="Self.FK_Pupil_ToClass" FromRole="Class" ToRole="Pupil" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_Teacher_ToClass" FromRole="Class" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventTypeId" />
+          </Key>
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SystemEvents" Relationship="Self.FK_SystemEvent_ToEvent" FromRole="Event" ToRole="SystemEvent" />
+        </EntityType>
+        <EntityType Name="Guardian">
+          <Key>
+            <PropertyRef Name="GuardianId" />
+          </Key>
+          <Property Name="GuardianId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GivenName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmergencyNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pupils" Relationship="Self.FK_Pupil_ToGuardian" FromRole="Guardian" ToRole="Pupil" />
+        </EntityType>
+        <EntityType Name="Pupil">
+          <Key>
+            <PropertyRef Name="PupilId" />
+          </Key>
+          <Property Name="PupilId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GivenName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GuardianId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_Pupil_ToClass" FromRole="Pupil" ToRole="Class" />
+          <NavigationProperty Name="Guardian" Relationship="Self.FK_Pupil_ToGuardian" FromRole="Pupil" ToRole="Guardian" />
+          <NavigationProperty Name="PupilAbsences" Relationship="Self.FK_PupilAbsence_ToPupil" FromRole="Pupil" ToRole="PupilAbsence" />
+          <NavigationProperty Name="PupilAttendances" Relationship="Self.FK_PupilAttendance_ToPupil" FromRole="Pupil" ToRole="PupilAttendance" />
+        </EntityType>
+        <EntityType Name="PupilAbsence">
+          <Key>
+            <PropertyRef Name="PupilAbsenceId" />
+          </Key>
+          <Property Name="PupilAbsenceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AbsenceId" Type="Int32" Nullable="false" />
+          <Property Name="PupilId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Absence" Relationship="Self.FK_PupilAbsence_ToAbsence" FromRole="PupilAbsence" ToRole="Absence" />
+          <NavigationProperty Name="Pupil" Relationship="Self.FK_PupilAbsence_ToPupil" FromRole="PupilAbsence" ToRole="Pupil" />
+        </EntityType>
+        <EntityType Name="PupilAttendance">
+          <Key>
+            <PropertyRef Name="PupilAttendanceId" />
+          </Key>
+          <Property Name="PupilAttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PupilId" Type="Int32" Nullable="false" />
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Attendance" Relationship="Self.FK_PupilAttendance_ToAttendance" FromRole="PupilAttendance" ToRole="Attendance" />
+          <NavigationProperty Name="Pupil" Relationship="Self.FK_PupilAttendance_ToPupil" FromRole="PupilAttendance" ToRole="Pupil" />
+        </EntityType>
+        <EntityType Name="SystemEvent">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" />
+          <Property Name="EventData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_SystemEvent_ToEvent" FromRole="SystemEvent" ToRole="Event" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemEvent_ToSystemUser" FromRole="SystemEvent" ToRole="SystemUser" />
+        </EntityType>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GivenName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AccessLevelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccessLevel" Relationship="Self.FK_SystemUser_ToAccessLevel" FromRole="SystemUser" ToRole="AccessLevel" />
+          <NavigationProperty Name="SystemEvents" Relationship="Self.FK_SystemEvent_ToSystemUser" FromRole="SystemUser" ToRole="SystemEvent" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GivenName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_Teacher_ToClass" FromRole="Teacher" ToRole="Class" />
+        </EntityType>
+        <Association Name="FK_Absence_ToAbsenceType">
+          <End Role="AbsenceType" Type="Self.AbsenceType" Multiplicity="1" />
+          <End Role="Absence" Type="Self.Absence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AbsenceType">
+              <PropertyRef Name="AbsenceTypeId" />
+            </Principal>
+            <Dependent Role="Absence">
+              <PropertyRef Name="AbsenceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAbsence_ToAbsence">
+          <End Role="Absence" Type="Self.Absence" Multiplicity="1" />
+          <End Role="PupilAbsence" Type="Self.PupilAbsence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Absence">
+              <PropertyRef Name="AbsenceId" />
+            </Principal>
+            <Dependent Role="PupilAbsence">
+              <PropertyRef Name="AbsenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUser_ToAccessLevel">
+          <End Role="AccessLevel" Type="Self.AccessLevel" Multiplicity="1" />
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccessLevel">
+              <PropertyRef Name="AccessLevelId" />
+            </Principal>
+            <Dependent Role="SystemUser">
+              <PropertyRef Name="AccessLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAttendance_ToAttendance">
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1" />
+          <End Role="PupilAttendance" Type="Self.PupilAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance">
+              <PropertyRef Name="AttendanceId" />
+            </Principal>
+            <Dependent Role="PupilAttendance">
+              <PropertyRef Name="AttendanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemEvent_ToEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="SystemEvent" Type="Self.SystemEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventTypeId" />
+            </Principal>
+            <Dependent Role="SystemEvent">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_ToGuardian">
+          <End Role="Guardian" Type="Self.Guardian" Multiplicity="1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guardian">
+              <PropertyRef Name="GuardianId" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="GuardianId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAbsence_ToPupil">
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+          <End Role="PupilAbsence" Type="Self.PupilAbsence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupil">
+              <PropertyRef Name="PupilId" />
+            </Principal>
+            <Dependent Role="PupilAbsence">
+              <PropertyRef Name="PupilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PupilAttendance_ToPupil">
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+          <End Role="PupilAttendance" Type="Self.PupilAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupil">
+              <PropertyRef Name="PupilId" />
+            </Principal>
+            <Dependent Role="PupilAttendance">
+              <PropertyRef Name="PupilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemEvent_ToSystemUser">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemEvent" Type="Self.SystemEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SystemEvent">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMADBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Absences" EntityType="Self.Absence" />
+          <EntitySet Name="AbsenceTypes" EntityType="Self.AbsenceType" />
+          <EntitySet Name="AccessLevels" EntityType="Self.AccessLevel" />
+          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Guardians" EntityType="Self.Guardian" />
+          <EntitySet Name="Pupils" EntityType="Self.Pupil" />
+          <EntitySet Name="PupilAbsences" EntityType="Self.PupilAbsence" />
+          <EntitySet Name="PupilAttendances" EntityType="Self.PupilAttendance" />
+          <EntitySet Name="SystemEvents" EntityType="Self.SystemEvent" />
+          <EntitySet Name="SystemUsers" EntityType="Self.SystemUser" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <AssociationSet Name="FK_Absence_ToAbsenceType" Association="Self.FK_Absence_ToAbsenceType">
+            <End Role="AbsenceType" EntitySet="AbsenceTypes" />
+            <End Role="Absence" EntitySet="Absences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAbsence_ToAbsence" Association="Self.FK_PupilAbsence_ToAbsence">
+            <End Role="Absence" EntitySet="Absences" />
+            <End Role="PupilAbsence" EntitySet="PupilAbsences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUser_ToAccessLevel" Association="Self.FK_SystemUser_ToAccessLevel">
+            <End Role="AccessLevel" EntitySet="AccessLevels" />
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAttendance_ToAttendance" Association="Self.FK_PupilAttendance_ToAttendance">
+            <End Role="Attendance" EntitySet="Attendances" />
+            <End Role="PupilAttendance" EntitySet="PupilAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_ToClass" Association="Self.FK_Pupil_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Pupil" EntitySet="Pupils" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_ToClass" Association="Self.FK_Teacher_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Teacher" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemEvent_ToEvent" Association="Self.FK_SystemEvent_ToEvent">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="SystemEvent" EntitySet="SystemEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_ToGuardian" Association="Self.FK_Pupil_ToGuardian">
+            <End Role="Guardian" EntitySet="Guardians" />
+            <End Role="Pupil" EntitySet="Pupils" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAbsence_ToPupil" Association="Self.FK_PupilAbsence_ToPupil">
+            <End Role="Pupil" EntitySet="Pupils" />
+            <End Role="PupilAbsence" EntitySet="PupilAbsences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PupilAttendance_ToPupil" Association="Self.FK_PupilAttendance_ToPupil">
+            <End Role="Pupil" EntitySet="Pupils" />
+            <End Role="PupilAttendance" EntitySet="PupilAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemEvent_ToSystemUser" Association="Self.FK_SystemEvent_ToSystemUser">
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+            <End Role="SystemEvent" EntitySet="SystemEvents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SMA_DBModelStoreContainer" CdmEntityContainer="SMADBEntities">
+          <EntitySetMapping Name="Absences">
+            <EntityTypeMapping TypeName="SMA_DBModel.Absence">
+              <MappingFragment StoreEntitySet="Absence">
+                <ScalarProperty Name="AbsenceId" ColumnName="AbsenceId" />
+                <ScalarProperty Name="AbsenceTypeId" ColumnName="AbsenceTypeId" />
+                <ScalarProperty Name="AbsenceDate" ColumnName="AbsenceDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AbsenceTypes">
+            <EntityTypeMapping TypeName="SMA_DBModel.AbsenceType">
+              <MappingFragment StoreEntitySet="AbsenceType">
+                <ScalarProperty Name="AbsenceTypeId" ColumnName="AbsenceTypeId" />
+                <ScalarProperty Name="AbsenceType1" ColumnName="AbsenceType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccessLevels">
+            <EntityTypeMapping TypeName="SMA_DBModel.AccessLevel">
+              <MappingFragment StoreEntitySet="AccessLevel">
+                <ScalarProperty Name="AccessLevelId" ColumnName="AccessLevelId" />
+                <ScalarProperty Name="AccessLevel1" ColumnName="AccessLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="SMA_DBModel.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+                <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="SMA_DBModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="SMA_DBModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guardians">
+            <EntityTypeMapping TypeName="SMA_DBModel.Guardian">
+              <MappingFragment StoreEntitySet="Guardian">
+                <ScalarProperty Name="GuardianId" ColumnName="GuardianId" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmergencyNo" ColumnName="EmergencyNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pupils">
+            <EntityTypeMapping TypeName="SMA_DBModel.Pupil">
+              <MappingFragment StoreEntitySet="Pupil">
+                <ScalarProperty Name="PupilId" ColumnName="PupilId" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="GuardianId" ColumnName="GuardianId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PupilAbsences">
+            <EntityTypeMapping TypeName="SMA_DBModel.PupilAbsence">
+              <MappingFragment StoreEntitySet="PupilAbsence">
+                <ScalarProperty Name="PupilAbsenceId" ColumnName="PupilAbsenceId" />
+                <ScalarProperty Name="AbsenceId" ColumnName="AbsenceId" />
+                <ScalarProperty Name="PupilId" ColumnName="PupilId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PupilAttendances">
+            <EntityTypeMapping TypeName="SMA_DBModel.PupilAttendance">
+              <MappingFragment StoreEntitySet="PupilAttendance">
+                <ScalarProperty Name="PupilAttendanceId" ColumnName="PupilAttendanceId" />
+                <ScalarProperty Name="PupilId" ColumnName="PupilId" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemEvents">
+            <EntityTypeMapping TypeName="SMA_DBModel.SystemEvent">
+              <MappingFragment StoreEntitySet="SystemEvent">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+                <ScalarProperty Name="EventData" ColumnName="EventData" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemUsers">
+            <EntityTypeMapping TypeName="SMA_DBModel.SystemUser">
+              <MappingFragment StoreEntitySet="SystemUser">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="AccessLevelId" ColumnName="AccessLevelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SMA_DBModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

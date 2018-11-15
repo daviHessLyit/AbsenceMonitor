@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMAClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        SMADBEntities smaDBEntities = new SMADBEntities();
         public MainWindow()
         {
             InitializeComponent();
@@ -32,10 +34,25 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            MainDashboard mainDashboard = new MainDashboard();
-            mainDashboard.Show();
-            this.Close();
+            // Counter to track login attempts
+            int loginAttemptCount = 0;
 
+            string userId = TbxUsername.Text;
+            string userPassword = TbxPassword.Password;
+
+            foreach (var systemUser in smaDBEntities.SystemUsers)
+            {
+                if ( loginAttemptCount <3 &&  systemUser.Username == userId && systemUser.Password == userPassword)
+                {
+                    MainDashboard mainDashboard = new MainDashboard();
+                    mainDashboard.Show();
+                    this.Close();
+                }
+                else
+                {
+                    loginAttemptCount++;
+                }
+            }
         }
     }
 }
