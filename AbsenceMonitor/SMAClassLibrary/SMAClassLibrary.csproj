@@ -99,6 +99,7 @@
     <Compile Include="SystemEvent.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="SystemEventUtils.cs" />
     <Compile Include="SystemUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
