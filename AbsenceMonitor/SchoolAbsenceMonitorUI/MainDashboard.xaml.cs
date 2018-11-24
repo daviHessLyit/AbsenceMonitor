@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMAClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class MainDashboard : Window
     {
+        public SystemUser systemUser = new SystemUser();
+
         public MainDashboard()
         {
             InitializeComponent();
@@ -51,6 +54,25 @@ namespace SchoolAbsenceMonitorUI
         {
             ApplicationLogs applicationLogs = new ApplicationLogs();
             frmMain.Navigate(applicationLogs);
+        }
+
+        private void CheckSystemUserAccess(SystemUser user)
+        {
+            if(user.AccessLevelId == 1)
+            {
+                Tbi_Reporting.Visibility = Visibility.Visible;
+                Tbi_Admin.Visibility = Visibility.Visible;
+                Tbi_ApplicationLogs.Visibility = Visibility.Visible;
+            }
+            else if (user.AccessLevelId == 2)
+            {
+                Tbi_Reporting.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CheckSystemUserAccess(systemUser);
         }
     }
 }

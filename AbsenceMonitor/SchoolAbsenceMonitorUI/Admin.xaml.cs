@@ -25,6 +25,7 @@ namespace SchoolAbsenceMonitorUI
             InitializeComponent();
         }
 
+
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
             Stk_MenuPanel.Visibility = Visibility.Visible;
@@ -220,6 +221,11 @@ namespace SchoolAbsenceMonitorUI
             string messsage = "Confirm Teacher Deletion";
             MessageBox.Show(messsage,title,MessageBoxButton.YesNo);
 
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
 
         }
     }

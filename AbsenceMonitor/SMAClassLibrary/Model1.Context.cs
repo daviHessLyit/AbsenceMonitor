@@ -15,8 +15,8 @@ namespace SMAClassLibrary
     
     public partial class SMADBEntities : DbContext
     {
-        public SMADBEntities()
-            : base("name=SMADBEntities")
+        public SMADBEntities(string connectionString)
+            : base(connectionString)
         {
         }
     

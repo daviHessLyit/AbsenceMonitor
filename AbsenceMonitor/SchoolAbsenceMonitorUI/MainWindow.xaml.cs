@@ -21,7 +21,7 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        SMADBEntities smaDBEntities = new SMADBEntities();
+        SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
         SystemEventUtils systemEventUtils = new SystemEventUtils();
 
         private int loginAttemptCount = 0;
@@ -33,51 +33,106 @@ namespace SchoolAbsenceMonitorUI
         private void BtnExitApp_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            Environment.Exit(0);
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             // Counter to track login attempts
-           
-
-            string userId = TbxUsername.Text;
+            SystemUser validatedUser = null; 
+            MainDashboard mainDashboard;
+            bool userValidated = false;
+            string userName = TbxUsername.Text;
             string userPassword = TbxPassword.Password;
 
-            foreach (var systemUser in smaDBEntities.SystemUsers)
+            foreach (var systemUser in smaDB.SystemUsers)
             {
-                if ( loginAttemptCount <3 &&  systemUser.Username == userId && systemUser.Password == userPassword)
+                if ( loginAttemptCount <3 &&  systemUser.Username == userName && systemUser.Password == userPassword)
                 {
                     Lbl_ErrorLabel.Visibility = Visibility.Hidden;
-                    MainDashboard mainDashboard = new MainDashboard();
-                    mainDashboard.Show();
-                    systemEventUtils.AddSystemEvent(new SystemEvent { UserId = systemUser.UserId,
-                                                                      EventTypeId = 1,
-                                                                      EventDateTime = DateTime.Now,
-                                                                      EventData = $"UserName { systemUser.Username} successfully logged on to the application at { DateTime.Now}" });
-                    
-                    Close();
+                    validatedUser = new SystemUser();
+                    validatedUser = systemUser;
+                    userValidated = true;
+                    break;
                 }
-                else
+                else if (loginAttemptCount < 3 && systemUser.Username == userName)
                 {
                     loginAttemptCount++;
-                    Lbl_ErrorLabel.Visibility = Visibility.Visible;
-                    TbxUsername.Clear();
+                    Lbl_ErrorLabel.Content = "User Password incorrect";
+                    Lbl_ErrorLabel.Visibility = Visibility.Visible;                    
                     TbxPassword.Clear();
                     systemEventUtils.AddSystemEvent(new SystemEvent
                     {
                         UserId = systemUser.UserId,
                         EventTypeId = 2,
                         EventDateTime = DateTime.Now,
-                        EventData = $"UserName: { systemUser.Username} had a failed logon to the application at { DateTime.Now}"
+                        EventData = $"UserName: { systemUser.Username} had a failed logon to the application at { DateTime.Now}, using Password: {userPassword}"
                     });
 
                     if (loginAttemptCount >= 3)
                     {
                         Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" +"Please contact System Administrator";
                         Lbl_ErrorLabel.FontSize = 14;
+
+
+                        systemEventUtils.AddSystemEvent(new SystemEvent
+                        {
+                            UserId = systemUser.UserId,
+                            EventTypeId = 1003,
+                            EventDateTime = DateTime.Now,
+                            EventData = $"System locked after 3 failed attempts for UserName: { systemUser.Username} at { DateTime.Now}, using Password: {userPassword}"
+                        });
+                    }
+                }
+                else if (loginAttemptCount < 3 && systemUser.Username != userName)
+                {
+                    loginAttemptCount++;
+                    Lbl_ErrorLabel.Visibility = Visibility.Visible;
+                    systemEventUtils.AddSystemEvent(new SystemEvent
+                    {
+                        UserId = 1002,
+                        EventTypeId = 1002,
+                        EventDateTime = DateTime.Now,
+                        EventData = $"Unknown user login attempt at {DateTime.Now}, using {userName} / {userPassword} combination"
+                    });
+
+                    if (loginAttemptCount >= 3)
+                    {
+                        Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" + "Please contact System Administrator";
+                        Lbl_ErrorLabel.FontSize = 14;
+
+                        systemEventUtils.AddSystemEvent(new SystemEvent
+                        {
+                            UserId = 1002,
+                            EventTypeId = 1003,
+                            EventDateTime = DateTime.Now,
+                            EventData = $"System locked after 3 failed attempts for unknown user at { DateTime.Now} , using {userName} / {userPassword} combination"
+                        });
                     }
                 }
             }
+
+            if(userValidated)
+            {
+                mainDashboard = new MainDashboard();               
+
+                if (validatedUser != null)
+                {
+                    mainDashboard.systemUser = validatedUser;
+                }               
+
+                systemEventUtils.AddSystemEvent(new SystemEvent
+                {
+                    UserId = validatedUser.UserId,
+                    EventTypeId = 1,
+                    EventDateTime = DateTime.Now,
+                    EventData = $"UserName { validatedUser.Username} successfully logged on to the application at { DateTime.Now}"
+                });
+                mainDashboard.Owner = this;
+                mainDashboard.ShowDialog();
+                this.Hide();
+                //Close();
+            } 
         }
     }
 }

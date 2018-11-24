@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
       mc:Ignorable="d" 
        d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
       Title="Admin">
 
     <Grid>
