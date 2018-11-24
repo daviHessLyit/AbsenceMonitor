@@ -91,6 +91,7 @@
                                 <RowDefinition Height="10*"/>
                             </Grid.RowDefinitions>
                             <Button Name="BtnLogin" Content="Login" Height="26" Width="130" TabIndex="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,10" Click="BtnLogin_Click"/>
+                            <Button Name="BtnCancel" Content="Cancel" Height="26" Width="130" TabIndex="2" Grid.Row="0" HorizontalAlignment="Left" Margin="10,10" Click="BtnCancel_Click"/>
                             <Label Grid.Row="1" Name="Lbl_ErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"

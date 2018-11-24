@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMAClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,11 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class Admin : Page
     {
+        SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
         public Admin()
         {
             InitializeComponent();
         }
-
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
@@ -226,7 +227,44 @@ namespace SchoolAbsenceMonitorUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            // Initialise a list of Pupils and fill with data if available
+            List<Pupil> pupils = new List<Pupil>();
+            foreach (var pupil in smaDB.Pupils)
+            {
+                pupils.Add(pupil);
+            }
+            int count = pupils.Count;
+            // Initialise a list of Teachers and fill with data if available
+            List<Teacher> teachers = new List<Teacher>();
+            foreach (var teacher in smaDB.Teachers)
+            {
+                teachers.Add(teacher);
+            }
+            // Initialise a list of SystemUsers and fill with data if available
+            List<SystemUser> systemUsers = new List<SystemUser>();           
+            foreach (var systemUser in smaDB.SystemUsers)
+            {
+                systemUsers.Add(systemUser);
+            }
+            // Initialise a list of Guardians and fill with data if available
+            List<Guardian> guardians = new List<Guardian>();
+            foreach (var guardian in smaDB.Guardians)
+            {
+                guardians.Add(guardian);
+            }
+            int guardiancount = guardians.Count;
+            // Initialise a list of School Classes and fill with data if available
+            List<Class> classes = new List<Class>();
+            foreach (var schoolClass in smaDB.Classes)
+            {
+                classes.Add(schoolClass);
+            }
+            // Initialise a list of AbsenceTypes and fill with data if available
+            List<AbsenceType> absenceTypes = new List<AbsenceType>();
+            foreach (var absenceType in smaDB.AbsenceTypes)
+            {
+                absenceTypes.Add(absenceType);
+            }
         }
     }
 }

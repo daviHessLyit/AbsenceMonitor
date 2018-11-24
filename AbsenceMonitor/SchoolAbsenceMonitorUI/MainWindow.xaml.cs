@@ -24,6 +24,7 @@ namespace SchoolAbsenceMonitorUI
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
         SystemEventUtils systemEventUtils = new SystemEventUtils();
 
+        // Counter to track login attempts
         private int loginAttemptCount = 0;
         public MainWindow()
         {
@@ -32,21 +33,24 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnExitApp_Click(object sender, RoutedEventArgs e)
         {
+            // Exit the application
             Close();
             Environment.Exit(0);
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Counter to track login attempts
+            // Create local variables
             SystemUser validatedUser = null; 
             MainDashboard mainDashboard;
             bool userValidated = false;
             string userName = TbxUsername.Text;
             string userPassword = TbxPassword.Password;
 
+            // Loop through all the system users available in the System Database
             foreach (var systemUser in smaDB.SystemUsers)
             {
+                // Validate the user if the count is less than 3.
                 if ( loginAttemptCount <3 &&  systemUser.Username == userName && systemUser.Password == userPassword)
                 {
                     Lbl_ErrorLabel.Visibility = Visibility.Hidden;
@@ -55,6 +59,7 @@ namespace SchoolAbsenceMonitorUI
                     userValidated = true;
                     break;
                 }
+                // Record the user login attempt if the user name is on the System Database and if the count is less than 3.
                 else if (loginAttemptCount < 3 && systemUser.Username == userName)
                 {
                     loginAttemptCount++;
@@ -84,6 +89,7 @@ namespace SchoolAbsenceMonitorUI
                         });
                     }
                 }
+                // Record the login attempt if the user name is not on the System Database and if the count is less than 3.
                 else if (loginAttemptCount < 3 && systemUser.Username != userName)
                 {
                     loginAttemptCount++;
@@ -112,6 +118,7 @@ namespace SchoolAbsenceMonitorUI
                 }
             }
 
+            // If the user has been validated set up the mainDashboard and record the event in the logs
             if(userValidated)
             {
                 mainDashboard = new MainDashboard();               
@@ -131,8 +138,14 @@ namespace SchoolAbsenceMonitorUI
                 mainDashboard.Owner = this;
                 mainDashboard.ShowDialog();
                 this.Hide();
-                //Close();
             } 
+        }
+
+        // Allow the system user to reset the username and password text boxes.
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            TbxPassword.Clear();
+            TbxUsername.Clear();
         }
     }
 }

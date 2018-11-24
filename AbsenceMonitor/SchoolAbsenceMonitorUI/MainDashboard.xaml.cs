@@ -29,7 +29,8 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnExitApp_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
+            Environment.Exit(0);
         }
 
         private void Tbi_Attendance_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

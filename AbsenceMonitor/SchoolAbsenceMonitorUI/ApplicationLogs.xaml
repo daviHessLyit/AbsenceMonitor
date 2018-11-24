@@ -6,18 +6,19 @@
       xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
       Title="ApplicationLogs">
 
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="80*"/>
             <ColumnDefinition Width="10*"/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="75*"/>
-            <RowDefinition Height="15*"/>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
@@ -39,33 +40,44 @@
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ListView Name="LstSystemEvents" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="800" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="10,10">
+                <ScrollViewer Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Name="LstSystemEvents" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                          Width="800" Margin="10,10" MaxHeight="600">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Date / Time" Width="150"  DisplayMemberBinding="{Binding DateTime}">
+                            <GridViewColumn Header="Date / Time" Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center"  TextWrapping="Wrap" Height="26"/>
+                                        <TextBlock HorizontalAlignment="Stretch" Text="{Binding EventDateTime}"  TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="System Event" Width="450"  DisplayMemberBinding="{Binding SystemEvent}">
+                            <GridViewColumn Header="System Event" Width="450">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Height="26"/>
+                                        <TextBlock HorizontalAlignment="Stretch" Text="{Binding EventData}" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="UserName" Width="150"  DisplayMemberBinding="{Binding UserName}">
+                            <GridViewColumn Header="UserID" Width="50">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Height="26"/>
+                                        <TextBlock HorizontalAlignment="Center" Text="{Binding UserId}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                        </GridView>
+                            <GridViewColumn Header="EventTypeID" Width="75">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Center" Text="{Binding EventTypeId}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            </GridView>
                     </ListView.View>
                 </ListView>
+                </ScrollViewer>
                 <StackPanel Name="Stk_FilterButtons" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10">
                     <Grid>
                         <Grid.RowDefinitions>
