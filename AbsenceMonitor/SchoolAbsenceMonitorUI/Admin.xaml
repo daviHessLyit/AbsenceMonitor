@@ -134,25 +134,20 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="User ID:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Email:" Margin="0,10"/>
-                    <Label Content="Mobile No:" Margin="0,10"/>
+                    <Label Content="User ID:" Margin="0,10"/>
                     <Label Content="Password:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
-                    <TextBox Name="TbxSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
-                    <TextBox Name="TbxUserId" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <TextBox Name="TbxGiven" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxSurname" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxEmail" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
-                    <TextBox Name="TbxMobile" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
-                    <TextBox Name="TbxPassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <TextBox Name="TbxUserId" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxPassword" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
                 </StackPanel>
-
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -164,13 +159,19 @@
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Admin Level:" Grid.Row="0" Grid.Column="0" Margin="0,10" HorizontalAlignment="Left"/>
-                        <Menu Name="Mnu_AdminLevel" AllowDrop="True" Width="200" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Visibility="Visible" Margin="10,10">
-                            <MenuItem Header="Select Admin Level" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
-                                <MenuItem Header="Main Admin"/>
-                                <MenuItem Header="Admin Teacher"/>
-                                <MenuItem Header="Reporting"/>
-                            </MenuItem>                           
-                        </Menu>                       
+                        <ComboBox AllowDrop="True"
+                                      TabIndex="4"
+                                      Text="Select Access Level"
+                                      Width="200"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      HorizontalAlignment="Right"
+                                      Visibility="Visible"
+                                      Margin="10,10"
+                                      Name="CmbBxAdminLevel"                                      
+                                      ItemsSource="{Binding}"
+                                      DisplayMemberPath="AccessLevel1"
+                                      SelectedValuePath="AccessLevelId"  />
                         <Label Grid.Row="1" Grid.ColumnSpan="2" Name="Lbl_ErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
@@ -181,7 +182,13 @@
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnAddUser" Height="26" Width="150" Content="Add User" Margin="15,15"/>
+                    <Button Name="BtnAddUser" Height="26" Width="150" Content="Add User" Margin="15,15" Click="BtnAddUser_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserAddErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Username already exists in the System"
+                                   Visibility="Hidden"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -198,6 +205,8 @@
                     <RowDefinition Height="80*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView Name="LstUserSearch" Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.View>
                         <GridView>
@@ -253,7 +262,7 @@
                         </ContextMenu>  
                     </ListView.ContextMenu>
                 </ListView>
-                
+                </ScrollViewer>
             </Grid> 
         </StackPanel>
         <!-- Stack Panel containing the Update User form -->

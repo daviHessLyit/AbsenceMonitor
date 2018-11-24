@@ -98,6 +98,7 @@
     <Compile Include="SystemUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="SystemUserUtils.cs" />
     <Compile Include="Teacher.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

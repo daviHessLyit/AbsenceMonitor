@@ -57,13 +57,12 @@ namespace SchoolAbsenceMonitorUI
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             List<SystemEvent> systemEvents = new List<SystemEvent>();
-
+            LstSystemEvents.ItemsSource = systemEvents;
             foreach (var eventLog in smaDB.SystemEvents)
             {
                 systemEvents.Add(eventLog);
             }
-            int count = systemEvents.Count;
-            LstSystemEvents.ItemsSource = systemEvents;
+            
         }
     }
 }

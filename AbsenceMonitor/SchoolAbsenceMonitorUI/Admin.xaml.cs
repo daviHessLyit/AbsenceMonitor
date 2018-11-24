@@ -22,9 +22,12 @@ namespace SchoolAbsenceMonitorUI
     public partial class Admin : Page
     {
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
+        SystemUserUtils userUtils = new SystemUserUtils();
+
         public Admin()
         {
             InitializeComponent();
+            PopulateComboBox();
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
@@ -220,7 +223,7 @@ namespace SchoolAbsenceMonitorUI
 
             string title = "Confirmation Box";
             string messsage = "Confirm Teacher Deletion";
-            MessageBox.Show(messsage,title,MessageBoxButton.YesNo);
+            MessageBox.Show(messsage, title, MessageBoxButton.YesNo);
 
 
         }
@@ -241,7 +244,7 @@ namespace SchoolAbsenceMonitorUI
                 teachers.Add(teacher);
             }
             // Initialise a list of SystemUsers and fill with data if available
-            List<SystemUser> systemUsers = new List<SystemUser>();           
+            List<SystemUser> systemUsers = new List<SystemUser>();
             foreach (var systemUser in smaDB.SystemUsers)
             {
                 systemUsers.Add(systemUser);
@@ -265,6 +268,47 @@ namespace SchoolAbsenceMonitorUI
             {
                 absenceTypes.Add(absenceType);
             }
+            
+
+        }
+        public List<AccessLevel> AccessLevels {get;set;}
+        private void PopulateComboBox()
+        {
+            AccessLevels = smaDB.AccessLevels.ToList();
+            DataContext = AccessLevels;
+
+        }
+
+        private void BtnAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            int selectAccessLevel = Convert.ToInt16(CmbBxAdminLevel.SelectedValue.ToString());
+            if (TbxGiven.Text.Length>0 && TbxSurname.Text.Length>0 && TbxUserId.Text.Length>0 && TbxPassword.Text.Length >0)
+            {
+                try
+                {
+                    userUtils.AddSystemUser(new SystemUser
+                    {
+                        GivenName = TbxGiven.Text,
+                        Surname = TbxSurname.Text,
+                        Username = TbxUserId.Text,
+                        Password = TbxPassword.Text,
+                        AccessLevelId = selectAccessLevel
+                    });
+                    
+                }
+                catch (Exception)
+                {
+                    // Make the ErrorLabel visible  
+                    Lbl_UserAddErrorLabel.Visibility = Visibility.Visible;
+                    TbxGiven.Clear();
+                    TbxSurname.Clear();
+                    TbxUserId.Clear();
+                    TbxPassword.Clear();
+                }
+               
+            }
+
+            
         }
     }
 }
