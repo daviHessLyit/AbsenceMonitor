@@ -1,0 +1,270 @@
+﻿<Page x:Class="SchoolAbsenceMonitorUI.TeacherAdmin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
+      mc:Ignorable="d" 
+       d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
+      Title="TeacherAdmin">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Page Title  -->
+        <Label Content="Teacher Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+
+        <!-- Stack Panel containing the list of available User CRUD options -->
+        <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Choose Admin Option" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Name="LblOptionError" Content="Error Creating Option Menu" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Hidden"/>
+                <Menu Name="MnuAdminOptions" AllowDrop="True" Width="200" Grid.Row="1" HorizontalAlignment="Left" Visibility="Visible">
+                    <MenuItem Header="Admin Options" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="User" Name="MenuItemUser">
+                            <Button Name="BtnUserAdd" Click="BtnUserAdd_Click" ToolTip="Add User">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnUserUpdate" Click="BtnUserUpdate_Click" ToolTip="Update User">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnUserDelete" Click="BtnUserDelete_Click" ToolTip="Delete User">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Guardian" Name="MenuItemGuardian">
+                            <Button Name="BtnGuardAdd" Click="BtnGuardAdd_Click"  ToolTip="Add Guardian">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnGuardUpdate" Click="BtnGuardUpdate_Click" ToolTip="Update Guardian">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnGuardDelete" Click="BtnGuardDelete_Click" ToolTip="Delete Guardian">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Pupil" Name="MenuItemPupil">
+                            <Button Name="BtnPupilAdd" Click="BtnPupilAdd_Click"  ToolTip="Add Pupil">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnPupilUpdate" Click="BtnPupilUpdate_Click"  ToolTip="Update Pupil">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnPupilDelete" Click="BtnPupilDelete_Click"  ToolTip="Delete Pupil">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Teacher" Name="MenuItemTeacher">
+                            <Button Name="BtnTeacherAdd" Click="BtnTeacherAdd_Click" ToolTip="Add Teacher">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnTeacherUpdate" Click="BtnTeacherUpdate_Click" ToolTip="Update Teacher">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnTeacherDelete" Click="BtnTeacherDelete_Click"  ToolTip="Delete Teacher">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Absence Type" Name="MenuItemAbsence">
+                            <Button Name="BtnAbsenceAdd" Click="BtnAbsenceAdd_Click" ToolTip="Add Absence">
+                                <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnAbsenceUpdate" Click="BtnAbsenceUpdate_Click" ToolTip="Update Absence">
+                                <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnAbsenceDelete" Click="BtnAbsenceDelete_Click" ToolTip="Delete Absence">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Class" Name="MenuItemClass">
+                            <Button Name="BtnClassAdd" Click="BtnClassAdd_Click"  ToolTip="Add Class">
+                                <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnClassUpdate" Click="BtnClassUpdate_Click" ToolTip="Update Class">
+                                <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnClassDelete" Click="BtnClassDelete_Click" ToolTip="Delete Class">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+            </Grid>
+        </StackPanel>
+
+        <!-- Teacher CRUD Options -->
+        <!-- Stack Panel containing the Add Teacher form -->
+        <StackPanel Name="Stk_AddTeacher" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Label Name="Lbl_TeacherLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Enter Teacher Details"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Given Name:" Margin="0,10"/>
+                    <Label Content="Surname:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxTeacherGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxTeacherSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <TextBox Name="TbxTeacherClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20" VerticalAlignment="Center">
+                    <Button Name="BtnAddTeacher" Height="26" Width="150" Content="Add Teacher" VerticalAlignment="Center" Margin="10,10"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Creating New Teacher"
+                                   Visibility="Hidden"
+                                   HorizontalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Update Teacher form -->
+        <StackPanel Name="Stk_UpdateTeacher" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name="Lbl_UpdateTeacherLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Enter Updated Teacher Details"/>
+
+                <Menu Name="Mnu_TeacherSelector" AllowDrop="True" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+                    <MenuItem Header="Select Teacher" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="TeacherType" Name="MnuI_TeacherType" Click="MnuI_TeacherType_Click"/>
+                    </MenuItem>
+                </Menu>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Given Name:" Margin="0,10"/>
+                    <Label Content="Surname:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
+                    <Label Content="Teacher ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxUpdateTeacherGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdateTeacherSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdateTeacherClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdateTeacherID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnUpdateAddTeacher" Height="26" Width="150" Content="Update Teacher" VerticalAlignment="Center" Margin="10,10"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherUpdateErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Updating the Teacher"
+                                   Visibility="Hidden"/>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Delete Teacher form -->
+        <StackPanel Name="Stk_DeleteTeacher" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name="Lbl_DeleteTeacherLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Please Check Teacher Details Before Deletion"/>
+
+                <Menu Name="Mnu_DeleteTeacherSelector" AllowDrop="True" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+                    <MenuItem Header="Select Teacher" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="Delete" Name="MnuI_DeleteTeacherType"/>
+                    </MenuItem>
+                </Menu>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Given Name:" Margin="0,10"/>
+                    <Label Content="Surname:" Margin="0,10"/>
+                    <Label Content="Teacher ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxDeleteTeacherGiven" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeleteTeacherSurname" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeleteTeacherID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnDeleteTeacher" Height="26" Width="150" Content="Delete Teacher"  VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteTeacher_Click"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherDeleteErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Deleting the Teacher"
+                                   Visibility="Hidden"/>
+            </Grid>
+        </StackPanel>
+        
+    </Grid>
+</Page>

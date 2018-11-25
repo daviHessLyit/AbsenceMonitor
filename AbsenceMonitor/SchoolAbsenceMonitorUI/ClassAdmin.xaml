@@ -1,0 +1,259 @@
+﻿<Page x:Class="SchoolAbsenceMonitorUI.ClassAdmin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
+      Title="ClassAdmin">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Page Title  -->
+        <Label Content="Administration Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+
+        <!-- Stack Panel containing the list of available User CRUD options -->
+        <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Choose Admin Option" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Name="LblOptionError" Content="Error Creating Option Menu" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Hidden"/>
+                <Menu Name="MnuAdminOptions" AllowDrop="True" Width="200" Grid.Row="1" HorizontalAlignment="Left" Visibility="Visible">
+                    <MenuItem Header="Admin Options" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="User" Name="MenuItemUser">
+                            <Button Name="BtnUserAdd" Click="BtnUserAdd_Click" ToolTip="Add User">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnUserUpdate" Click="BtnUserUpdate_Click" ToolTip="Update User">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnUserDelete" Click="BtnUserDelete_Click" ToolTip="Delete User">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Guardian" Name="MenuItemGuardian">
+                            <Button Name="BtnGuardAdd" Click="BtnGuardAdd_Click"  ToolTip="Add Guardian">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnGuardUpdate" Click="BtnGuardUpdate_Click" ToolTip="Update Guardian">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnGuardDelete" Click="BtnGuardDelete_Click" ToolTip="Delete Guardian">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Pupil" Name="MenuItemPupil">
+                            <Button Name="BtnPupilAdd" Click="BtnPupilAdd_Click"  ToolTip="Add Pupil">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnPupilUpdate" Click="BtnPupilUpdate_Click"  ToolTip="Update Pupil">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnPupilDelete" Click="BtnPupilDelete_Click"  ToolTip="Delete Pupil">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Teacher" Name="MenuItemTeacher">
+                            <Button Name="BtnTeacherAdd" Click="BtnTeacherAdd_Click" ToolTip="Add Teacher">
+                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnTeacherUpdate" Click="BtnTeacherUpdate_Click" ToolTip="Update Teacher">
+                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnTeacherDelete" Click="BtnTeacherDelete_Click"  ToolTip="Delete Teacher">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Absence Type" Name="MenuItemAbsence">
+                            <Button Name="BtnAbsenceAdd" Click="BtnAbsenceAdd_Click" ToolTip="Add Absence">
+                                <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnAbsenceUpdate" Click="BtnAbsenceUpdate_Click" ToolTip="Update Absence">
+                                <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnAbsenceDelete" Click="BtnAbsenceDelete_Click" ToolTip="Delete Absence">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                        <MenuItem Header="Class" Name="MenuItemClass">
+                            <Button Name="BtnClassAdd" Click="BtnClassAdd_Click"  ToolTip="Add Class">
+                                <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
+                            </Button>
+                            <Button Name="BtnClassUpdate" Click="BtnClassUpdate_Click" ToolTip="Update Class">
+                                <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                            <Button Name="BtnClassDelete" Click="BtnClassDelete_Click" ToolTip="Delete Class">
+                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
+                            </Button>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+            </Grid>
+        </StackPanel>
+
+        <!-- Class CRUD Options -->
+        <!-- Stack Panel containing the Add Class form -->
+        <StackPanel Name="Stk_AddClass" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Label Name="Lbl_ClassLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Enter Class Details"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Class Name:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxClassClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnAddClass" Height="26" Width="150" Content="Add Class" VerticalAlignment="Center" Margin="10,10"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_ClassErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Creating New Class"
+                                   Visibility="Hidden"
+                                   HorizontalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Update Class form -->
+        <StackPanel Name="Stk_UpdateClass" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name="Lbl_UpdateClassLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Enter Updated Class Details"/>
+
+                <Menu Name="Mnu_ClassSelector" AllowDrop="True" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+                    <MenuItem Header="Select Class" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="ClassType" Name="MnuI_ClassType" Click="MnuI_ClassType_Click"/>
+                    </MenuItem>
+                </Menu>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Class Name:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxUpdateClassDescription" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdateClassID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnUpdateAddClass" Height="26" Width="150" Content="Update Class" VerticalAlignment="Center" Margin="10,10"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_ClassUpdateErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Updating the Class"
+                                   Visibility="Hidden"/>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Delete Class form -->
+        <StackPanel Name="Stk_DeleteClass" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name="Lbl_DeleteClassLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Please Check Class Details Before Deletion"/>
+
+                <Menu Name="Mnu_DeleteClassSelector" AllowDrop="True" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+                    <MenuItem Header="Select Class" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                        <MenuItem Header="Delete Class" Name="MnuI_DeleteClass"/>
+                    </MenuItem>
+                </Menu>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Class Name:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxDeleteClassDescription" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeleteClassID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnDeleteAddClass" Height="26" Width="150" Content="Delete Class" VerticalAlignment="Center" Margin="10,10"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_ClassDeleteErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Deleting the Class"
+                                   Visibility="Hidden"/>
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</Page>

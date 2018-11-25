@@ -1,13 +1,13 @@
-﻿<Page x:Class="SchoolAbsenceMonitorUI.Admin"
+﻿<Page x:Class="SchoolAbsenceMonitorUI.PupilAdmin"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
       mc:Ignorable="d" 
-       d:DesignHeight="650" d:DesignWidth="1050"
+      d:DesignHeight="650" d:DesignWidth="1050"
       Loaded="Page_Loaded"
-      Title="Admin">
+      Title="PupilAdmin">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="User Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Content="Pupil Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
 
         <!-- Stack Panel containing the list of available User CRUD options -->
         <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
@@ -105,10 +105,10 @@
                 </Menu>
             </Grid>
         </StackPanel>
-        
-        <!-- User CRUD Options -->
-        <!-- Stack Panel containing the Add User form -->
-        <StackPanel Name="Stk_AddUser" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+
+        <!-- Pupil CRUD Options -->
+        <!-- Stack Panel containing the Add Pupil form -->
+        <StackPanel Name="Stk_AddPupil" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
@@ -123,77 +123,46 @@
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-                
-                <Label Name="Lbl_UserLabel"
+                <Label Name="Lbl_PupilLabel"
                            Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
                            FontSize="20"
-                           Content="Enter User Details"/>
+                           Content="Enter Pupil Details"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="User ID:" Margin="0,10"/>
-                    <Label Content="Password:" Margin="0,10"/>
+                    <Label Content="Guardian ID:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxGiven" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
-                    <TextBox Name="TbxSurname" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <TextBox Name="TbxPupilGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxPupilSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxUserId" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
-                    <TextBox Name="TbxPassword" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
+                    <TextBox Name="TbxPupilGuardianID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxPupilClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
                 </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50*"/>
-                            <RowDefinition Height="50*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50*"/>
-                            <ColumnDefinition Width="50*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Admin Level:" Grid.Row="0" Grid.Column="0" Margin="0,10" HorizontalAlignment="Left"/>
-                        <ComboBox AllowDrop="True"
-                                      TabIndex="4"
-                                      Text="Select Access Level"
-                                      Width="200"
-                                      Grid.Row="0"
-                                      Grid.Column="1"
-                                      HorizontalAlignment="Right"
-                                      Visibility="Visible"
-                                      Margin="10,10"
-                                      Name="CmbBxAdminLevel"                                      
-                                      ItemsSource="{Binding}"
-                                      DisplayMemberPath="AccessLevel1"
-                                      SelectedValuePath="AccessLevelId"  />
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" Name="Lbl_ErrorLabel"
+
+                <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button Name="BtnAddPupil" Height="26" Width="150" Content="Add Pupil" VerticalAlignment="Center" Margin="10,10"/>
+                </StackPanel>
+
+                <Label Grid.Row="3" Grid.ColumnSpan="2" Name="LblPupilErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
-                                   Content="Error Creating New User"
+                                   Content="Error Creating New Pupil"
                                    Visibility="Hidden"
                                    HorizontalAlignment="Center"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnAddUser" Height="26" Width="150" Content="Add User" Margin="15,15" Click="BtnAddUser_Click"/>
-                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserAddErrorLabel"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="Red"
-                                   Content="Username already exists in the System"
-                                   Visibility="Hidden"/>
-                </StackPanel>
             </Grid>
         </StackPanel>
-        <!-- Stack Panel containing the Search User form -->
-        <StackPanel Name="Stk_SearchUser" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+        <!-- Stack Panel containing the Search Pupil form -->
+        <StackPanel Name="Stk_SearchPupil" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
@@ -205,74 +174,63 @@
                     <RowDefinition Height="80*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Grid.Row="1"
-                              Grid.Column="1"
-                              VerticalAlignment="Top"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              Width="800"
-                              Margin="10,10"
-                              MaxHeight="600">
-                    <ListView Name="LstUserSearch"                          
-                              SelectedValuePath="UserId">
+                <ListView Name="LstPupilSearch" Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Username" Width="150">
+                            <GridViewColumn Header="PupilID" Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Right" Text="{Binding Username}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Password" Width="150">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Center" Text="{Binding Password}"/>
+                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Given Name" Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Center" Text="{Binding GivenName}"/>
+                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Surname" Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Center" Text="{Binding Surname}"/>
+                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Admin Level" Width="50">
+                            <GridViewColumn Header="Class" Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Right" Text="{Binding AccessLevelId}"/>
+                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                        </GridView>   
+                        </GridView>
                     </ListView.View>
                     <ListView.ContextMenu>
-                        <ContextMenu Name="MnuUserSearchContext" IsEnabled="True">
-                            <MenuItem Header="Update User" Name="MnuIUpdateUser" IsEnabled="True" Click="MnuIUpdateUser_Click">
+                        <ContextMenu Name="MnuPupilSearchContext" IsEnabled="True">
+                            <MenuItem Header="Update Pupil" Name="MnuIUpdatePupil" IsEnabled="True" Click="MnuIUpdatePupil_Click">
                                 <MenuItem.Icon>
-                                    <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />                                    
-                                </MenuItem.Icon>                                
+                                    <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />
+                                </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Delete User" Name="MnuIDeleteUser" IsEnabled="True" Click="MnuIDeleteUser_Click">
+                            <MenuItem Header="Add Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True" Click="MnuIUpdatePupilAbsence_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete Pupil" Name="MnuIDeletePupil" IsEnabled="True" Click="MnuIDeletePupil_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                        </ContextMenu>  
+                        </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-                </ScrollViewer>
-            </Grid> 
+            </Grid>
         </StackPanel>
-        <!-- Stack Panel containing the Update User form -->
-        <StackPanel Name="Stk_UpdateUserForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+        <!-- Stack Panel containing the Update Pupil form -->
+        <StackPanel Name="Stk_UpdatePupilForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
@@ -288,93 +246,50 @@
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
 
-                <Label Name="Lbl_UpdateUserLabel"
+                <Label Name="Lbl_UpdatePupilLabel"
                            Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
                            FontSize="20"
-                           Content="Enter User Details"/>
+                           Content="Enter Pupil Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="UserID:" Margin="0,10"/>
+                    <Label Content="Pupil ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxUpdateUserGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
-                    <TextBox Name="TbxUpdateUserSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
-                    <TextBox Name="TbxUpdateUserID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdatePupilGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxUpdatePupilSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <TextBox Name="TbxUpdatePupilID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Password:" Margin="0,10"/>
-                    <Label Content="UserID:" Margin="0,10"/>
-                    <Label Name="LblAccLvlId" Content="AccessLevelID" Margin="0,10" Visibility="Hidden"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
+                    <Label Content="Guardian ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxUpdateUserName" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
-                    <TextBox Name="TbxUpdatePassword" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="4"/>
-                    <TextBox Name="TbxUpdateAccessLevelId" Visibility="Hidden" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="25" Margin="0,10" VerticalContentAlignment="Center"/>
+                    <TextBox Name="TbxUpdatePupilClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
+                    <TextBox Name="TbxUpdatePupilGuardianID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="4"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50*"/>
-                            <RowDefinition Height="50*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50*"/>
-                            <ColumnDefinition Width="50*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Name="LblAccessLevelDrp" Content="Admin Level:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"/>
-                        <ComboBox AllowDrop="True"
-                                      TabIndex="4"
-                                      Text="Select Access Level"
-                                      Width="200"
-                                      Grid.Row="0"
-                                      Grid.Column="1"
-                                      HorizontalAlignment="Left"
-                                      Visibility="Visible"
-                                      Margin="0,5"
-                                      Name="CmbBxUpdateAdminLevel"                                      
-                                      ItemsSource="{Binding}"
-                                      DisplayMemberPath="AccessLevel1"
-                                      SelectedValuePath="AccessLevelId"/>
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" Name="Lbl_UpdateUserErrorLabel"
+                <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnUpdatePupil" Height="26" Width="150" Content="Update Pupil" Margin="15,15"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilUpdateErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
-                                   Content="Error Creating Admin Level Dropdown"
-                                   Visibility="Hidden"
-                                   HorizontalAlignment="Center"/>
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserUpdateSuccessLabel"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   Foreground="BlueViolet"
-                                   Content="User details successfully updated"
-                                   Visibility="Collapsed"/>
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserUpdateErrorLabel"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   Foreground="Red"
-                                   Content="Error Updating the User"
-                                   Visibility="Collapsed"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnUpdateUser" Height="26" Width="150" Content="Update User" Margin="15,15" Click="BtnUpdateUser_Click"/>
-                    <Button Name="BtnCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnCancel_Click"/>
-                    <Button Name="BtnReturn" Height="26" Width="150" Content="Return" Margin="15,15" Visibility="Collapsed" Click="BtnReturn_Click"/>
-                </StackPanel>
-                
+                                   Content="Error Updating the Pupil"
+                                   Visibility="Hidden"/>
             </Grid>
         </StackPanel>
-        <!-- Stack Panel containing the Delete User form -->
-        <StackPanel Name="Stk_DeleteUserForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+        <!-- Stack Panel containing the Add Pupil Absence -->
+        <StackPanel Name="Stk_UpdatePupilAbsenceForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
@@ -390,61 +305,103 @@
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
 
-                <Label Name="Lbl_DeleteUserLabel"
+                <Label Name="Lbl_UpdatePupilAbsenceLabel"
                            Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
                            FontSize="20"
-                           Content="Please Check User Details Before Deletion"/>
+                           Content="Enter Pupil Absence Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="UserName:" Margin="0,10"/>
-                    <Label Content="User ID:" Margin="0,10"/>
+                    <Label Content="Pupil ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxDeleteUserGiven" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
-                    <TextBox Name="TbxDeleteUserSurname" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
-                    <TextBox Name="TbxDeleteUserName" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
-                    <TextBox Name="TbxDeleteUserId" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
+                    <Label Content="Class ID:" Margin="0,10"/>
+                    <Label Content="Absence Reason:" Margin="0,10,10,0"/>
+                    <Label Content="Date:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxUpdatePupilAbsenceClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
+                    <Menu Name="Mnu_UpdatePupilAbsence" Grid.Row="1" Grid.Column="1" Width="150" Margin="10,15" VerticalAlignment="Center">
+                        <MenuItem Name="MnuI_AbsenceReason" Header="Select Absence Reason" AllowDrop="True">
+                            <MenuItem  Header="Absence Reason"/>
+                        </MenuItem>
+                    </Menu>
+                    <DatePicker Name="DatePAbsenceDate" Margin="10,10" AllowDrop="True" Grid.Row="1" Width="150"/>
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnUpdatePupilAbsence" Height="26" Width="150" Content="Add Pupil Absence" Margin="15,15"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilAddAbsenceErrorLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Updating the Pupil Absence"
+                                   Visibility="Hidden"/>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Delete Pupil form -->
+        <StackPanel Name="Stk_DeletePupilForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name="Lbl_DeletePupilLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Please Check Pupil Details Before Deletion"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Given Name:" Margin="0,10"/>
+                    <Label Content="Surname:" Margin="0,10"/>
+                    <Label Content="Pupil ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxDeletePupilGiven" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeletePupilSurname" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeletePupilID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
                 </StackPanel>
 
 
                 <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnDeleteUser" Height="26" Width="150" Content="Delete User" Margin="15,15" Click="BtnDeleteUser_Click"/>
-                    <Button Name="BtnDeleteUserCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnDeleteUserCancel_Click"/>
-                    <Button Name="BtnDeleteUserReturn" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnDeleteUserReturn_Click" Visibility="Collapsed"/>
-                    <Label Grid.Row="1" Grid.Column="2" Name="Lbl_UserDeleteSuccessLabel"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="BlueViolet"
-                                   Content="User details successfully deleted"
-                                   Visibility="Collapsed"/>
-                    <Label Grid.Row="1" Grid.Column="2" Name="Lbl_UserDeleteErrorLabel"
+                    <Button Name="BtnDeletePupil" Height="26" Width="150" Content="Delete Pupil" Margin="15,15"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
-                                   Content="Error Deleting the User"
-                                   Visibility="Collapsed"/>
-                </StackPanel>
-                
-            </Grid>
-        </StackPanel>
-        
-         <!-- Stack Panel Containing the Reset button-->
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="50*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
-                <Button Grid.Column="0" Content="Reset" Height="26" Width="150" Name="BtnReset" Click="BtnReset_Click" Margin="10,0"/>
+                                   Content="Error Deleting the Pupil"
+                                   Visibility="Hidden"/>
             </Grid>
         </StackPanel>
     </Grid>
