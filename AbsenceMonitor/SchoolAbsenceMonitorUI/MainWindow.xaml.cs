@@ -48,78 +48,90 @@ namespace SchoolAbsenceMonitorUI
             string userPassword = TbxPassword.Password;
 
             // Loop through all the system users available in the System Database
-            foreach (var systemUser in smaDB.SystemUsers)
+
+            var systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.Username == userName && s.Password == userPassword);
+
+            if (systemUser.UserId > 0)
             {
-                // Validate the user if the count is less than 3.
-                if ( loginAttemptCount <3 &&  systemUser.Username == userName && systemUser.Password == userPassword)
-                {
-                    Lbl_ErrorLabel.Visibility = Visibility.Hidden;
-                    validatedUser = new SystemUser();
-                    validatedUser = systemUser;
-                    userValidated = true;
-                    break;
-                }
-                // Record the user login attempt if the user name is on the System Database and if the count is less than 3.
-                else if (loginAttemptCount < 3 && systemUser.Username == userName)
-                {
-                    loginAttemptCount++;
-                    Lbl_ErrorLabel.Content = "User Password incorrect";
-                    Lbl_ErrorLabel.Visibility = Visibility.Visible;                    
-                    TbxPassword.Clear();
-                    systemEventUtils.AddSystemEvent(new SystemEvent
-                    {
-                        UserId = systemUser.UserId,
-                        EventTypeId = 2,
-                        EventDateTime = DateTime.Now,
-                        EventData = $"UserName: { systemUser.Username} had a failed logon to the application at { DateTime.Now}, using Password: {userPassword}"
-                    });
-
-                    if (loginAttemptCount >= 3)
-                    {
-                        Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" +"Please contact System Administrator";
-                        Lbl_ErrorLabel.FontSize = 14;
-
-
-                        systemEventUtils.AddSystemEvent(new SystemEvent
-                        {
-                            UserId = systemUser.UserId,
-                            EventTypeId = 1003,
-                            EventDateTime = DateTime.Now,
-                            EventData = $"System locked after 3 failed attempts for UserName: { systemUser.Username} at { DateTime.Now}, using Password: {userPassword}"
-                        });
-                    }
-                }
-                // Record the login attempt if the user name is not on the System Database and if the count is less than 3.
-                else if (loginAttemptCount < 3 && systemUser.Username != userName)
-                {
-                    loginAttemptCount++;
-                    Lbl_ErrorLabel.Visibility = Visibility.Visible;
-                    systemEventUtils.AddSystemEvent(new SystemEvent
-                    {
-                        UserId = 1002,
-                        EventTypeId = 1002,
-                        EventDateTime = DateTime.Now,
-                        EventData = $"Unknown user login attempt at {DateTime.Now}, using {userName} / {userPassword} combination"
-                    });
-
-                    if (loginAttemptCount >= 3)
-                    {
-                        Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" + "Please contact System Administrator";
-                        Lbl_ErrorLabel.FontSize = 14;
-
-                        systemEventUtils.AddSystemEvent(new SystemEvent
-                        {
-                            UserId = 1002,
-                            EventTypeId = 1003,
-                            EventDateTime = DateTime.Now,
-                            EventData = $"System locked after 3 failed attempts for unknown user at { DateTime.Now} , using {userName} / {userPassword} combination"
-                        });
-                    }
-                }
+                validatedUser = systemUser;
+                userValidated = true;
             }
 
+
+
+
+            //foreach (var systemUser in smaDB.SystemUsers)
+            //{
+            //    // Validate the user if the count is less than 3.
+            //    if ( loginAttemptCount <3 &&  systemUser.Username == userName && systemUser.Password == userPassword)
+            //    {
+            //        Lbl_ErrorLabel.Visibility = Visibility.Hidden;
+            //        validatedUser = new SystemUser();
+            //        validatedUser = systemUser;
+            //        userValidated = true;
+            //        break;
+            //    }
+            //    // Record the user login attempt if the user name is on the System Database and if the count is less than 3.
+            //    else if (loginAttemptCount < 3 && systemUser.Username == userName)
+            //    {
+            //        loginAttemptCount++;
+            //        Lbl_ErrorLabel.Content = "User Password incorrect";
+            //        Lbl_ErrorLabel.Visibility = Visibility.Visible;                    
+            //        TbxPassword.Clear();
+            //        systemEventUtils.AddSystemEvent(new SystemEvent
+            //        {
+            //            UserId = systemUser.UserId,
+            //            EventTypeId = 2,
+            //            EventDateTime = DateTime.Now,
+            //            EventData = $"UserName: { systemUser.Username} had a failed logon to the application at { DateTime.Now}, using Password: {userPassword}"
+            //        });
+
+            //        if (loginAttemptCount >= 3)
+            //        {
+            //            Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" +"Please contact System Administrator";
+            //            Lbl_ErrorLabel.FontSize = 14;
+
+
+            //            systemEventUtils.AddSystemEvent(new SystemEvent
+            //            {
+            //                UserId = systemUser.UserId,
+            //                EventTypeId = 1003,
+            //                EventDateTime = DateTime.Now,
+            //                EventData = $"System locked after 3 failed attempts for UserName: { systemUser.Username} at { DateTime.Now}, using Password: {userPassword}"
+            //            });
+            //        }
+            //    }
+            //    // Record the login attempt if the user name is not on the System Database and if the count is less than 3.
+            //    else if (loginAttemptCount < 3 && systemUser.Username != userName)
+            //    {
+            //        loginAttemptCount++;
+            //        Lbl_ErrorLabel.Visibility = Visibility.Visible;
+            //        systemEventUtils.AddSystemEvent(new SystemEvent
+            //        {
+            //            UserId = 1002,
+            //            EventTypeId = 1002,
+            //            EventDateTime = DateTime.Now,
+            //            EventData = $"Unknown user login attempt at {DateTime.Now}, using {userName} / {userPassword} combination"
+            //        });
+
+            //        if (loginAttemptCount >= 3)
+            //        {
+            //            Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" + "Please contact System Administrator";
+            //            Lbl_ErrorLabel.FontSize = 14;
+
+            //            systemEventUtils.AddSystemEvent(new SystemEvent
+            //            {
+            //                UserId = 1002,
+            //                EventTypeId = 1003,
+            //                EventDateTime = DateTime.Now,
+            //                EventData = $"System locked after 3 failed attempts for unknown user at { DateTime.Now} , using {userName} / {userPassword} combination"
+            //            });
+            //        }
+            //    }
+            //}
+
             // If the user has been validated set up the mainDashboard and record the event in the logs
-            if(userValidated)
+            if (userValidated)
             {
                 mainDashboard = new MainDashboard();               
 

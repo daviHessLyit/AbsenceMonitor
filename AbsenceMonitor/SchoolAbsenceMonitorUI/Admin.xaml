@@ -47,57 +47,57 @@
                             </Button>
                         </MenuItem>
                         <MenuItem Header="Guardian" Name="MenuItemGuardian">
-                            <Button Name="BtnGuardAdd" Click="BtnGuardAdd_Click"  ToolTip="Add Guardian">
+                            <Button Name="BtnGuardAdd" ToolTip="Add Guardian">
                                 <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
                             </Button>
-                            <Button Name="BtnGuardUpdate" Click="BtnGuardUpdate_Click" ToolTip="Update Guardian">
+                            <Button Name="BtnGuardUpdate" ToolTip="Update Guardian">
                                 <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Name="BtnGuardDelete" Click="BtnGuardDelete_Click" ToolTip="Delete Guardian">
+                            <Button Name="BtnGuardDelete" ToolTip="Delete Guardian">
                                 <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
                             </Button>
                         </MenuItem>
                         <MenuItem Header="Pupil" Name="MenuItemPupil">
-                            <Button Name="BtnPupilAdd" Click="BtnPupilAdd_Click"  ToolTip="Add Pupil">
+                            <Button Name="BtnPupilAdd" ToolTip="Add Pupil">
                                 <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
                             </Button>
-                            <Button Name="BtnPupilUpdate" Click="BtnPupilUpdate_Click"  ToolTip="Update Pupil">
+                            <Button Name="BtnPupilUpdate" ToolTip="Update Pupil">
                                 <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Name="BtnPupilDelete" Click="BtnPupilDelete_Click"  ToolTip="Delete Pupil">
+                            <Button Name="BtnPupilDelete" ToolTip="Delete Pupil">
                                 <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
                             </Button>
                         </MenuItem>
                         <MenuItem Header="Teacher" Name="MenuItemTeacher">
-                            <Button Name="BtnTeacherAdd" Click="BtnTeacherAdd_Click" ToolTip="Add Teacher">
+                            <Button Name="BtnTeacherAdd" ToolTip="Add Teacher">
                                 <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
                             </Button>
-                            <Button Name="BtnTeacherUpdate" Click="BtnTeacherUpdate_Click" ToolTip="Update Teacher">
+                            <Button Name="BtnTeacherUpdate" ToolTip="Update Teacher">
                                 <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Name="BtnTeacherDelete" Click="BtnTeacherDelete_Click"  ToolTip="Delete Teacher">
+                            <Button Name="BtnTeacherDelete" ToolTip="Delete Teacher">
                                 <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
                             </Button>
                         </MenuItem>
                         <MenuItem Header="Absence Type" Name="MenuItemAbsence">
-                            <Button Name="BtnAbsenceAdd" Click="BtnAbsenceAdd_Click" ToolTip="Add Absence">
+                            <Button Name="BtnAbsenceAdd" ToolTip="Add Absence">
                                 <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
                             </Button>
-                            <Button Name="BtnAbsenceUpdate" Click="BtnAbsenceUpdate_Click" ToolTip="Update Absence">
+                            <Button Name="BtnAbsenceUpdate" ToolTip="Update Absence">
                                 <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Name="BtnAbsenceDelete" Click="BtnAbsenceDelete_Click" ToolTip="Delete Absence">
+                            <Button Name="BtnAbsenceDelete" ToolTip="Delete Absence">
                                 <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
                             </Button>
                         </MenuItem>
                         <MenuItem Header="Class" Name="MenuItemClass">
-                            <Button Name="BtnClassAdd" Click="BtnClassAdd_Click"  ToolTip="Add Class">
+                            <Button Name="BtnClassAdd" ToolTip="Add Class">
                                 <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
                             </Button>
-                            <Button Name="BtnClassUpdate" Click="BtnClassUpdate_Click" ToolTip="Update Class">
+                            <Button Name="BtnClassUpdate" ToolTip="Update Class">
                                 <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Name="BtnClassDelete" Click="BtnClassDelete_Click" ToolTip="Delete Class">
+                            <Button Name="BtnClassDelete" ToolTip="Delete Class">
                                 <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
                             </Button>
                         </MenuItem>
