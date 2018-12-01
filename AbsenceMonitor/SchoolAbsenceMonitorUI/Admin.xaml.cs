@@ -32,29 +32,8 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
-            Stk_MenuPanel.Visibility = Visibility.Visible;
             Stk_AddUser.Visibility = Visibility.Hidden;
             Stk_UpdateUserForm.Visibility = Visibility.Hidden;
-        }
-
-        private void BtnUserDelete_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshUserDetails();
-            Stk_MenuPanel.Visibility = Visibility.Hidden;
-            Stk_SearchUser.Visibility = Visibility.Visible;
-        }
-
-        private void BtnUserUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshUserDetails();
-            Stk_MenuPanel.Visibility = Visibility.Hidden;
-            Stk_SearchUser.Visibility = Visibility.Visible;
-        }
-
-        private void BtnUserAdd_Click(object sender, RoutedEventArgs e)
-        {
-            Stk_AddUser.Visibility = Visibility.Visible;
-            Stk_MenuPanel.Visibility = Visibility.Hidden;
         }
 
         private void MnuIUpdateUser_Click(object sender, RoutedEventArgs e)
@@ -137,8 +116,8 @@ namespace SchoolAbsenceMonitorUI
 
         private void RefreshUserDetails()
         {
-            LstUserSearch.ItemsSource = systemUsers;
             systemUsers.Clear();
+            LstUserSearch.ItemsSource = systemUsers;           
             foreach (var systemUser in smaDB.SystemUsers)
             {
                 systemUsers.Add(systemUser);
@@ -148,7 +127,13 @@ namespace SchoolAbsenceMonitorUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshUserDetails();
+            LstUserSearch.ItemsSource = systemUsers;
+            foreach (var systemUser in smaDB.SystemUsers)
+            {
+                systemUsers.Add(systemUser);
+            }
+            
+            PopulateComboBox();
         }
         public List<AccessLevel> AccessLevels {get;set;}
         private void PopulateComboBox()
@@ -160,7 +145,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnAddUser_Click(object sender, RoutedEventArgs e)
         {
-            int selectAccessLevel = CmbBxAdminLevel.SelectedIndex;
+            int selectAccessLevel = Convert.ToInt16( CmbBxAdminLevel.SelectedValue.ToString());
             if (TbxGiven.Text.Length>0 && TbxSurname.Text.Length>0 && TbxUserId.Text.Length>0 && TbxPassword.Text.Length >0)
             {
               
@@ -173,7 +158,7 @@ namespace SchoolAbsenceMonitorUI
                         AccessLevelId = selectAccessLevel
                     }) == 1)
                     {
-
+                        
                     }
                     else
                     {
@@ -194,7 +179,7 @@ namespace SchoolAbsenceMonitorUI
             try
             {
                 Lbl_UpdateUserErrorLabel.Visibility = Visibility.Hidden;
-                int selectAccessLevel = CmbBxUpdateAdminLevel.SelectedIndex;
+                int selectAccessLevel = Convert.ToInt16(CmbBxUpdateAdminLevel.SelectedValue.ToString());
                 userUtils.UpdateUserDetails(new SystemUser
                 {
                     GivenName = TbxUpdateUserGiven.Text,
@@ -276,9 +261,15 @@ namespace SchoolAbsenceMonitorUI
             {
                 DeleteFormReset();
             }
-            else
+            else if(formName == "Update")
             {
                 UpdateFormReset();
+            }
+            else
+            {
+
+
+                
             }
 
             RefreshUserDetails();
@@ -293,6 +284,20 @@ namespace SchoolAbsenceMonitorUI
         private void BtnDeleteUserReturn_Click(object sender, RoutedEventArgs e)
         {
             ReloadUserSearch("Delete");
+        }
+
+        private void BtnAddUserReturn_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_AddUser.Visibility = Visibility.Hidden;
+            ReloadUserSearch("Update");
+            Stk_SearchUser.Visibility = Visibility.Visible;
+        }
+
+        private void BtnAddUserCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Stk_AddUser.Visibility = Visibility.Hidden;
+            ReloadUserSearch("Update");
+            Stk_SearchUser.Visibility = Visibility.Visible;
         }
     }
 }

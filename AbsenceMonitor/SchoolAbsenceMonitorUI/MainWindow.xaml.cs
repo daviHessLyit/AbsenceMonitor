@@ -31,6 +31,11 @@ namespace SchoolAbsenceMonitorUI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Button click exits the application gracefully
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnExitApp_Click(object sender, RoutedEventArgs e)
         {
             // Exit the application
@@ -38,6 +43,11 @@ namespace SchoolAbsenceMonitorUI
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Button click event attempts to login to the system with the details provided
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             // Create local variables
@@ -49,9 +59,9 @@ namespace SchoolAbsenceMonitorUI
 
             // Loop through all the system users available in the System Database
 
-            if (ValidateInput(userName, userPassword))
+            if (ValidateInput(userName, userPassword) && loginAttemptCount <4)
             {
-                var systemUser = smaDB.SystemUsers.Where(s => s.Username == userName && s.Password == userPassword);
+                var systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.Username == userName && s.Password == userPassword);
 
                 if (systemUser.UserId > 0)
                 {
@@ -60,87 +70,33 @@ namespace SchoolAbsenceMonitorUI
                 }
                 else
                 {
-                    // Credentials don't match anyone in the db.
+                    loginAttemptCount++;
+                    Lbl_ErrorLabel.Content = "User Credentials Incorrect";
+                    Lbl_ErrorLabel.Visibility = Visibility.Visible;
+                    TbxPassword.Clear();
+                    systemEventUtils.AddSystemEvent(new SystemEvent
+                    {
+                        UserId = 1002,
+                        EventTypeId = 1003,
+                        EventDateTime = DateTime.Now,
+                        EventData = $"Invalid Login attempt for unknown user at { DateTime.Now} , using {userName} / {userPassword} combination"
+                    });
                 }
             }
             else
             {
-                // Problem with userName and password.
+                loginAttemptCount++;
+                Lbl_ErrorLabel.Content = "User Credentials Incorrect";
+                Lbl_ErrorLabel.Visibility = Visibility.Visible;
+                TbxPassword.Clear();
+                systemEventUtils.AddSystemEvent(new SystemEvent
+                {
+                    UserId = 1002,
+                    EventTypeId = 1003,
+                    EventDateTime = DateTime.Now,
+                    EventData = $"System locked after 3 failed attempts for unknown user at { DateTime.Now} , using {userName} / {userPassword} combination"
+                });
             }
-           
-
-
-
-
-            //foreach (var systemUser in smaDB.SystemUsers)
-            //{
-            //    // Validate the user if the count is less than 3.
-            //    if ( loginAttemptCount <3 &&  systemUser.Username == userName && systemUser.Password == userPassword)
-            //    {
-            //        Lbl_ErrorLabel.Visibility = Visibility.Hidden;
-            //        validatedUser = new SystemUser();
-            //        validatedUser = systemUser;
-            //        userValidated = true;
-            //        break;
-            //    }
-            //    // Record the user login attempt if the user name is on the System Database and if the count is less than 3.
-            //    else if (loginAttemptCount < 3 && systemUser.Username == userName)
-            //    {
-            //        loginAttemptCount++;
-            //        Lbl_ErrorLabel.Content = "User Password incorrect";
-            //        Lbl_ErrorLabel.Visibility = Visibility.Visible;                    
-            //        TbxPassword.Clear();
-            //        systemEventUtils.AddSystemEvent(new SystemEvent
-            //        {
-            //            UserId = systemUser.UserId,
-            //            EventTypeId = 2,
-            //            EventDateTime = DateTime.Now,
-            //            EventData = $"UserName: { systemUser.Username} had a failed logon to the application at { DateTime.Now}, using Password: {userPassword}"
-            //        });
-
-            //        if (loginAttemptCount >= 3)
-            //        {
-            //            Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" +"Please contact System Administrator";
-            //            Lbl_ErrorLabel.FontSize = 14;
-
-
-            //            systemEventUtils.AddSystemEvent(new SystemEvent
-            //            {
-            //                UserId = systemUser.UserId,
-            //                EventTypeId = 1003,
-            //                EventDateTime = DateTime.Now,
-            //                EventData = $"System locked after 3 failed attempts for UserName: { systemUser.Username} at { DateTime.Now}, using Password: {userPassword}"
-            //            });
-            //        }
-            //    }
-            //    // Record the login attempt if the user name is not on the System Database and if the count is less than 3.
-            //    else if (loginAttemptCount < 3 && systemUser.Username != userName)
-            //    {
-            //        loginAttemptCount++;
-            //        Lbl_ErrorLabel.Visibility = Visibility.Visible;
-            //        systemEventUtils.AddSystemEvent(new SystemEvent
-            //        {
-            //            UserId = 1002,
-            //            EventTypeId = 1002,
-            //            EventDateTime = DateTime.Now,
-            //            EventData = $"Unknown user login attempt at {DateTime.Now}, using {userName} / {userPassword} combination"
-            //        });
-
-            //        if (loginAttemptCount >= 3)
-            //        {
-            //            Lbl_ErrorLabel.Content = "3 Unsucessful login attempts,\n" + "Please contact System Administrator";
-            //            Lbl_ErrorLabel.FontSize = 14;
-
-            //            systemEventUtils.AddSystemEvent(new SystemEvent
-            //            {
-            //                UserId = 1002,
-            //                EventTypeId = 1003,
-            //                EventDateTime = DateTime.Now,
-            //                EventData = $"System locked after 3 failed attempts for unknown user at { DateTime.Now} , using {userName} / {userPassword} combination"
-            //            });
-            //        }
-            //    }
-            //}
 
             // If the user has been validated set up the mainDashboard and record the event in the logs
             if (userValidated)
@@ -186,10 +142,10 @@ namespace SchoolAbsenceMonitorUI
 
             foreach (char ch in userName)
             {
-                if (ch >= '0' && ch >= '9')
+                if (ch >= '0' && ch <= '9')
                 {
                     validData = false;
-                    break;
+                    //break;
                 }
             }
 
@@ -200,11 +156,11 @@ namespace SchoolAbsenceMonitorUI
             return validData;
         }
 
-
-
-
-
-        // Allow the system user to reset the username and password text boxes.
+        /// <summary>
+        /// Button click event resets the login form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             TbxPassword.Clear();

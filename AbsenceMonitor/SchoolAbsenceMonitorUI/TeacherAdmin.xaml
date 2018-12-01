@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
       mc:Ignorable="d" 
        d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
       Title="TeacherAdmin">
 
     <Grid>
@@ -21,89 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="Teacher Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
-
-        <!-- Stack Panel containing the list of available User CRUD options -->
-        <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                </Grid.RowDefinitions>
-                <Label Content="Choose Admin Option" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
-                <Label Name="LblOptionError" Content="Error Creating Option Menu" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Hidden"/>
-                <Menu Name="MnuAdminOptions" AllowDrop="True" Width="200" Grid.Row="1" HorizontalAlignment="Left" Visibility="Visible">
-                    <MenuItem Header="Admin Options" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
-                        <MenuItem Header="User" Name="MenuItemUser">
-                            <Button Name="BtnUserAdd"  ToolTip="Add User">
-                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
-                            </Button>
-                            <Button Name="BtnUserUpdate" ToolTip="Update User">
-                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                            <Button Name="BtnUserDelete" ToolTip="Delete User">
-                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                        </MenuItem>
-                        <MenuItem Header="Guardian" Name="MenuItemGuardian">
-                            <Button Name="BtnGuardAdd"   ToolTip="Add Guardian">
-                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
-                            </Button>
-                            <Button Name="BtnGuardUpdate"  ToolTip="Update Guardian">
-                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                            <Button Name="BtnGuardDelete"  ToolTip="Delete Guardian">
-                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                        </MenuItem>
-                        <MenuItem Header="Pupil" Name="MenuItemPupil">
-                            <Button Name="BtnPupilAdd"   ToolTip="Add Pupil">
-                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
-                            </Button>
-                            <Button Name="BtnPupilUpdate"   ToolTip="Update Pupil">
-                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                            <Button Name="BtnPupilDelete"  ToolTip="Delete Pupil">
-                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                        </MenuItem>
-                        <MenuItem Header="Teacher" Name="MenuItemTeacher">
-                            <Button Name="BtnTeacherAdd" ToolTip="Add Teacher">
-                                <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
-                            </Button>
-                            <Button Name="BtnTeacherUpdate" ToolTip="Update Teacher">
-                                <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                            <Button Name="BtnTeacherDelete" ToolTip="Delete Teacher">
-                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                        </MenuItem>
-                        <MenuItem Header="Absence Type" Name="MenuItemAbsence">
-                            <Button Name="BtnAbsenceAdd" ToolTip="Add Absence">
-                                <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
-                            </Button>
-                            <Button Name="BtnAbsenceUpdate" ToolTip="Update Absence">
-                                <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                            <Button Name="BtnAbsenceDelete" ToolTip="Delete Absence">
-                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                        </MenuItem>
-                        <MenuItem Header="Class" Name="MenuItemClass">
-                            <Button Name="BtnClassAdd"  ToolTip="Add Class">
-                                <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
-                            </Button>
-                            <Button Name="BtnClassUpdate" ToolTip="Update Class">
-                                <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                            <Button Name="BtnClassDelete" ToolTip="Delete Class">
-                                <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="Uniform" />
-                            </Button>
-                        </MenuItem>
-                    </MenuItem>
-                </Menu>
-            </Grid>
-        </StackPanel>
+        <Label Content="Teacher Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>   
 
         <!-- Teacher CRUD Options -->
         <!-- Stack Panel containing the Add Teacher form -->
@@ -152,6 +71,77 @@
                                    Content="Error Creating New Teacher"
                                    Visibility="Hidden"
                                    HorizontalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Search Teacher form -->
+        <StackPanel Name="Stk_SearchTeacher" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Top"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              Width="900"
+                              Margin="10,10"
+                              MaxHeight="600">
+                    <ListView Name="LstTeacherSearch">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="TeacherID" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding TeacherId}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Given Name" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding GivenName}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Surname" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding Surname}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="ClassId" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding ClassId}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ContextMenu>
+                            <ContextMenu Name="MnuTeacherSearchContext" IsEnabled="True">
+                                <MenuItem Header="Update Teacher" Name="MnuIUpdateTeacher" IsEnabled="True">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Delete Teacher" Name="MnuIDeleteTeacher" IsEnabled="True">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                </ScrollViewer>
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Update Teacher form -->

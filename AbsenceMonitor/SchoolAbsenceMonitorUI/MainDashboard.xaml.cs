@@ -45,12 +45,6 @@ namespace SchoolAbsenceMonitorUI
             frmMain.Navigate(reports);
         }
 
-        private void Tbi_Admin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Admin admin = new Admin();
-            frmMain.Navigate(admin);
-        }
-
         private void Tbi_ApplicationLogs_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ApplicationLogs applicationLogs = new ApplicationLogs();
@@ -74,6 +68,135 @@ namespace SchoolAbsenceMonitorUI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CheckSystemUserAccess(systemUser);
+        }
+
+        private void BtnUserAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Admin admin = new Admin();
+            admin.Stk_AddUser.Visibility = Visibility.Visible;
+            frmMain.Navigate(admin);
+        }
+
+        private void BtnUserUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Admin admin = new Admin();
+            admin.Stk_SearchUser.Visibility = Visibility.Visible;
+            frmMain.Navigate(admin);
+        }
+
+        private void BtnUserDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Admin admin = new Admin();
+            admin.Stk_SearchUser.Visibility = Visibility.Visible;
+            frmMain.Navigate(admin);
+        }
+
+        private void BtnGuardAdd_Click(object sender, RoutedEventArgs e)
+        {
+            GuardianAdmin guardianAdmin = new GuardianAdmin();
+            guardianAdmin.Stk_AddGuardian.Visibility = Visibility.Visible;
+            frmMain.Navigate(guardianAdmin);
+        }
+
+        private void BtnGuardUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            GuardianAdmin guardianAdmin = new GuardianAdmin();
+            guardianAdmin.Stk_SearchGuardian.Visibility = Visibility.Visible;
+            frmMain.Navigate(guardianAdmin);
+        }
+
+        private void BtnGuardDelete_Click(object sender, RoutedEventArgs e)
+        {
+            GuardianAdmin guardianAdmin = new GuardianAdmin();
+            guardianAdmin.Stk_SearchGuardian.Visibility = Visibility.Visible;
+            frmMain.Navigate(guardianAdmin);
+        }
+
+        private void BtnPupilAdd_Click(object sender, RoutedEventArgs e)
+        {
+            PupilAdmin pupilAdmin = new PupilAdmin();
+            pupilAdmin.Stk_AddPupil.Visibility = Visibility.Visible;
+            frmMain.Navigate(pupilAdmin);
+        }
+
+        private void BtnPupilUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            PupilAdmin pupilAdmin = new PupilAdmin();
+            pupilAdmin.Stk_SearchPupil.Visibility = Visibility.Visible;
+            frmMain.Navigate(pupilAdmin);
+        }
+
+        private void BtnPupilDelete_Click(object sender, RoutedEventArgs e)
+        {
+            PupilAdmin pupilAdmin = new PupilAdmin();
+            pupilAdmin.Stk_SearchPupil.Visibility = Visibility.Visible;
+            frmMain.Navigate(pupilAdmin);
+        }
+
+        private void BtnTeacherAdd_Click(object sender, RoutedEventArgs e)
+        {
+            TeacherAdmin teacherAdmin = new TeacherAdmin();
+            teacherAdmin.Stk_AddTeacher.Visibility = Visibility.Visible;
+            frmMain.Navigate(teacherAdmin);
+        }
+
+        private void BtnTeacherUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            TeacherAdmin teacherAdmin = new TeacherAdmin();
+            teacherAdmin.Stk_SearchTeacher.Visibility = Visibility.Visible;
+            frmMain.Navigate(teacherAdmin);
+        }
+
+        private void BtnTeacherDelete_Click(object sender, RoutedEventArgs e)
+        {
+            TeacherAdmin teacherAdmin = new TeacherAdmin();
+            teacherAdmin.Stk_SearchTeacher.Visibility = Visibility.Visible;
+            frmMain.Navigate(teacherAdmin);
+        }
+
+        private void BtnAbsenceAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
+            absenceTypeAdmin.Stk_AddAbsence.Visibility = Visibility.Visible;
+            frmMain.Navigate(absenceTypeAdmin);
+        }
+
+        private void BtnAbsenceUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
+            absenceTypeAdmin.Stk_SearchAbsenceType.Visibility = Visibility.Visible;
+            frmMain.Navigate(absenceTypeAdmin);
+        }
+
+        private void BtnAbsenceDelete_Click(object sender, RoutedEventArgs e)
+        {
+            AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
+            absenceTypeAdmin.Stk_SearchAbsenceType.Visibility = Visibility.Visible;
+            frmMain.Navigate(absenceTypeAdmin);
+        }
+
+        private void BtnClassAdd_Click(object sender, RoutedEventArgs e)
+        {
+            ClassAdmin classAdmin = new ClassAdmin();
+            classAdmin.Stk_AddClass.Visibility = Visibility.Visible;
+            classAdmin.systemUser = this.systemUser;
+            frmMain.Navigate(classAdmin);
+        }
+
+        private void BtnClassUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            ClassAdmin classAdmin = new ClassAdmin();
+            classAdmin.Stk_SearchClass.Visibility = Visibility.Visible;
+            classAdmin.systemUser = this.systemUser;
+            frmMain.Navigate(classAdmin);
+        }
+
+        private void BtnClassDelete_Click(object sender, RoutedEventArgs e)
+        {
+            ClassAdmin classAdmin = new ClassAdmin();
+            classAdmin.Stk_SearchClass.Visibility = Visibility.Visible;
+            classAdmin.systemUser = this.systemUser;
+            frmMain.Navigate(classAdmin);
         }
     }
 }

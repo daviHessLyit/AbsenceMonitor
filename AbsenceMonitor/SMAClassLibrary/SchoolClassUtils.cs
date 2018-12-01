@@ -29,6 +29,7 @@ namespace SMAClassLibrary
             }
             else
             {
+                smaDB.Entry(newSchoolClass).State = System.Data.Entity.EntityState.Added;
                 return smaDB.SaveChanges();
             }
             

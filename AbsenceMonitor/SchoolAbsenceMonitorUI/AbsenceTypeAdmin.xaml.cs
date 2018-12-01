@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMAClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,20 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class AbsenceTypeAdmin : Page
     {
+        SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
+        List<AbsenceType> absenceTypes = new List<AbsenceType>();
         public AbsenceTypeAdmin()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LstAbsenceTypeSearch.ItemsSource = absenceTypes;
+            foreach (var absenceType in smaDB.AbsenceTypes)
+            {
+                absenceTypes.Add(absenceType);
+            }
         }
     }
 }

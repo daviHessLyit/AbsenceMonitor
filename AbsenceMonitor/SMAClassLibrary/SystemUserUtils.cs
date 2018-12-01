@@ -23,7 +23,7 @@ namespace SMAClassLibrary
             else
             {
                 // Add the system user to the DataBase
-                smaDB.Entry(newUser).State = System.Data.Entity.EntityState.Added;
+                smaDB.Entry(systemUser).State = System.Data.Entity.EntityState.Added;
                 // Save the changes to the database
                 return smaDB.SaveChanges();
             }

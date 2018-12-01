@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMAClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,21 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class GuardianAdmin : Page
     {
+        SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
+        List<Guardian> guardians = new List<Guardian>();
+
         public GuardianAdmin()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LstGuardianSearch.ItemsSource = guardians;
+            foreach (var guardian in smaDB.Guardians)
+            {
+                guardians.Add(guardian);
+            }
         }
     }
 }
