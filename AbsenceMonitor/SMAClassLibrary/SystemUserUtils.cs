@@ -11,21 +11,21 @@ namespace SMAClassLibrary
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
 
         // Add a new user to the database
-        public void AddSystemUser(SystemUser systemUser)
+        public int AddSystemUser(SystemUser systemUser)
         {
             // Check to see if the userName exists in the SystemDb first - if not add the new system user.
 
             var newUser = smaDB.SystemUsers.Where(u => u.Username == systemUser.Username).FirstOrDefault();
             if (newUser !=null)
             {
-                throw new Exception("User Exists in the DB");
+                return 0;
             }
             else
             {
                 // Add the system user to the DataBase
-                smaDB.SystemUsers.Add(systemUser);
+                smaDB.Entry(newUser).State = System.Data.Entity.EntityState.Added;
                 // Save the changes to the database
-                smaDB.SaveChanges();
+                return smaDB.SaveChanges();
             }
           
 
@@ -36,14 +36,14 @@ namespace SMAClassLibrary
         {
             SystemUser systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.UserId == systemUserId);
             // Remove the system user from the DataBase
-            smaDB.SystemUsers.Remove(systemUser);
+            smaDB.Entry(systemUser).State = System.Data.Entity.EntityState.Deleted;
             // Save the changes to the database
             smaDB.SaveChanges();
 
         }
 
         // Method updates an existing user on the database.
-        public void UpdateUserDetails(SystemUser systemUser)
+        public int UpdateUserDetails(SystemUser systemUser)
         {
             SystemUser existingUserDetails = smaDB.SystemUsers.FirstOrDefault(s => s.UserId == systemUser.UserId);
             // Update the user details
@@ -53,8 +53,9 @@ namespace SMAClassLibrary
             existingUserDetails.AccessLevelId = systemUser.AccessLevelId;
             existingUserDetails.Username = systemUser.Username;
 
+            smaDB.Entry(existingUserDetails).State = System.Data.Entity.EntityState.Modified;
             // Save the changes to the database
-            smaDB.SaveChanges();
+            return smaDB.SaveChanges();
 
         }
 

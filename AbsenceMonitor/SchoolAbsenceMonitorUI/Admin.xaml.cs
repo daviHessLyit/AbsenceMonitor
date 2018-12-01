@@ -23,6 +23,7 @@ namespace SchoolAbsenceMonitorUI
     {
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
         SystemUserUtils userUtils = new SystemUserUtils();
+        List<SystemUser> systemUsers = new List<SystemUser>();
 
         public Admin()
         {
@@ -38,14 +39,14 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnUserDelete_Click(object sender, RoutedEventArgs e)
         {
-            PopulateUserDetails();
+            RefreshUserDetails();
             Stk_MenuPanel.Visibility = Visibility.Hidden;
             Stk_SearchUser.Visibility = Visibility.Visible;
         }
 
         private void BtnUserUpdate_Click(object sender, RoutedEventArgs e)
         {
-            PopulateUserDetails();
+            RefreshUserDetails();
             Stk_MenuPanel.Visibility = Visibility.Hidden;
             Stk_SearchUser.Visibility = Visibility.Visible;
         }
@@ -134,22 +135,20 @@ namespace SchoolAbsenceMonitorUI
             Stk_DeleteUserForm.Visibility = Visibility.Visible;
         }
 
-        private void PopulateUserDetails()
+        private void RefreshUserDetails()
         {
-            // Initialise a list of SystemUsers and fill with data if available
-            List<SystemUser> systemUsers = new List<SystemUser>();
             LstUserSearch.ItemsSource = systemUsers;
+            systemUsers.Clear();
             foreach (var systemUser in smaDB.SystemUsers)
             {
                 systemUsers.Add(systemUser);
             }
-            PopulateComboBox();
         }
 
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            PopulateUserDetails();
+            RefreshUserDetails();
         }
         public List<AccessLevel> AccessLevels {get;set;}
         private void PopulateComboBox()
@@ -161,31 +160,31 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnAddUser_Click(object sender, RoutedEventArgs e)
         {
-            int selectAccessLevel = Convert.ToInt16(CmbBxAdminLevel.SelectedValue.ToString());
+            int selectAccessLevel = CmbBxAdminLevel.SelectedIndex;
             if (TbxGiven.Text.Length>0 && TbxSurname.Text.Length>0 && TbxUserId.Text.Length>0 && TbxPassword.Text.Length >0)
             {
-                try
-                {
-                    userUtils.AddSystemUser(new SystemUser
+              
+                    if (userUtils.AddSystemUser(new SystemUser
                     {
                         GivenName = TbxGiven.Text,
                         Surname = TbxSurname.Text,
                         Username = TbxUserId.Text,
                         Password = TbxPassword.Text,
                         AccessLevelId = selectAccessLevel
-                    });
-                    
-                }
-                catch (Exception)
-                {
-                    // Make the ErrorLabel visible  
-                    Lbl_UserAddErrorLabel.Visibility = Visibility.Visible;
-                    // Clear the details from the form
-                    TbxGiven.Clear();
-                    TbxSurname.Clear();
-                    TbxUserId.Clear();
-                    TbxPassword.Clear();
-                }
+                    }) == 1)
+                    {
+
+                    }
+                    else
+                    {
+                        // Make the ErrorLabel visible  
+                        Lbl_UserAddErrorLabel.Visibility = Visibility.Visible;
+                        // Clear the details from the form
+                        TbxGiven.Clear();
+                        TbxSurname.Clear();
+                        TbxUserId.Clear();
+                        TbxPassword.Clear();
+                    }               
                
             }            
         }
@@ -195,7 +194,7 @@ namespace SchoolAbsenceMonitorUI
             try
             {
                 Lbl_UpdateUserErrorLabel.Visibility = Visibility.Hidden;
-                int selectAccessLevel = Convert.ToInt16(CmbBxUpdateAdminLevel.SelectedValue.ToString());
+                int selectAccessLevel = CmbBxUpdateAdminLevel.SelectedIndex;
                 userUtils.UpdateUserDetails(new SystemUser
                 {
                     GivenName = TbxUpdateUserGiven.Text,
@@ -282,7 +281,7 @@ namespace SchoolAbsenceMonitorUI
                 UpdateFormReset();
             }
 
-            PopulateUserDetails();
+            RefreshUserDetails();
             Stk_SearchUser.Visibility = Visibility.Visible;
         }
 

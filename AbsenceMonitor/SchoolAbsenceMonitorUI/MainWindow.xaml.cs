@@ -44,18 +44,30 @@ namespace SchoolAbsenceMonitorUI
             SystemUser validatedUser = null; 
             MainDashboard mainDashboard;
             bool userValidated = false;
-            string userName = TbxUsername.Text;
-            string userPassword = TbxPassword.Password;
+            string userName = TbxUsername.Text.Trim();
+            string userPassword = TbxPassword.Password.Trim();
 
             // Loop through all the system users available in the System Database
 
-            var systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.Username == userName && s.Password == userPassword);
-
-            if (systemUser.UserId > 0)
+            if (ValidateInput(userName, userPassword))
             {
-                validatedUser = systemUser;
-                userValidated = true;
+                var systemUser = smaDB.SystemUsers.Where(s => s.Username == userName && s.Password == userPassword);
+
+                if (systemUser.UserId > 0)
+                {
+                    validatedUser = systemUser;
+                    userValidated = true;
+                }
+                else
+                {
+                    // Credentials don't match anyone in the db.
+                }
             }
+            else
+            {
+                // Problem with userName and password.
+            }
+           
 
 
 
@@ -152,6 +164,45 @@ namespace SchoolAbsenceMonitorUI
                 this.Hide();
             } 
         }
+
+        /// <summary>
+        /// Validates the user inputs to the login screen.
+        /// </summary>
+        /// <param name="userName">
+        /// User name entered by the user.
+        /// </param>
+        /// <param name="password">Password entered by the user</param>
+        /// <returns>
+        /// Validated Data
+        /// </returns>
+        private bool ValidateInput(string userName, string password)
+        {
+            bool validData = true;
+
+            if (userName.Length == 0 || userName.Length > 30)
+            {
+                validData = false;
+            }
+
+            foreach (char ch in userName)
+            {
+                if (ch >= '0' && ch >= '9')
+                {
+                    validData = false;
+                    break;
+                }
+            }
+
+            if (password.Length == 0 || password.Length > 30)
+            {
+                validData = false;
+            }
+            return validData;
+        }
+
+
+
+
 
         // Allow the system user to reset the username and password text boxes.
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
