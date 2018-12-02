@@ -26,7 +26,7 @@ namespace SchoolAbsenceMonitorUI
         List<Class> classes = new List<Class>();
         SchoolClassUtils schoolClassUtils = new SchoolClassUtils();
         public SystemUser systemUser = new SystemUser();
-        SystemEventUtils eventUtils = new SystemEventUtils();
+        SystemEventUtils systemEventUtils = new SystemEventUtils();
 
         public ClassAdmin()
         {
@@ -63,7 +63,7 @@ namespace SchoolAbsenceMonitorUI
 
                     try
                     {
-                        eventUtils.AddSystemEvent(new SystemEvent
+                        systemEventUtils.AddSystemEvent(new SystemEvent
                         {
                             UserId = systemUser.UserId,
                             EventTypeId = 3,
@@ -84,7 +84,7 @@ namespace SchoolAbsenceMonitorUI
                     Lbl_ClassErrorLabel.Visibility = Visibility.Visible;
                     try
                     {
-                        eventUtils.AddSystemEvent(new SystemEvent
+                        systemEventUtils.AddSystemEvent(new SystemEvent
                         {
                             UserId = systemUser.UserId,
                             EventTypeId = 1006,
@@ -171,11 +171,11 @@ namespace SchoolAbsenceMonitorUI
                         BtnDeleteCancel.Visibility = Visibility.Collapsed;
                         Lbl_DeleteClassLabel.Visibility = Visibility.Visible;
                         BtnDeleteReturn.Visibility = Visibility.Visible;
-                        Lbl_DeleteClassLabel.Content = "The selected class details have been deleted";
+                        Lbl_DeleteClassLabel.Content = "The selected Class details have been deleted";
                         // Update the System Events if the deletion is successful
                         try
                         {
-                            eventUtils.AddSystemEvent(new SystemEvent
+                            systemEventUtils.AddSystemEvent(new SystemEvent
                             {
                                 UserId = systemUser.UserId,
                                 EventTypeId = 6,
@@ -196,12 +196,12 @@ namespace SchoolAbsenceMonitorUI
                         BtnDeleteReturn.Visibility = Visibility.Visible;
                         try
                         {
-                            eventUtils.AddSystemEvent(new SystemEvent
+                            systemEventUtils.AddSystemEvent(new SystemEvent
                             {
                                 UserId = systemUser.UserId,
                                 EventTypeId = 1006,
                                 EventDateTime = DateTime.Now,
-                                EventData = $"Error deleting class record { DateTime.Now} , by {systemUser.Username}"
+                                EventData = $"Error deleting Class record { DateTime.Now} , by {systemUser.Username}"
                             });
                         }
                         catch (EntityException)
@@ -220,7 +220,11 @@ namespace SchoolAbsenceMonitorUI
             }
             else
             {
-
+                BtnDeletClass.Visibility = Visibility.Collapsed;
+                BtnDeleteCancel.Visibility = Visibility.Collapsed;
+                Lbl_DeleteClassLabel.Visibility = Visibility.Visible;
+                BtnDeleteReturn.Visibility = Visibility.Visible;
+                Lbl_DeleteClassLabel.Content = "Delete Operation Cancelled";
             }
            
         }
@@ -286,7 +290,7 @@ namespace SchoolAbsenceMonitorUI
 
                     try
                     {
-                        eventUtils.AddSystemEvent(new SystemEvent
+                        systemEventUtils.AddSystemEvent(new SystemEvent
                         {
                             UserId = systemUser.UserId,
                             EventTypeId = 4,
@@ -301,9 +305,13 @@ namespace SchoolAbsenceMonitorUI
                 }
                 else
                 {
+                    BtnUpdateClass.Visibility = Visibility.Collapsed;
+                    BtnUpdateCancel.Visibility = Visibility.Collapsed;
+                    BtnUpdateReturn.Visibility = Visibility.Visible;
+                    Lbl_ClassUpdateErrorLabel.Visibility = Visibility.Visible;
                     try
                     {
-                        eventUtils.AddSystemEvent(new SystemEvent
+                        systemEventUtils.AddSystemEvent(new SystemEvent
                         {
                             UserId = systemUser.UserId,
                             EventTypeId = 1004,

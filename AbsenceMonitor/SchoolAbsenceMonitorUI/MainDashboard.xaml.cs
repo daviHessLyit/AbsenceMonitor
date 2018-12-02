@@ -137,6 +137,7 @@ namespace SchoolAbsenceMonitorUI
         {
             TeacherAdmin teacherAdmin = new TeacherAdmin();
             teacherAdmin.Stk_AddTeacher.Visibility = Visibility.Visible;
+            teacherAdmin.systemUser = this.systemUser;
             frmMain.Navigate(teacherAdmin);
         }
 
@@ -144,6 +145,7 @@ namespace SchoolAbsenceMonitorUI
         {
             TeacherAdmin teacherAdmin = new TeacherAdmin();
             teacherAdmin.Stk_SearchTeacher.Visibility = Visibility.Visible;
+            teacherAdmin.systemUser = this.systemUser;
             frmMain.Navigate(teacherAdmin);
         }
 
@@ -151,6 +153,7 @@ namespace SchoolAbsenceMonitorUI
         {
             TeacherAdmin teacherAdmin = new TeacherAdmin();
             teacherAdmin.Stk_SearchTeacher.Visibility = Visibility.Visible;
+            teacherAdmin.systemUser = this.systemUser;
             frmMain.Navigate(teacherAdmin);
         }
 
@@ -158,6 +161,7 @@ namespace SchoolAbsenceMonitorUI
         {
             AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
             absenceTypeAdmin.Stk_AddAbsence.Visibility = Visibility.Visible;
+            absenceTypeAdmin.systemUser = this.systemUser;
             frmMain.Navigate(absenceTypeAdmin);
         }
 
@@ -165,6 +169,7 @@ namespace SchoolAbsenceMonitorUI
         {
             AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
             absenceTypeAdmin.Stk_SearchAbsenceType.Visibility = Visibility.Visible;
+            absenceTypeAdmin.systemUser = this.systemUser;
             frmMain.Navigate(absenceTypeAdmin);
         }
 
@@ -172,6 +177,7 @@ namespace SchoolAbsenceMonitorUI
         {
             AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
             absenceTypeAdmin.Stk_SearchAbsenceType.Visibility = Visibility.Visible;
+            absenceTypeAdmin.systemUser = this.systemUser;
             frmMain.Navigate(absenceTypeAdmin);
         }
 

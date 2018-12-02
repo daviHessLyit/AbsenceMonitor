@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMAClassLibrary
 {
-    class AbsenceTypeUtils
+    public class AbsenceTypeUtils
     {
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
 
@@ -28,6 +28,7 @@ namespace SMAClassLibrary
             }
             else
             {
+                smaDB.Entry(newAbsenceType).State = System.Data.Entity.EntityState.Added;
                 return smaDB.SaveChanges();
             }
 
@@ -82,7 +83,7 @@ namespace SMAClassLibrary
         /// <returns>
         /// AbsenceType object
         /// </returns>
-        public AbsenceType GetSchoolClass(int absenceTypeId)
+        public AbsenceType GetAbsenceType(int absenceTypeId)
         {
             AbsenceType absenceType = new AbsenceType();
 

@@ -61,16 +61,17 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20" VerticalAlignment="Center">
-                    <Button Name="BtnAddTeacher" Height="26" Width="150" Content="Add Teacher" VerticalAlignment="Center" Margin="10,10"/>
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherErrorLabel"
+                    <Button Name="BtnAddTeacher" Height="26" Width="150" Content="Add Teacher" VerticalAlignment="Center" Margin="10,10" Click="BtnAddTeacher_Click"/>
+                    <Button Name="BtnAddCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnAddCancel_Click"/>
+                    <Button Name="BtnAddReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnAddReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Creating New Teacher"
-                                   Visibility="Hidden"
+                                   Visibility="Collapsed"
                                    HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Search Teacher form -->
