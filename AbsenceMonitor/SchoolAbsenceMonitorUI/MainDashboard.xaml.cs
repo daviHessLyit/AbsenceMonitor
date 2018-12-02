@@ -95,6 +95,7 @@ namespace SchoolAbsenceMonitorUI
         {
             GuardianAdmin guardianAdmin = new GuardianAdmin();
             guardianAdmin.Stk_AddGuardian.Visibility = Visibility.Visible;
+            guardianAdmin.systemUser = this.systemUser;
             frmMain.Navigate(guardianAdmin);
         }
 
@@ -102,6 +103,7 @@ namespace SchoolAbsenceMonitorUI
         {
             GuardianAdmin guardianAdmin = new GuardianAdmin();
             guardianAdmin.Stk_SearchGuardian.Visibility = Visibility.Visible;
+            guardianAdmin.systemUser = this.systemUser;
             frmMain.Navigate(guardianAdmin);
         }
 
@@ -109,6 +111,7 @@ namespace SchoolAbsenceMonitorUI
         {
             GuardianAdmin guardianAdmin = new GuardianAdmin();
             guardianAdmin.Stk_SearchGuardian.Visibility = Visibility.Visible;
+            guardianAdmin.systemUser = this.systemUser;
             frmMain.Navigate(guardianAdmin);
         }
 
@@ -116,6 +119,7 @@ namespace SchoolAbsenceMonitorUI
         {
             PupilAdmin pupilAdmin = new PupilAdmin();
             pupilAdmin.Stk_AddPupil.Visibility = Visibility.Visible;
+            pupilAdmin.systemUser = this.systemUser;
             frmMain.Navigate(pupilAdmin);
         }
 
@@ -123,6 +127,7 @@ namespace SchoolAbsenceMonitorUI
         {
             PupilAdmin pupilAdmin = new PupilAdmin();
             pupilAdmin.Stk_SearchPupil.Visibility = Visibility.Visible;
+            pupilAdmin.systemUser = this.systemUser;
             frmMain.Navigate(pupilAdmin);
         }
 
@@ -130,6 +135,7 @@ namespace SchoolAbsenceMonitorUI
         {
             PupilAdmin pupilAdmin = new PupilAdmin();
             pupilAdmin.Stk_SearchPupil.Visibility = Visibility.Visible;
+            pupilAdmin.systemUser = this.systemUser;
             frmMain.Navigate(pupilAdmin);
         }
 

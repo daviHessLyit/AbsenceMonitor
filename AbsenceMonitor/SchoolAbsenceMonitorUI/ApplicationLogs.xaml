@@ -40,10 +40,14 @@
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ScrollViewer Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ListView Name="LstSystemEvents" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                          Width="800" Margin="10,10" MaxHeight="600">
+                <ScrollViewer Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Top"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              Width="800"
+                              Margin="10,10"
+                              MaxHeight="600">
+                    <ListView Name="LstSystemEvents">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Date / Time" Width="150">
