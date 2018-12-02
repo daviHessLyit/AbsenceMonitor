@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMAClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,9 @@ namespace SchoolAbsenceMonitorUI
     /// </summary>
     public partial class Reports : Page
     {
+        SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
+        public SystemUser systemUser = new SystemUser();
+
         public Reports()
         {
             InitializeComponent();
@@ -36,7 +40,7 @@ namespace SchoolAbsenceMonitorUI
             Stk_PupilList.Visibility = Visibility.Hidden;
             Stk_PupilReport.Visibility = Visibility.Hidden;
             Stk_SchoolReport.Visibility = Visibility.Hidden;
-        }
+        }        
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {

@@ -62,6 +62,8 @@ namespace SchoolAbsenceMonitorUI
             else if (user.AccessLevelId == 2)
             {
                 Tbi_Reporting.Visibility = Visibility.Visible;
+                Tbi_Admin.Visibility = Visibility.Collapsed;
+                Tbi_ApplicationLogs.Visibility = Visibility.Collapsed;
             }
         }
 
