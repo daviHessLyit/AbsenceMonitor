@@ -51,13 +51,22 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Class ID:" Margin="0,10"/>
+                    <Label Content="Class:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxTeacherGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
                     <TextBox Name="TbxTeacherSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
-                    <TextBox Name="TbxTeacherClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <ComboBox AllowDrop="True"
+                              TabIndex="3"
+                              Text="Select Class"
+                              Width="200"
+                              Visibility="Visible"
+                              Margin="10,10"
+                              Name="CmbBxClassSelector"
+                              ItemsSource="{Binding}"
+                              DisplayMemberPath="ClassName"
+                              SelectedValuePath="ClassId"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20" VerticalAlignment="Center">
@@ -94,7 +103,7 @@
                               Width="900"
                               Margin="10,10"
                               MaxHeight="600">
-                    <ListView Name="LstTeacherSearch">
+                    <ListView Name="LstTeacherSearch" SelectedValuePath="TeacherId">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="TeacherID" Width="100">
@@ -129,12 +138,12 @@
                         </ListView.View>
                         <ListView.ContextMenu>
                             <ContextMenu Name="MnuTeacherSearchContext" IsEnabled="True">
-                                <MenuItem Header="Update Teacher" Name="MnuIUpdateTeacher" IsEnabled="True">
+                                <MenuItem Header="Update Teacher" Name="MnuIUpdateTeacher" IsEnabled="True" Click="MnuIUpdateTeacher_Click">
                                     <MenuItem.Icon>
                                         <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Delete Teacher" Name="MnuIDeleteTeacher" IsEnabled="True">
+                                <MenuItem Header="Delete Teacher" Name="MnuIDeleteTeacher" IsEnabled="True" Click="MnuIDeleteTeacher_Click">
                                     <MenuItem.Icon>
                                         <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
                                     </MenuItem.Icon>
@@ -170,35 +179,41 @@
                            FontSize="20"
                            Content="Enter Updated Teacher Details"/>
 
-                <Menu Name="Mnu_TeacherSelector" AllowDrop="True" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
-                    <MenuItem Header="Select Teacher" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
-                        <MenuItem Header="TeacherType" Name="MnuI_TeacherType"/>
-                    </MenuItem>
-                </Menu>
-
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Class ID:" Margin="0,10"/>
                     <Label Content="Teacher ID:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxUpdateTeacherGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
                     <TextBox Name="TbxUpdateTeacherSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
-                    <TextBox Name="TbxUpdateTeacherClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
                     <TextBox Name="TbxUpdateTeacherID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <ComboBox AllowDrop="True"
+                              TabIndex="3"
+                              Text="Select Class"
+                              Width="200"
+                              Visibility="Visible"
+                              Margin="10,10"
+                              Name="CmbBxClassUpdateSelector"
+                              ItemsSource="{Binding}"
+                              DisplayMemberPath="ClassName"
+                              SelectedValuePath="ClassId"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnUpdateAddTeacher" Height="26" Width="150" Content="Update Teacher" VerticalAlignment="Center" Margin="10,10"/>
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherUpdateErrorLabel"
+                    <Button Name="BtnUpdateTeacher" Height="26" Width="150" Content="Update Teacher" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateTeacher_Click"/>
+                    <Button Name="BtnUpdateCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateCancel_Click"/>
+                    <Button Name="BtnUpdateReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateReturn_Click"/>
+                    <Label Grid.ColumnSpan="2" Name="Lbl_TeacherUpdateErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Teacher"
-                                   Visibility="Hidden"/>
+                                   Visibility="Collapsed"/>
+                </StackPanel>
+
+                
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Delete Teacher form -->
@@ -226,33 +241,32 @@
                            FontSize="20"
                            Content="Please Check Teacher Details Before Deletion"/>
 
-                <Menu Name="Mnu_DeleteTeacherSelector" AllowDrop="True" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
-                    <MenuItem Header="Select Teacher" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
-                        <MenuItem Header="Delete" Name="MnuI_DeleteTeacherType"/>
-                    </MenuItem>
-                </Menu>
-
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
                     <Label Content="Teacher ID:" Margin="0,10"/>
+                    <Label Content="Class ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxDeleteTeacherGiven" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
-                    <TextBox Name="TbxDeleteTeacherSurname" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeleteTeacherGiven" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxDeleteTeacherSurname" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
                     <TextBox Name="TbxDeleteTeacherID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeleteClassID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnDeleteTeacher" Height="26" Width="150" Content="Delete Teacher"  VerticalAlignment="Center" Margin="10,10"/>
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherDeleteErrorLabel"
+                    <Button Name="BtnDeleteTeacher" Height="26" Width="150" Content="Delete Teacher"  VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteTeacher_Click"/>
+                    <Button Name="BtnDeleteCancel" Height="26" Width="150" Content="Cancel"  VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteCancel_Click"/>
+                    <Button Name="BtnDeleteReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed"  VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherDeleteErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the Teacher"
-                                   Visibility="Hidden"/>
+                                   Visibility="Collapsed"/>
+                </StackPanel>
+
+                
             </Grid>
         </StackPanel>
         
