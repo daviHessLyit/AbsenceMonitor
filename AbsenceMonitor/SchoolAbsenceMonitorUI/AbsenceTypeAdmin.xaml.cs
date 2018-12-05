@@ -50,6 +50,9 @@ namespace SchoolAbsenceMonitorUI
             {               
                 absenceTypes.Add(absenceType);
             }
+
+            LstAbsenceTypeSearch.Items.Refresh();
+
         }
 
         private void BtnAddAbsence_Click(object sender, RoutedEventArgs e)

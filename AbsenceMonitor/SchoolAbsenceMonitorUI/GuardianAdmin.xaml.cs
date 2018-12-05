@@ -50,6 +50,8 @@ namespace SchoolAbsenceMonitorUI
             {
                 guardians.Add(guardian);
             }
+
+            LstGuardianSearch.Items.Refresh();
         }
 
         private void BtnAddGuardian_Click(object sender, RoutedEventArgs e)

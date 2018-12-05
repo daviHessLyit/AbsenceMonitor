@@ -135,6 +135,8 @@ namespace SchoolAbsenceMonitorUI
             {
                 classes.Add(schoolClass);
             }
+
+            LstClassSearch.Items.Refresh();
         }
 
         private void MnuIUpdateClass_Click(object sender, RoutedEventArgs e)

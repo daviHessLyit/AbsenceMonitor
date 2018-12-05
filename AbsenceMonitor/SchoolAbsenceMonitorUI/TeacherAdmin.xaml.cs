@@ -59,6 +59,8 @@ namespace SchoolAbsenceMonitorUI
             {
                 teachers.Add(teacher);
             }
+
+            LstTeacherSearch.Items.Refresh();
         }
 
         private void BtnAddTeacher_Click(object sender, RoutedEventArgs e)

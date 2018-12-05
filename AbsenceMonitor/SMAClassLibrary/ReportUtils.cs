@@ -10,19 +10,6 @@ namespace SMAClassLibrary
     {
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
 
-        public List<Pupil> ReturnPupilsByClass(int classId)
-        {
-            List<Pupil> pupils = new List<Pupil>();
-
-            foreach (var pupil in smaDB.Pupils.Where(p => p.ClassId == classId))
-            {
-                pupils.Add(pupil);
-            }
-
-            return pupils;
-
-        }
-
         public List<object> ReturnPupilByClass(int classId)
         {
             List<object> pupilsAbsencesByClass = new List<object>();

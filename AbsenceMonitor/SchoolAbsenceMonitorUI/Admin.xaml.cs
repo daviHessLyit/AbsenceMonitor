@@ -122,6 +122,8 @@ namespace SchoolAbsenceMonitorUI
             {
                 systemUsers.Add(systemUser);
             }
+
+            LstUserSearch.Items.Refresh();
         }
 
 
