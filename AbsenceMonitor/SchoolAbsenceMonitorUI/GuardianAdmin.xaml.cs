@@ -45,6 +45,7 @@ namespace SchoolAbsenceMonitorUI
         private void RefreshGuardianList()
         {
             guardians.Clear();
+            
             LstGuardianSearch.ItemsSource = guardians;
             foreach (var guardian in smaDB.Guardians)
             {
@@ -56,7 +57,14 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnAddGuardian_Click(object sender, RoutedEventArgs e)
         {
-            try
+            bool validFormData = VerifyFormData(TbxGuadianGiven.Text.ToString(),
+                     TbxGuadianSurname.Text.ToString(),
+                     TbkGuardianAddress.Text.ToString(),
+                     TbxGuadianMobile.Text.ToString());
+
+            if (validFormData)
+            {
+                try
             {
                 int guardianAdded = guardianUtils.AddGuardian(new Guardian
                 {
@@ -131,6 +139,13 @@ namespace SchoolAbsenceMonitorUI
             {
                 MessageBox.Show("System Error, Please contact the System Administrator", "System Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            }
+            else
+            {
+                Lbl_GuardianErrorLabel.Content = "Invalid form data, please correct and resubmit";
+                Lbl_GuardianErrorLabel.Visibility = Visibility.Visible;
+            }
+           
         }
 
         private void BtnAddGuardianCancel_Click(object sender, RoutedEventArgs e)
@@ -420,5 +435,51 @@ namespace SchoolAbsenceMonitorUI
             RefreshGuardianList();
             Stk_SearchGuardian.Visibility = Visibility.Visible;
         }
-    }
+
+        /// <summary>
+        /// Method to validate form data for the mandatory fields in the add Guardian form.
+        /// </summary>
+        /// <param name="givenName">
+        /// string givenName
+        /// </param>
+        /// <param name="surname">
+        /// string surname
+        /// </param>
+        /// <param name="address">
+        /// string address
+        /// </param>
+        /// <param name="mobileNo">
+        /// string mobileNo
+        /// </param>
+        /// <returns>
+        /// bool validData
+        /// </returns>
+        private bool VerifyFormData(string givenName, string surname, string address, string mobileNo )
+        {
+            bool validData = true;
+
+            if ( givenName.Length == 0 || givenName.Length > 30)
+            {
+                validData = false;
+            }
+
+            if (surname.Length == 0 || surname.Length > 30)
+            {
+                validData = false;
+            }
+
+            if(address.Length == 0 || address.Length > 100)
+            {
+                validData = false;
+            }
+
+            if(mobileNo.Length == 0 || mobileNo.Length > 30)
+            {
+                validData = false;
+            }
+
+            return validData;
+        }
+
+    }  
 }

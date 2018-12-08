@@ -26,7 +26,15 @@ namespace SMAClassLibrary
         public string MobileNo { get; set; }
         public string EmergencyNo { get; set; }
         public string Address { get; set; }
-    
+
+        public string FullName
+        {
+            get
+            {
+                return $"{GivenName} {Surname}";
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pupil> Pupils { get; set; }
     }

@@ -84,11 +84,6 @@
         <!-- Stack Panel containing the Search Guardian form -->
         <StackPanel Name="Stk_SearchGuardian" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="80*"/>
-                    <ColumnDefinition Width="10*"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="80*"/>
@@ -96,12 +91,11 @@
                 </Grid.RowDefinitions>
                 <ScrollViewer Grid.Row="1"
                               Grid.Column="1"
-                              VerticalAlignment="Top"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              VerticalAlignment="Top"                              
                               Width="800"
                               Margin="10,10"
                               MaxHeight="600">
-                    <ListView Name="LstGuardianSearch" SelectedValuePath="GuardianId">
+                    <ListView Name="LstGuardianSearch" SelectedValuePath="GuardianId" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="800">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="GuardianID" Width="75">
@@ -139,7 +133,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Address" Width="250">
+                            <GridViewColumn Header="Address" Width="300">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding Address}"/>

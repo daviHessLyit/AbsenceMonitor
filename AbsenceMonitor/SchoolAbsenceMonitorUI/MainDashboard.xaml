@@ -7,12 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Width="1250"
-        MaxWidth="1250"
-        MinWidth="1250"
-        Height="1050"
-        MaxHeight="1050"
-        MinHeight="1050"      
+        WindowState="Maximized"
         Loaded="Window_Loaded"
         Title="SchoolAbsenceMonitor">
     <Grid>

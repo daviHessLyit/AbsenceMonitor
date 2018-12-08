@@ -18,7 +18,15 @@ namespace SMAClassLibrary
         public string GivenName { get; set; }
         public string Surname { get; set; }
         public int ClassId { get; set; }
-    
+
+        public string FullName
+        {
+            get
+            {
+                return $"{GivenName} {Surname}";
+            }
+        }
+
         public virtual Class Class { get; set; }
     }
 }
