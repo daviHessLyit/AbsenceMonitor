@@ -47,17 +47,26 @@ namespace SMAClassLibrary
         public int UpdateGuardian(Guardian guardian)
         {
             Guardian existingGuardian = new Guardian();
+
             existingGuardian = smaDB.Guardians.Where(g => g.GuardianId == guardian.GuardianId).FirstOrDefault();
 
-            existingGuardian.GivenName = guardian.GivenName;
-            existingGuardian.Surname = guardian.Surname;
-            existingGuardian.MobileNo = guardian.MobileNo;
-            existingGuardian.EmergencyNo = guardian.EmergencyNo;
-            existingGuardian.Address = guardian.Address;
+            if (existingGuardian != null)
+            {
+                existingGuardian.GivenName = guardian.GivenName;
+                existingGuardian.Surname = guardian.Surname;
+                existingGuardian.MobileNo = guardian.MobileNo;
+                existingGuardian.EmergencyNo = guardian.EmergencyNo;
+                existingGuardian.Address = guardian.Address;
 
-            smaDB.Entry(existingGuardian).State = System.Data.Entity.EntityState.Modified;
+                smaDB.Entry(existingGuardian).State = System.Data.Entity.EntityState.Modified;
 
-            return smaDB.SaveChanges();
+                return smaDB.SaveChanges();
+            }
+            else
+            {
+                return 0;
+            }
+            
         }
 
         /// <summary>

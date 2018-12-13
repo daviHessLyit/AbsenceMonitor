@@ -30,50 +30,61 @@ namespace SchoolAbsenceMonitorUI
             InitializeComponent();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            PopulateClassList();
         }
 
-        private void chkPresent_Click(object sender, RoutedEventArgs e)
+        private void PopulateClassList()
         {
-            
+            SchoolClasses = smaDB.Classes.ToList();
+            DataContext = SchoolClasses;
         }
 
-        private void chkAbsent_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Method populates the select class pupils into the ListView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CmbBxClassSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int selectedClass = 0;
 
+            try
+            {
+                selectedClass = Convert.ToInt16(CmbBxClassSelector.SelectedValue.ToString());
+                var pupilList = smaDB.Pupils.Where(p => p.ClassId == selectedClass).ToList();
+
+                LbCheckList.ItemsSource = pupilList;
+                LbCheckList.Items.Refresh();
+                Stk_ClassList.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error in populating class list", "Selection Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            }
         }
 
-        private void lstClassList_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        private void BtnCancelAttendance_Click(object sender, RoutedEventArgs e)
         {
-            
+            Stk_ClassList.Visibility = Visibility.Hidden;
+            PopulateClassList();
         }
 
-        private void DatePAbsenceDate_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void BtnConfirmAttendance_Click(object sender, RoutedEventArgs e)
         {
-           
+            int count =0;
+            //for (int i = 0; i < LstClassList.Items.Count; i++)
+            //{
+            //    count++;
+            //}
+            count = LbCheckList.SelectedItems.Count;
+
+            MessageBox.Show($"{count}", "Selection Error", MessageBoxButton.OKCancel, MessageBoxImage.Information);
         }
 
-        private void BtnConfirm_Click(object sender, RoutedEventArgs e)
+        private void ChkPresent_Checked(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void BtnReset_Click(object sender, RoutedEventArgs e)
-        {
-            stk_MenuPanel.Visibility = Visibility.Visible;
-            stk_ClassList.Visibility = Visibility.Hidden;
-            StkConfirmationPanel.Visibility = Visibility.Hidden;
-            BtnSubmit.Visibility = Visibility.Visible;
-            BtnConfirm.Visibility = Visibility.Hidden;
-        }
-
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            BtnSubmit.Visibility = Visibility.Hidden;
-            BtnConfirm.Visibility = Visibility.Visible;
-            StkConfirmationPanel.Visibility = Visibility.Visible;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace SchoolAbsenceMonitorUI
         public SystemUser systemUser = new SystemUser();
         GuardianUtils guardianUtils = new GuardianUtils();
         SystemEventUtils systemEventUtils = new SystemEventUtils();
+        ValidationUtils validationUtils = new ValidationUtils();
 
         public GuardianAdmin()
         {
@@ -57,7 +58,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnAddGuardian_Click(object sender, RoutedEventArgs e)
         {
-            bool validFormData = VerifyFormData(TbxGuadianGiven.Text.ToString(),
+            bool validFormData = validationUtils.VerifyFormData(TbxGuadianGiven.Text.ToString(),
                      TbxGuadianSurname.Text.ToString(),
                      TbkGuardianAddress.Text.ToString(),
                      TbxGuadianMobile.Text.ToString());
@@ -434,52 +435,7 @@ namespace SchoolAbsenceMonitorUI
             Stk_UpdateGuardianForm.Visibility = Visibility.Hidden;
             RefreshGuardianList();
             Stk_SearchGuardian.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        /// Method to validate form data for the mandatory fields in the add Guardian form.
-        /// </summary>
-        /// <param name="givenName">
-        /// string givenName
-        /// </param>
-        /// <param name="surname">
-        /// string surname
-        /// </param>
-        /// <param name="address">
-        /// string address
-        /// </param>
-        /// <param name="mobileNo">
-        /// string mobileNo
-        /// </param>
-        /// <returns>
-        /// bool validData
-        /// </returns>
-        private bool VerifyFormData(string givenName, string surname, string address, string mobileNo )
-        {
-            bool validData = true;
-
-            if ( givenName.Length == 0 || givenName.Length > 30)
-            {
-                validData = false;
-            }
-
-            if (surname.Length == 0 || surname.Length > 30)
-            {
-                validData = false;
-            }
-
-            if(address.Length == 0 || address.Length > 100)
-            {
-                validData = false;
-            }
-
-            if(mobileNo.Length == 0 || mobileNo.Length > 30)
-            {
-                validData = false;
-            }
-
-            return validData;
-        }
+        }       
 
     }  
 }
