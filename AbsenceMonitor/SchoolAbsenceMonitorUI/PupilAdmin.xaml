@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1050"
-      Title="PupilAdmin">
+      Title="PupilAdmin"
+      Loaded="Page_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -65,16 +66,19 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Name="BtnAddPupil" Height="26" Width="150" Content="Add Pupil" VerticalAlignment="Center" Margin="10,10"/>
-                </StackPanel>
-
-                <Label Grid.Row="3" Grid.ColumnSpan="2" Name="LblPupilErrorLabel"
-                                   FontSize="20"
+                    <Button Name="BtnAddPupil" Height="26" Width="150" Content="Add Pupil" VerticalAlignment="Center" Margin="10,10" Click="BtnAddPupil_Click"/>
+                    <Button Name="BtnAddPupilCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnAddPupilCancel_Click"/>
+                    <Button Name="BtnAddPupilReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnAddPupilReturn_Click"/>                   
+                    <Label Grid.Row="3" Grid.ColumnSpan="2" Name="LblPupilErrorLabel"
+                                   FontSize="14"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Creating New Pupil"
-                                   Visibility="Hidden"
+                                   Visibility="Collapsed"
                                    HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Search Pupil form -->
@@ -90,59 +94,73 @@
                     <RowDefinition Height="80*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-                <ListView Name="LstPupilSearch" Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="PupilID" Width="100">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Given Name" Width="150">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Surname" Width="150">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Class" Width="150">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                    <ListView.ContextMenu>
-                        <ContextMenu Name="MnuPupilSearchContext" IsEnabled="True">
-                            <MenuItem Header="Update Pupil" Name="MnuIUpdatePupil" IsEnabled="True">
-                                <MenuItem.Icon>
-                                    <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="Add Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True" >
-                                <MenuItem.Icon>
-                                    <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="Delete Pupil" Name="MnuIDeletePupil" IsEnabled="True">
-                                <MenuItem.Icon>
-                                    <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                </ListView>
+                <ScrollViewer Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Top"                              
+                              Width="800"
+                              Margin="10,10"
+                              MaxHeight="600">
+                    <ListView Name="LstPupilSearch" SelectedValuePath="PupilId" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="800">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="PupilID" Width="75">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding PupilId}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Name" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding PupilName}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Class" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding SchoolClass}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Guardian Name" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding GuardianFullName}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Class" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding GuardianAddress}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ContextMenu>
+                            <ContextMenu Name="MnuPupilSearchContext" IsEnabled="True">
+                                <MenuItem Header="Update Pupil" Name="MnuIUpdatePupil" IsEnabled="True" Click="MnuIUpdatePupil_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Add Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True" >
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Delete Pupil" Name="MnuIDeletePupil" IsEnabled="True">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                </ScrollViewer>
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Update Pupil form -->
@@ -193,15 +211,18 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnUpdatePupil" Height="26" Width="150" Content="Update Pupil" Margin="15,15"/>
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilUpdateErrorLabel"
+                    <Button Name="BtnUpdatePupil" Height="26" Width="150" Content="Update Pupil" Margin="15,15" Click="BtnUpdatePupil_Click"/>
+                    <Button Name="BtnUpdatePupilCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10"/>
+                    <Button Name="BtnUpdatePupilReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilUpdateErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Pupil"
                                    Visibility="Hidden"/>
+                </StackPanel>
+
+                
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Add Pupil Absence -->

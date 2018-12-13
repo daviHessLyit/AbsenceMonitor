@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMAClassLibrary
 {
-    class PupilUtils
+    public class PupilUtils
     {
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
        
@@ -45,9 +45,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int UpdatePupil(Pupil pupil)
         {
-            Pupil existingPupil = new Pupil();
-
-            existingPupil = smaDB.Pupils.Where(p => p.PupilId == pupil.PupilId).FirstOrDefault();
+            Pupil existingPupil = smaDB.Pupils.Where(p => p.PupilId == pupil.PupilId).FirstOrDefault();
 
             if (existingPupil != null)
             {
@@ -99,9 +97,22 @@ namespace SMAClassLibrary
         {
             Pupil pupil = new Pupil();
 
-            pupil = smaDB.Pupils.Where(p => p.PupilId == pupil.PupilId).FirstOrDefault();
+            pupil = smaDB.Pupils.Where(p => p.PupilId == pupilId).FirstOrDefault();
 
             return pupil;
+        }
+
+        public List<Pupil> SortPupilsbyLastAdded()
+        {
+            var sortedPupils = smaDB.Pupils.OrderByDescending(p => p.PupilId).ToList();
+            return sortedPupils;
+        }
+
+
+        public List<Pupil> SortPupilsbyGuardianID()
+        {
+            var sortedPupils = smaDB.Pupils.OrderBy(p => p.GuardianId).ToList();
+            return sortedPupils;
         }
 
 

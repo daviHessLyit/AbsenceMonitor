@@ -66,81 +66,81 @@ namespace SchoolAbsenceMonitorUI
             if (validFormData)
             {
                 try
-            {
-                int guardianAdded = guardianUtils.AddGuardian(new Guardian
                 {
-                    GivenName = TbxGuadianGiven.Text.ToString(),
-                    Surname = TbxGuadianSurname.Text.ToString(),
-                    MobileNo = TbxGuadianMobile.Text.ToString(),
-                    EmergencyNo = TbxGuadianEmergency.Text.ToString(),
-                    Address = TbkGuardianAddress.Text.ToString()
-                });
-
-                if (guardianAdded ==1)
-                {
-                    BtnAddGuardian.Visibility = Visibility.Collapsed;
-                    BtnAddGuardianCancel.Visibility = Visibility.Collapsed;
-                    BtnAddGuardianReturn.Visibility = Visibility.Visible;
-                    TbxGuadianGiven.IsEnabled = false;
-                    TbxGuadianSurname.IsEnabled = false;
-                    TbxGuadianMobile.IsEnabled = false;
-                    TbxGuadianEmergency.IsEnabled = false;
-                    TbkGuardianAddress.IsEnabled = false;
-                    Lbl_GuardianLabel.Content = "Guardian details Successfully Added"; 
-
-                    try
+                    int guardianAdded = guardianUtils.AddGuardian(new Guardian
                     {
-                        systemEventUtils.AddSystemEvent(new SystemEvent
+                        GivenName = TbxGuadianGiven.Text.ToString(),
+                        Surname = TbxGuadianSurname.Text.ToString(),
+                        MobileNo = TbxGuadianMobile.Text.ToString(),
+                        EmergencyNo = TbxGuadianEmergency.Text.ToString(),
+                        Address = TbkGuardianAddress.Text.ToString()
+                    });
+
+                    if (guardianAdded ==1)
+                    {
+                        BtnAddGuardian.Visibility = Visibility.Collapsed;
+                        BtnAddGuardianCancel.Visibility = Visibility.Collapsed;
+                        BtnAddGuardianReturn.Visibility = Visibility.Visible;
+                        TbxGuadianGiven.IsEnabled = false;
+                        TbxGuadianSurname.IsEnabled = false;
+                        TbxGuadianMobile.IsEnabled = false;
+                        TbxGuadianEmergency.IsEnabled = false;
+                        TbkGuardianAddress.IsEnabled = false;
+                        Lbl_GuardianLabel.Content = "Guardian details Successfully Added"; 
+
+                        try
                         {
-                            UserId = systemUser.UserId,
-                            EventTypeId = 3,
-                            EventDateTime = DateTime.Now,
-                            EventData = $"New Guardian record added at { DateTime.Now} , by {systemUser.Username}"
-                        });
-                    }
-                    catch (EntityException)
-                    {
-                        MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    BtnAddGuardian.Visibility = Visibility.Collapsed;
-                    BtnAddGuardianCancel.Visibility = Visibility.Collapsed;
-                    BtnAddGuardianReturn.Visibility = Visibility.Visible;
-                    TbxGuadianGiven.Text = "";
-                    TbxGuadianSurname.Text = "";
-                    TbxGuadianMobile.Text = "";
-                    TbxGuadianEmergency.Text = "";
-                    TbkGuardianAddress.Text = "";
-                    Lbl_GuardianErrorLabel.Visibility = Visibility.Visible;
-
-                    try
-                    {
-                        systemEventUtils.AddSystemEvent(new SystemEvent
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 3,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"New Guardian record added at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
                         {
-                            UserId = systemUser.UserId,
-                            EventTypeId = 1006,
-                            EventDateTime = DateTime.Now,
-                            EventData = $"Problem adding Guardian record at { DateTime.Now} , by {systemUser.Username}"
-                        });
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
-                    catch (EntityException)
+                    else
                     {
-                        MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
+                        BtnAddGuardian.Visibility = Visibility.Collapsed;
+                        BtnAddGuardianCancel.Visibility = Visibility.Collapsed;
+                        BtnAddGuardianReturn.Visibility = Visibility.Visible;
+                        TbxGuadianGiven.Text = "";
+                        TbxGuadianSurname.Text = "";
+                        TbxGuadianMobile.Text = "";
+                        TbxGuadianEmergency.Text = "";
+                        TbkGuardianAddress.Text = "";
+                        Lbl_GuardianErrorLabel.Visibility = Visibility.Visible;
 
-            }
-            catch (EntityException)
-            {
-                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("System Error, Please contact the System Administrator", "System Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            }
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 1006,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Problem adding Guardian record at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                }
+                catch (EntityException)
+                {
+                    MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("System Error, Please contact the System Administrator", "System Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                }
             else
             {
                 Lbl_GuardianErrorLabel.Content = "Invalid form data, please correct and resubmit";
@@ -383,7 +383,7 @@ namespace SchoolAbsenceMonitorUI
                             UserId = systemUser.UserId,
                             EventTypeId = 1004,
                             EventDateTime = DateTime.Now,
-                            EventData = $"Teacher record update error at { DateTime.Now} , by {systemUser.Username}"
+                            EventData = $"Guardian record update error at { DateTime.Now} , by {systemUser.Username}"
                         });
                     }
                     catch (EntityException)

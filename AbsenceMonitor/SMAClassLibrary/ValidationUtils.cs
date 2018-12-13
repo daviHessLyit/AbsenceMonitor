@@ -8,6 +8,7 @@ namespace SMAClassLibrary
 {
     public class ValidationUtils
     {
+        SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
 
         /// <summary>
         /// Validate the user inputs 
@@ -97,6 +98,95 @@ namespace SMAClassLibrary
             return validData;
         }
 
+
+        /// <summary>
+        /// Method validates inputs from the add pupil form
+        /// </summary>
+        /// <param name="givenName">
+        /// GivenName entered by the user
+        /// </param>
+        /// <param name="surname">
+        /// Surname entered by the user
+        /// </param>
+        /// <param name="guardianId">
+        /// GuardianId entered by the user
+        /// </param>
+        /// <param name="classId">
+        /// ClassId entered by the user
+        /// </param>
+        /// <returns>
+        /// bool validData
+        /// </returns>
+        public bool VerifyPupilFormData(string givenName, string surname, string guardianId, string classId)
+        {
+            bool validData = true;
+
+            if (givenName.Length == 0 || givenName.Length > 30)
+            {
+                validData = false;
+            }
+            else
+            {
+                foreach (char ch in givenName)
+                {
+                    if (ch >= '0' && ch <= '9')
+                    {
+                        validData = false;
+                    }
+                }
+            }
+           
+
+            if (surname.Length == 0 || surname.Length > 30)
+            {
+                validData = false;
+            }
+            else
+            {
+                foreach (char ch in surname)
+                {
+                    if (ch >= '0' && ch <= '9')
+                    {
+                        validData = false;
+                    }
+                }
+            }
+
+            try
+            {
+                int guardianIdToValidate = Convert.ToInt16(guardianId);
+
+                if (!smaDB.Guardians.Any( g=> g.GuardianId == guardianIdToValidate))
+                {
+                    validData = false;
+                }
+
+            }
+            catch (Exception)
+            {
+                validData = false;
+            }
+
+            try
+            {
+                int classIdtoValidate = Convert.ToInt16(classId);
+
+                if (!smaDB.Classes.Any(c => c.ClassId == classIdtoValidate))
+                {
+                    validData = false;
+                }
+            }
+            catch (Exception)
+            {
+                validData = false;
+            }
+            
+            
+
+
+            return validData;
+        }
+
         /// <summary>
         /// Method to validate form data
         /// </summary>
@@ -112,8 +202,7 @@ namespace SMAClassLibrary
         {
             bool validData = true;
 
-            try
-            {
+            
 
                 if (givenName.Length == 0 || givenName.Length > 30)
                 {
@@ -140,12 +229,6 @@ namespace SMAClassLibrary
                         validData = false;
                     }
                 }
-            }
-            catch (Exception)
-            {
-
-               
-            }
 
 
             return validData;
