@@ -216,7 +216,11 @@ namespace SchoolAbsenceMonitorUI
                         {
                             MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                    }                 
+                    }
+                    else
+                    {
+                       // Must have been full attendance for the selected class 
+                    }
                 }
 
                
