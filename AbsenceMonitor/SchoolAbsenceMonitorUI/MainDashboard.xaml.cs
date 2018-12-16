@@ -36,12 +36,14 @@ namespace SchoolAbsenceMonitorUI
         private void Tbi_Attendance_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Attendance attendance = new Attendance();
+            attendance.systemUser = this.systemUser;
             frmMain.Navigate(attendance);
         }
 
         private void Tbi_Reporting_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Reports reports = new Reports();
+            reports.systemUser = this.systemUser;
             frmMain.Navigate(reports);
         }
 
@@ -86,13 +88,6 @@ namespace SchoolAbsenceMonitorUI
             frmMain.Navigate(admin);
         }
 
-        private void BtnUserDelete_Click(object sender, RoutedEventArgs e)
-        {
-            Admin admin = new Admin();
-            admin.Stk_SearchUser.Visibility = Visibility.Visible;
-            frmMain.Navigate(admin);
-        }
-
         private void BtnGuardAdd_Click(object sender, RoutedEventArgs e)
         {
             GuardianAdmin guardianAdmin = new GuardianAdmin();
@@ -102,14 +97,6 @@ namespace SchoolAbsenceMonitorUI
         }
 
         private void BtnGuardUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            GuardianAdmin guardianAdmin = new GuardianAdmin();
-            guardianAdmin.Stk_SearchGuardian.Visibility = Visibility.Visible;
-            guardianAdmin.systemUser = this.systemUser;
-            frmMain.Navigate(guardianAdmin);
-        }
-
-        private void BtnGuardDelete_Click(object sender, RoutedEventArgs e)
         {
             GuardianAdmin guardianAdmin = new GuardianAdmin();
             guardianAdmin.Stk_SearchGuardian.Visibility = Visibility.Visible;
@@ -133,14 +120,6 @@ namespace SchoolAbsenceMonitorUI
             frmMain.Navigate(pupilAdmin);
         }
 
-        private void BtnPupilDelete_Click(object sender, RoutedEventArgs e)
-        {
-            PupilAdmin pupilAdmin = new PupilAdmin();
-            pupilAdmin.Stk_SearchPupil.Visibility = Visibility.Visible;
-            pupilAdmin.systemUser = this.systemUser;
-            frmMain.Navigate(pupilAdmin);
-        }
-
         private void BtnTeacherAdd_Click(object sender, RoutedEventArgs e)
         {
             TeacherAdmin teacherAdmin = new TeacherAdmin();
@@ -150,14 +129,6 @@ namespace SchoolAbsenceMonitorUI
         }
 
         private void BtnTeacherUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            TeacherAdmin teacherAdmin = new TeacherAdmin();
-            teacherAdmin.Stk_SearchTeacher.Visibility = Visibility.Visible;
-            teacherAdmin.systemUser = this.systemUser;
-            frmMain.Navigate(teacherAdmin);
-        }
-
-        private void BtnTeacherDelete_Click(object sender, RoutedEventArgs e)
         {
             TeacherAdmin teacherAdmin = new TeacherAdmin();
             teacherAdmin.Stk_SearchTeacher.Visibility = Visibility.Visible;
@@ -181,14 +152,6 @@ namespace SchoolAbsenceMonitorUI
             frmMain.Navigate(absenceTypeAdmin);
         }
 
-        private void BtnAbsenceDelete_Click(object sender, RoutedEventArgs e)
-        {
-            AbsenceTypeAdmin absenceTypeAdmin = new AbsenceTypeAdmin();
-            absenceTypeAdmin.Stk_SearchAbsenceType.Visibility = Visibility.Visible;
-            absenceTypeAdmin.systemUser = this.systemUser;
-            frmMain.Navigate(absenceTypeAdmin);
-        }
-
         private void BtnClassAdd_Click(object sender, RoutedEventArgs e)
         {
             ClassAdmin classAdmin = new ClassAdmin();
@@ -205,12 +168,5 @@ namespace SchoolAbsenceMonitorUI
             frmMain.Navigate(classAdmin);
         }
 
-        private void BtnClassDelete_Click(object sender, RoutedEventArgs e)
-        {
-            ClassAdmin classAdmin = new ClassAdmin();
-            classAdmin.Stk_SearchClass.Visibility = Visibility.Visible;
-            classAdmin.systemUser = this.systemUser;
-            frmMain.Navigate(classAdmin);
-        }
     }
 }

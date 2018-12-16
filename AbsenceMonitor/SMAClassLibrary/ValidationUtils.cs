@@ -25,11 +25,12 @@ namespace SMAClassLibrary
             bool validData = true;
             try
             {
+                // Check if the field meets the length requirements
                 if (userName.Length == 0 || userName.Length >30)
                 {
                     validData = false;
                 }
-
+                // Check if the field contains chars
                 foreach (char ch in userName)
                 {
                     if (ch >='0' && ch <='9')
@@ -37,7 +38,7 @@ namespace SMAClassLibrary
                         validData = false;
                     }
                 }
-
+                // Check if the field meets the length requirements
                 if (password.Length == 0 || password.Length > 30)
                 {
                     validData = false;
@@ -75,22 +76,65 @@ namespace SMAClassLibrary
         {
             bool validData = true;
 
+            // Check if the field meets the length requirements
             if (givenName.Length == 0 || givenName.Length > 30)
             {
                 validData = false;
             }
+            else
+            {
+                // Check if the field contains chars
+                foreach (char ch in givenName)
+                {
+                    if (ch >= '0' && ch <= '9')
+                    {
+                        validData = false;
+                    }
+                }
+            }
 
+            // Check if the field meets the length requirements
             if (surname.Length == 0 || surname.Length > 30)
             {
                 validData = false;
             }
+            else
+            {
+                // Check if the field contains chars
+                foreach (char ch in surname)
+                {
+                    if (ch >= '0' && ch <= '9')
+                    {
+                        validData = false;
+                    }
+                }
+            }
 
+            // Check if the field meets the length requirements
             if (address.Length == 0 || address.Length > 100)
             {
                 validData = false;
             }
 
+            // Check if the field meets the length requirements
             if (mobileNo.Length == 0 || mobileNo.Length > 30)
+            {
+                validData = false;
+            }
+
+            return validData;
+        }
+
+        /// <summary>
+        /// Method verifies the date passed by the user is not null and not in the future
+        /// </summary>
+        /// <param name="selectedDate"></param>
+        /// <returns></returns>
+        public bool VerifyDate(DateTime selectedDate)
+        {
+            bool validData = true;
+            // Check if the date is null or in the future
+            if (selectedDate == null || selectedDate.Date > DateTime.Now)
             {
                 validData = false;
             }
@@ -120,13 +164,14 @@ namespace SMAClassLibrary
         public bool VerifyPupilFormData(string givenName, string surname, string guardianId, string classId)
         {
             bool validData = true;
-
+            // Check if the field meets the length requirements
             if (givenName.Length == 0 || givenName.Length > 30)
             {
                 validData = false;
             }
             else
             {
+                // Check if the field contains chars
                 foreach (char ch in givenName)
                 {
                     if (ch >= '0' && ch <= '9')
@@ -135,14 +180,15 @@ namespace SMAClassLibrary
                     }
                 }
             }
-           
 
+            // Check if the field meets the length requirements
             if (surname.Length == 0 || surname.Length > 30)
             {
                 validData = false;
             }
             else
             {
+                // Check if the field contains chars
                 foreach (char ch in surname)
                 {
                     if (ch >= '0' && ch <= '9')
@@ -154,6 +200,7 @@ namespace SMAClassLibrary
 
             try
             {
+                // Check if the guardianId exists in the database
                 int guardianIdToValidate = Convert.ToInt16(guardianId);
 
                 if (!smaDB.Guardians.Any( g=> g.GuardianId == guardianIdToValidate))
@@ -169,6 +216,7 @@ namespace SMAClassLibrary
 
             try
             {
+                // Check if the class exists in the database
                 int classIdtoValidate = Convert.ToInt16(classId);
 
                 if (!smaDB.Classes.Any(c => c.ClassId == classIdtoValidate))
@@ -203,12 +251,14 @@ namespace SMAClassLibrary
             bool validData = true;
 
             
-
+                // Check if the field meets the length requirements
                 if (givenName.Length == 0 || givenName.Length > 30)
                 {
                     validData = false;
                 }
 
+                
+                // Check if the field contains chars
                 foreach (char ch in givenName)
                 {
                     if (ch >= '0' && ch <= '9')
@@ -217,11 +267,12 @@ namespace SMAClassLibrary
                     }
                 }
 
+                // Check if the field meets the length requirements
                 if (surname.Length == 0 || surname.Length > 30)
                 {
                     validData = false;
                 }
-
+                // Check if the field contains chars    
                 foreach (char ch in surname)
                 {
                     if (ch >= '0' && ch <= '9')
@@ -230,7 +281,42 @@ namespace SMAClassLibrary
                     }
                 }
 
+            return validData;
+        }
 
+
+        /// <summary>
+        /// Method verifies form data to add an absence to the system database
+        /// </summary>
+        /// <param name="absenceDate">
+        /// Verify the date selected by the user
+        /// </param>
+        /// <param name="selectedAbsenceType">
+        /// The absence type selected by the user
+        /// </param>
+        /// <param name="pupilId">
+        /// The pupilId selected by the user
+        /// </param>
+        /// <returns>
+        /// bool validData
+        /// </returns>
+        public bool VerifyAbsenceFormData(DateTime absenceDate, int selectedAbsenceType, int pupilId)
+        {
+            bool validData = true;
+
+            // User the VerifyDateMethod to verify we have a valid date field
+            validData = VerifyDate(absenceDate);
+
+            // Check the absenceType is a positive integer
+            if (selectedAbsenceType <=0)
+            {
+                validData = false;
+            }
+            // Check the pupilId is a positive integer
+            if (pupilId<=0)
+            {
+                validData = false;
+            }
             return validData;
         }
     }

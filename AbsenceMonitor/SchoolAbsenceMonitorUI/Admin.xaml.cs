@@ -147,8 +147,17 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnAddUser_Click(object sender, RoutedEventArgs e)
         {
-            int selectAccessLevel = Convert.ToInt16( CmbBxAdminLevel.SelectedValue.ToString());
-            if (TbxGiven.Text.Length>0 && TbxSurname.Text.Length>0 && TbxUserId.Text.Length>0 && TbxPassword.Text.Length >0)
+            int selectAccessLevel = 0;
+            try
+            {
+                selectAccessLevel = Convert.ToInt16( CmbBxAdminLevel.SelectedValue.ToString());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Select an Access Level", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+            if (TbxGiven.Text.Length>0 && TbxSurname.Text.Length>0 && TbxUserId.Text.Length>0 && TbxPassword.Text.Length >0 && selectAccessLevel >0)
             {
               
                     if (userUtils.AddSystemUser(new SystemUser

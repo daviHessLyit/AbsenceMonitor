@@ -8,7 +8,6 @@
        d:DesignHeight="650" d:DesignWidth="1050"
       Title="Attendance"
       Loaded="Page_Loaded">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
@@ -22,7 +21,7 @@
         </Grid.RowDefinitions>
         
         <!-- Page Title  -->
-        <Label Content="Attendance Reporting" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Name="LblPageHeading" Content="Attendance Reporting" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
         <!-- Stack Panel containing the Class selection dropdown list  -->
         <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
             <Grid>
@@ -57,99 +56,149 @@
                               Width="800"
                               MaxHeight="600"
                               Grid.Row="1" >
-                    <ListBox Name="LbCheckList"
-                             VerticalAlignment="Top"
-                             SelectedValuePath="PupilId">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox Name="ChkPresent"
-                                                      IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
-                                    <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" Height="26" Text="{Binding FullName}"/>
-                                </CheckBox>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                        <!--<ListView.View>
+                    <ListView Name="LstPupilAttendance" SelectedValuePath="PupilId">
+                        <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Pupil Name" Width="250">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox Name="ChkPresent"
-                                                      IsChecked="{Binding IsSelected, Mode=TwoWay}" Checked="ChkPresent_Checked">
-                                                <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" Height="26" Text="{Binding FullName}"/>
-                                            </CheckBox>                                           
+                                            <StackPanel>
+                                                <TextBlock Margin="0,10" Width="250" Grid.Row="1" HorizontalAlignment="Left" Height="26" Text="{Binding FullName}"/>
+                                            </StackPanel>                                     
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                --><!--<GridViewColumn Header="Present" Width="150">
+                                <GridViewColumn Header="Status" Width="250">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox Name="ChkPresent"
-                                                      IsChecked="True" Content="Present"/>
+                                            <StackPanel>
+                                                <CheckBox 
+                                                    Tag="{Binding PupilId}"
+                                                    IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
+                                                    HorizontalAlignment="Right"
+                                                    Content="Present"
+                                                    Checked="ChkPresent_Checked"
+                                                    Unchecked="ChkPresent_Unchecked"/>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
-                                </GridViewColumn>--><!--
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
-                    </ListView>-->
+                    </ListView>
                 </ScrollViewer>
-                <Button Name="BtnConfirmAttendance"
-                        Grid.Row="2"
+                <StackPanel Grid.Row="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="Select Date" Margin="10,10" HorizontalAlignment="Left" Width="150"/>
+                        <DatePicker AllowDrop="True" Name="Dp_DateSelector" Grid.Row="0" Margin="10,10" Width="200"/>
+                        <Button Name="BtnConfirmAttendance"
+                        Grid.Row="1"
                         Height="26"
                         Width="150"
                         Content="Confirm Attendance"
                         Margin="15,15"
                         Click="BtnConfirmAttendance_Click"
                         HorizontalAlignment="Left"/>
-                <Button Name="BtnCancelAttendance"
-                        Grid.Row="2"
+                        <Button Name="BtnCancelAttendance"
+                        Grid.Row="1"
                         Height="26"
                         Width="150"
                         Content="Cancel"
                         Margin="15,15"
                         Click="BtnCancelAttendance_Click"
                         HorizontalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+               
             </Grid>
         </StackPanel>
         <!-- Stack Panel with dynamically created list of pupils who have been marked absent with the absence reason, list is reviewed and date is added and confimed -->
         <StackPanel Name="StkConfirmationPanel"  Visibility="Hidden" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45*"/>
-                    <RowDefinition Height="45*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-                <Label Name="LblDatePickerError" 
-                       Content="Error with Date selection" 
-                       FontSize="14" 
-                       Grid.Row="0" 
-                       HorizontalAlignment="Left" 
-                       FontWeight="Bold"
-                       Foreground="Red"
-                       Visibility="Hidden"/>
-                <ListView Name="ListVConfirmation" Grid.Row="0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Pupil Name" Width="250">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Grid.Row="1" Text="{Binding FullName}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Absence Reason" Width="150">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <Label Content="Absence Report for: " FontFamily="Calibri" FontSize="16" Grid.Row="1" HorizontalAlignment="Left"/>
-                <DatePicker Name="DatePAbsenceDate" AllowDrop="True" Grid.Row="1" HorizontalAlignment="Right" Width="250"/>
-                <Label Name="LblSubmitted" Content="Absence Report Submitted" FontFamily="Calibri" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              Width="300"
+                              MaxHeight="600"
+                              Grid.Row="0" 
+                              Grid.Column="0">
+                    <ListView Name="LstPupilAbsence" SelectedValuePath="PupilId">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Pupil Name" Width="250">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FullName}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Height="26"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>               
+                <StackPanel Grid.Row="0" Grid.Column="1" Name="StkPupilConfirmation">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*"/>
+                            <ColumnDefinition Width="50*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="33*"/>
+                            <RowDefinition Height="33*"/>
+                            <RowDefinition Height="33*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Absence Type" Margin="10,10" Grid.Row="1" Grid.Column="0"/>
+                        <ComboBox AllowDrop="True"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Width="150"
+                          MaxHeight="26"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Left"
+                          Margin="10,10"
+                          Name="CmbBxAbsenceTypeSelector"
+                          DisplayMemberPath="AbsenceType1"
+                          SelectedValuePath="AbsenceTypeId"/>
+                        <Button Name="BtnConfirmAbsence" Height="26" Width="150" Content="Confirm Pupil Absence" Margin="10,10" HorizontalAlignment="Right" Grid.Row="2" Click="BtnConfirmAbsence_Click"/>
+                    </Grid>                    
+                </StackPanel>
+                <StackPanel Grid.Row="3">
+                    <Label Margin="10,10" Name="Lbl_ComfirmationLbl" Content="Absence Report for: " FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left"/>                
+                    <TextBlock Name="Tblk_ReportBlock" Margin="10,10" HorizontalAlignment="Right" Width="400" Height="150" TextWrapping="Wrap" Visibility="Visible" FontSize="14"/>                    
+                </StackPanel>
+                
+                <Button Name="BtnSubmitReport"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Height="26"
+                        Width="150"
+                        Content="Submit Report"
+                        Margin="10,10"
+                        HorizontalAlignment="Left"
+                        Visibility="Hidden"/>
+                <Button Name="BtnFormReset"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Height="26"
+                        Width="150"
+                        Content="Reset Form"
+                        Margin="10,10"
+                        HorizontalAlignment="Right"
+                        Visibility="Hidden"/>                
             </Grid>
         </StackPanel>
     </Grid>

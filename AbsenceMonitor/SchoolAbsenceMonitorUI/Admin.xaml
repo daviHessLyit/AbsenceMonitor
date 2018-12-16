@@ -353,19 +353,5 @@
                 
             </Grid>
         </StackPanel>
-        
-         <!-- Stack Panel Containing the Reset button-->
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="50*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
-                <Button Grid.Column="0" Content="Reset" Height="26" Width="150" Name="BtnReset" Click="BtnReset_Click" Margin="10,0"/>
-            </Grid>
-        </StackPanel>
     </Grid>
 </Page>

@@ -131,7 +131,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Class" Width="150">
+                                <GridViewColumn Header="Address" Width="150">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding GuardianAddress}"/>
@@ -147,12 +147,12 @@
                                         <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Add Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True" >
+                                <MenuItem Header="Add Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True" Click="MnuIUpdatePupilAbsence_Click" >
                                     <MenuItem.Icon>
                                         <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Delete Pupil" Name="MnuIDeletePupil" IsEnabled="True">
+                                <MenuItem Header="Delete Pupil" Name="MnuIDeletePupil" IsEnabled="True" Click="MnuIDeletePupil_Click">
                                     <MenuItem.Icon>
                                         <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
                                     </MenuItem.Icon>
@@ -212,10 +212,10 @@
 
                 <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
                     <Button Name="BtnUpdatePupil" Height="26" Width="150" Content="Update Pupil" Margin="15,15" Click="BtnUpdatePupil_Click"/>
-                    <Button Name="BtnUpdatePupilCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10"/>
-                    <Button Name="BtnUpdatePupilReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10"/>
+                    <Button Name="BtnUpdatePupilCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdatePupilCancel_Click"/>
+                    <Button Name="BtnUpdatePupilReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdatePupilReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilUpdateErrorLabel"
-                                   FontSize="20"
+                                   FontSize="14"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Pupil"
@@ -226,7 +226,7 @@
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Add Pupil Absence -->
-        <StackPanel Name="Stk_UpdatePupilAbsenceForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+        <StackPanel Name="Stk_AddPupilAbsenceForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
@@ -253,42 +253,50 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
                     <Label Content="Given Name:" Margin="0,10"/>
                     <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Pupil ID:" Margin="0,10"/>
+                    <Label Content="Absence Reason:" Margin="0,10,10,0"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxUpdatePupilAbsenceGiven" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
-                    <TextBox Name="TbxUpdatePupilAbsenceSurname" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
-                    <TextBox Name="TbxUpdatePupilAbsenceID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceGiven" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="0"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceSurname" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <ComboBox AllowDrop="True"
+                              TabIndex="3"
+                              Text="Select Class"
+                              Width="200"
+                              Visibility="Visible"
+                              Margin="10,10"
+                              Name="CmbBxAbsenceTypeSelector"
+                              ItemsSource="{Binding}"
+                              DisplayMemberPath="AbsenceType1"
+                              SelectedValuePath="AbsenceTypeId"/>                    
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Class ID:" Margin="0,10"/>
-                    <Label Content="Absence Reason:" Margin="0,10,10,0"/>
+                    <Label Content="Class Name:" Margin="0,10"/>
+                    <Label Content="Pupil ID:" Margin="0,10"/>
                     <Label Content="Date:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxUpdatePupilAbsenceClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
-                    <Menu Name="Mnu_UpdatePupilAbsence" Grid.Row="1" Grid.Column="1" Width="150" Margin="10,15" VerticalAlignment="Center">
-                        <MenuItem Name="MnuI_AbsenceReason" Header="Select Absence Reason" AllowDrop="True">
-                            <MenuItem  Header="Absence Reason"/>
-                        </MenuItem>
-                    </Menu>
+                    <TextBox Name="TbxUpdatePupilAbsenceClassID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>                    
                     <DatePicker Name="DatePAbsenceDate" Margin="10,10" AllowDrop="True" Grid.Row="1" Width="150"/>
 
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnUpdatePupilAbsence" Height="26" Width="150" Content="Add Pupil Absence" Margin="15,15"/>
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilAddAbsenceErrorLabel"
-                                   FontSize="20"
+                    <Button Name="BtnUpdatePupilAbsence" Height="26" Width="150" Content="Add Pupil Absence" Margin="15,15" Click="BtnUpdatePupilAbsence_Click"/>
+                    <Button Name="BtnUpdatePupilAbsenceCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnUpdatePupilAbsenceCancel_Click"/>
+                    <Button Name="BtnUpdatePupilAbsenceReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnUpdatePupilAbsenceReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilAddAbsenceErrorLabel"
+                                   FontSize="14"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Pupil Absence"
                                    Visibility="Hidden"/>
+                </StackPanel>
+
+               
             </Grid>
         </StackPanel>
         <!-- Stack Panel containing the Delete Pupil form -->
@@ -330,15 +338,16 @@
 
 
                 <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
-                    <Button Name="BtnDeletePupil" Height="26" Width="150" Content="Delete Pupil" Margin="15,15"/>
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteErrorLabel"
-                                   FontSize="20"
+                    <Button Name="BtnDeletePupil" Height="26" Width="150" Content="Delete Pupil" Margin="15,15" Click="BtnDeletePupil_Click"/>
+                    <Button Name="BtnDeleteCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnDeleteCancel_Click"/>
+                    <Button Name="BtnDeleteReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnDeleteReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteErrorLabel"
+                                   FontSize="14"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the Pupil"
                                    Visibility="Hidden"/>
+                </StackPanel>
             </Grid>
         </StackPanel>
     </Grid>

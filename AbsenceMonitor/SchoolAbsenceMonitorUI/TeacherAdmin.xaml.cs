@@ -155,59 +155,74 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnDeleteTeacher_Click(object sender, RoutedEventArgs e)
         {
+            // Warn the user that the delete cannot be undone
             bool confirmDelete = MessageBox.Show("This action cannot be undone", "Confirm Deletion", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
 
+            // Deletion confirmed
             if (confirmDelete)
             {
-                int teacherDeleted = teacherUtils.DeleteTeacher(Convert.ToInt16(TbxDeleteTeacherID.Text.ToString()));
-
-                if (teacherDeleted == 1)
+                try
                 {
-                    BtnDeleteTeacher.Visibility = Visibility.Collapsed;
-                    BtnDeleteCancel.Visibility = Visibility.Collapsed;
-                    Lbl_DeleteTeacherLabel.Content = "Teacher Successfully Deleted";
-                    BtnDeleteReturn.Visibility = Visibility.Visible;
-                    try
+                    // Delete the selected record from the system database
+                    int teacherDeleted = teacherUtils.DeleteTeacher(Convert.ToInt16(TbxDeleteTeacherID.Text.ToString()));
+
+                    if (teacherDeleted == 1)
                     {
-                        systemEventUtils.AddSystemEvent(new SystemEvent
+                        // Deletion successful, display success message, update the system logs
+                        BtnDeleteTeacher.Visibility = Visibility.Collapsed;
+                        BtnDeleteCancel.Visibility = Visibility.Collapsed;
+                        Lbl_DeleteTeacherLabel.Content = "Teacher Successfully Deleted";
+                        BtnDeleteReturn.Visibility = Visibility.Visible;
+                        try
                         {
-                            UserId = systemUser.UserId,
-                            EventTypeId = 6,
-                            EventDateTime = DateTime.Now,
-                            EventData = $"Teacher record deleted at { DateTime.Now} , by {systemUser.Username}"
-                        });
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 6,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Teacher record deleted at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
-                    catch (EntityException)
+                    else
                     {
-                        MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        // Deletion failed, show the errror and reset the form, try to log the event to the system logs
+                        BtnDeleteTeacher.Visibility = Visibility.Collapsed;
+                        BtnDeleteCancel.Visibility = Visibility.Collapsed;
+                        Lbl_TeacherDeleteErrorLabel.Visibility = Visibility.Visible;
+                        BtnDeleteReturn.Visibility = Visibility.Visible;
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 1006,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Error deleting Teacher record { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        }
                     }
                 }
-                else
+                catch (Exception)
                 {
-                    BtnDeleteTeacher.Visibility = Visibility.Collapsed;
-                    BtnDeleteCancel.Visibility = Visibility.Collapsed;
-                    Lbl_TeacherDeleteErrorLabel.Visibility = Visibility.Visible;
-                    BtnDeleteReturn.Visibility = Visibility.Visible;
-                    try
-                    {
-                        systemEventUtils.AddSystemEvent(new SystemEvent
-                        {
-                            UserId = systemUser.UserId,
-                            EventTypeId = 1006,
-                            EventDateTime = DateTime.Now,
-                            EventData = $"Error deleting Teacher record { DateTime.Now} , by {systemUser.Username}"
-                        });
-                    }
-                    catch (EntityException)
-                    {
-                        MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                    }
+                    MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
+               
 
             }
             else
             {
+                // Disable button options - make return option available
                 BtnDeleteTeacher.Visibility = Visibility.Collapsed;
                 BtnDeleteCancel.Visibility = Visibility.Collapsed;
                 BtnDeleteReturn.Visibility = Visibility.Visible;
@@ -277,10 +292,10 @@ namespace SchoolAbsenceMonitorUI
                     BtnUpdateCancel.Visibility = Visibility.Collapsed;
                     BtnUpdateTeacher.Visibility = Visibility.Collapsed;
                     BtnUpdateReturn.Visibility = Visibility.Visible;
-                    TbxUpdateTeacherGiven.IsEnabled = false;
-                    TbxUpdateTeacherSurname.IsEnabled = false;
-                    TbxUpdateTeacherID.IsEnabled = false;
-                    CmbBxClassUpdateSelector.IsEnabled = false;
+                    TbxUpdateTeacherGiven.IsReadOnly = true;
+                    TbxUpdateTeacherSurname.IsReadOnly = true;
+                    TbxUpdateTeacherID.IsReadOnly = true;
+                    CmbBxClassUpdateSelector.IsReadOnly = true;
                     Lbl_UpdateTeacherLabel.Content = "Teacher Successfully Updated";
 
 
@@ -344,10 +359,10 @@ namespace SchoolAbsenceMonitorUI
             TbxUpdateTeacherGiven.Text = "";
             TbxUpdateTeacherSurname.Text = "";
             TbxUpdateTeacherID.Text = "";
-            TbxUpdateTeacherGiven.IsEnabled = true;
-            TbxUpdateTeacherSurname.IsEnabled = true;
-            TbxUpdateTeacherID.IsEnabled = true;
-            CmbBxClassUpdateSelector.IsEnabled = true;
+            TbxUpdateTeacherGiven.IsReadOnly = false;
+            TbxUpdateTeacherSurname.IsReadOnly = false;
+            TbxUpdateTeacherID.IsReadOnly = false;
+            CmbBxClassUpdateSelector.IsReadOnly = false;
             RefreshTeacherList();
             Stk_SearchTeacher.Visibility = Visibility.Visible;
         }

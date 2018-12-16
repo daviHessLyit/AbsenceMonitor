@@ -1,8 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace SMAClassLibrary
 {
@@ -21,14 +31,17 @@ namespace SMAClassLibrary
         /// </returns>
         public int AddPupil(Pupil addedPupil)
         {
+            // Check the database to ensure the pupil doesn't already exist
             var pupil = smaDB.Pupils.Where(p => p.GivenName == addedPupil.GivenName && p.Surname == addedPupil.Surname && p.GuardianId == addedPupil.GuardianId).FirstOrDefault();
 
+            // If the pupil exists return 0
             if (pupil !=null)
             {
                 return 0;
             }
             else
             {
+                // Commit the new pupil to the database.
                 smaDB.Entry(addedPupil).State = System.Data.Entity.EntityState.Added;
                 return smaDB.SaveChanges();
             }
@@ -44,25 +57,19 @@ namespace SMAClassLibrary
         ///  int signifying success (1) or failure (0) of operation
         /// </returns>
         public int UpdatePupil(Pupil pupil)
-        {
-            Pupil existingPupil = smaDB.Pupils.Where(p => p.PupilId == pupil.PupilId).FirstOrDefault();
+        {          
 
-            if (existingPupil != null)
+            // Loop through the pupils list and update the pupil matching the pupil id.
+            foreach (var existingPupil in smaDB.Pupils.Where(p => p.PupilId == pupil.PupilId))
             {
                 existingPupil.GivenName = pupil.GivenName;
                 existingPupil.Surname = pupil.Surname;
                 existingPupil.ClassId = pupil.ClassId;
-                existingPupil.GuardianId = pupil.GuardianId;
-
-                smaDB.Entry(existingPupil).State = System.Data.Entity.EntityState.Modified;
-
-                return smaDB.SaveChanges();
+                existingPupil.GuardianId = pupil.GuardianId;                
             }
-            else
-            {
-                return 0;
-            }
-            
+            // Return an int 
+            return smaDB.SaveChanges();
+
         }
 
         /// <summary>
@@ -76,10 +83,8 @@ namespace SMAClassLibrary
         /// </returns>
         public int DeletePupil(int pupilId)
         {
-            Pupil pupil = new Pupil();
-            pupil = smaDB.Pupils.Where(p => p.PupilId == pupil.PupilId).FirstOrDefault();
-
-            smaDB.Entry(pupil).State = System.Data.Entity.EntityState.Deleted;
+            // Delete the pupil from the database meeting the criteria
+            smaDB.Entry(smaDB.Pupils.Where(p => p.PupilId == pupilId)).State = System.Data.Entity.EntityState.Deleted;
 
             return smaDB.SaveChanges();
         }
@@ -97,22 +102,134 @@ namespace SMAClassLibrary
         {
             Pupil pupil = new Pupil();
 
+            // Return a pupil object matching the pupilId passed by the user.
             pupil = smaDB.Pupils.Where(p => p.PupilId == pupilId).FirstOrDefault();
 
             return pupil;
         }
 
-        public List<Pupil> SortPupilsbyLastAdded()
+        /// <summary>
+        /// Method returns a list of Pupils for the selected class
+        /// </summary>
+        /// <param name="classId">
+        /// int classId
+        /// </param>
+        /// <returns>
+        /// List<Pupil>
+        /// </returns>
+        public List<Pupil> GetPupilsByClass(int classId)
         {
-            var sortedPupils = smaDB.Pupils.OrderByDescending(p => p.PupilId).ToList();
-            return sortedPupils;
+            // Return a list of pupils from the selected class.
+            var classPupils = smaDB.Pupils.Where(p => p.ClassId == classId);
+
+            return classPupils.ToList();
         }
 
 
-        public List<Pupil> SortPupilsbyGuardianID()
+        public int RecordPupilAttendance(DateTime attendanceDate, List<Pupil> pupils)
         {
-            var sortedPupils = smaDB.Pupils.OrderBy(p => p.GuardianId).ToList();
-            return sortedPupils;
+            int attendanceId = 0;
+            List<PupilAttendance> pupilAttendances = new List<PupilAttendance>();
+            try
+            {
+                /*
+                 *Check the database to see if we have an attendance record for the specified date.
+                 * Use this record if it exists otherwise create a new attendance record.
+                 */
+
+                if (smaDB.Attendances.Any(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate)))
+                {
+                    var existingAttendance = smaDB.Attendances.Where(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate)).FirstOrDefault();
+
+                    attendanceId = existingAttendance.AttendanceId;
+                }
+                else
+                {
+                    // Create a new attendance object with the date passed in by the user.
+                    Attendance attendance = new Attendance
+                    {
+                        AttendanceDate = attendanceDate.Date
+                    };
+
+                    // Add the attendance to the database
+                    try
+                    {
+                        smaDB.Entry(attendance).State = System.Data.Entity.EntityState.Added;
+                        smaDB.SaveChanges();
+                        attendanceId = attendance.AttendanceId;
+
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Problem adding attendance records, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }            
+                
+                // Loop through the list of pupils and create a pupilAttendance object for each pupil
+                foreach (var pupil in pupils)
+                {
+                    pupilAttendances.Add(
+                    new PupilAttendance
+                    {
+                        PupilId = pupil.PupilId,
+                        AttendanceId = attendanceId
+                    });
+                }
+
+                // Commit the pupilAttendances to the database.
+                if (pupilAttendances.Count >0)
+                {
+                    try
+                    {
+                        smaDB.PupilAttendances.AddRange(pupilAttendances);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Problem adding pupil attendance records", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    
+                }
+
+                return smaDB.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Problem adding attendance records", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return 0;
+            }           
+        }
+
+        /// <summary>
+        /// Method will do simultaneous inserts to the pupilAbsence table and the Absence table
+        /// </summary>
+        /// <param name="absence">
+        /// Absence details
+        /// </param>
+        /// <param name="pupilId">
+        /// PupilId of the selected pupil
+        /// </param>
+        /// <returns>
+        ///  int signifying success (1) or failure (0) of operation
+        /// </returns>
+        public int AddPupilAbsence(Absence absence, int pupilId)
+        {
+            // Add the absence passed into  the method to the system database
+            smaDB.Absences.Add(absence);
+            smaDB.SaveChanges();
+
+            // Get the absenceId from the absence
+            int absenceId = absence.AbsenceId;
+
+            // Create a new pupilAbsence object and pass in the absenceId and pupilId
+            smaDB.PupilAbsences.Add(new PupilAbsence
+            {
+                PupilId = pupilId,
+                AbsenceId = absenceId
+            });
+
+            // Save the changes and return an int signifying success or failure.
+            return smaDB.SaveChanges();
         }
 
 
