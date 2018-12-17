@@ -32,13 +32,13 @@ namespace SMAClassLibrary
         }
 
         // Method deletes the selected user from the database
-        public void DeleteSystemUser(int systemUserId)
+        public int DeleteSystemUser(int systemUserId)
         {
             SystemUser systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.UserId == systemUserId);
             // Remove the system user from the DataBase
             smaDB.Entry(systemUser).State = System.Data.Entity.EntityState.Deleted;
             // Save the changes to the database
-            smaDB.SaveChanges();
+            return smaDB.SaveChanges();
 
         }
 

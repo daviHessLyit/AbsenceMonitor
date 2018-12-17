@@ -78,6 +78,7 @@ namespace SchoolAbsenceMonitorUI
         {
             Admin admin = new Admin();
             admin.Stk_AddUser.Visibility = Visibility.Visible;
+            admin.systemUser = this.systemUser;
             frmMain.Navigate(admin);
         }
 
@@ -85,6 +86,7 @@ namespace SchoolAbsenceMonitorUI
         {
             Admin admin = new Admin();
             admin.Stk_SearchUser.Visibility = Visibility.Visible;
+            admin.systemUser = this.systemUser;
             frmMain.Navigate(admin);
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,8 @@ namespace SchoolAbsenceMonitorUI
         SMADBEntities smaDB = new SMADBEntities("metadata = res://*/SchoolAbsenceMonitorModel.csdl|res://*/SchoolAbsenceMonitorModel.ssdl|res://*/SchoolAbsenceMonitorModel.msl;provider=System.Data.SqlClient;provider connection string='data source=DBSERVER;initial catalog=SMA_DB;persist security info=True;user id=davihess;password=d4vidH355;pooling=False;MultipleActiveResultSets=True;App=EntityFramework'");
         SystemUserUtils userUtils = new SystemUserUtils();
         List<SystemUser> systemUsers = new List<SystemUser>();
+        SystemEventUtils systemEventUtils = new SystemEventUtils();
+        public SystemUser systemUser = new SystemUser();
 
         public Admin()
         {
@@ -38,53 +41,70 @@ namespace SchoolAbsenceMonitorUI
 
         private void MnuIUpdateUser_Click(object sender, RoutedEventArgs e)
         {
-            Stk_SearchUser.Visibility = Visibility.Hidden;
-            // Get the selected user details from the data base
-            var selectedUser = userUtils.GetUserDetails(Convert.ToInt16(LstUserSearch.SelectedValue.ToString()));
-            // Populate the user update details form.
-            TbxUpdateUserGiven.Text = selectedUser.GivenName.ToString();
-            TbxUpdateUserSurname.Text = selectedUser.Surname.ToString();
-            TbxUpdateUserName.Text = selectedUser.Username.ToString();
-            TbxUpdatePassword.Text = selectedUser.Password.ToString();
-            TbxUpdateUserID.Text = selectedUser.UserId.ToString();
-            // Make the form visible to the user.
-            Stk_UpdateUserForm.Visibility = Visibility.Visible;
+            try
+            {
+                Stk_SearchUser.Visibility = Visibility.Hidden;
+                // Get the selected user details from the data base
+                var selectedUser = userUtils.GetUserDetails(Convert.ToInt16(LstUserSearch.SelectedValue.ToString()));
+                // Populate the user update details form.
+                TbxUpdateUserGiven.Text = selectedUser.GivenName.ToString();
+                TbxUpdateUserSurname.Text = selectedUser.Surname.ToString();
+                TbxUpdateUserName.Text = selectedUser.Username.ToString();
+                TbxUpdatePassword.Text = selectedUser.Password.ToString();
+                TbxUpdateUserID.Text = selectedUser.UserId.ToString();
+                // Make the form visible to the user.
+                Stk_UpdateUserForm.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void UpdateFormReload(int systemUserId)
         {
-            var selectedUser = userUtils.GetUserDetails(systemUserId);
-            // Populate the user update details form.
-            TbxUpdateUserGiven.Text = selectedUser.GivenName.ToString();
-            TbxUpdateUserGiven.IsEnabled = false;
-            TbxUpdateUserSurname.Text = selectedUser.Surname.ToString();
-            TbxUpdateUserSurname.IsEnabled = false;
-            TbxUpdateUserName.Text = selectedUser.Username.ToString();
-            TbxUpdateUserName.IsEnabled = false;
-            TbxUpdatePassword.Text = selectedUser.Password.ToString();
-            TbxUpdatePassword.IsEnabled = false;
-            TbxUpdateUserID.Text = selectedUser.UserId.ToString();
-            LblAccessLevelDrp.Visibility = Visibility.Collapsed;
-            LblAccLvlId.Visibility = Visibility.Visible;
-            TbxUpdateAccessLevelId.Text = selectedUser.AccessLevelId.ToString();
-            TbxUpdateAccessLevelId.Visibility = Visibility.Visible;
-            CmbBxUpdateAdminLevel.Visibility = Visibility.Collapsed;
-            Lbl_UserUpdateSuccessLabel.Visibility = Visibility.Visible;
-            BtnUpdateUser.Visibility = Visibility.Collapsed;
-            BtnCancel.Visibility = Visibility.Collapsed;
-            BtnReturn.Visibility = Visibility.Visible;
+            try
+            {
+                var selectedUser = userUtils.GetUserDetails(systemUserId);
+                // Populate the user update details form.
+                TbxUpdateUserGiven.Text = selectedUser.GivenName.ToString();
+                TbxUpdateUserGiven.IsReadOnly = true;
+                TbxUpdateUserSurname.Text = selectedUser.Surname.ToString();
+                TbxUpdateUserSurname.IsReadOnly = true;
+                TbxUpdateUserName.Text = selectedUser.Username.ToString();
+                TbxUpdateUserName.IsReadOnly = true;
+                TbxUpdatePassword.Text = selectedUser.Password.ToString();
+                TbxUpdatePassword.IsReadOnly = true;
+                TbxUpdateUserID.Text = selectedUser.UserId.ToString();
+                LblAccessLevelDrp.Visibility = Visibility.Collapsed;
+                LblAccLvlId.Visibility = Visibility.Visible;
+                TbxUpdateAccessLevelId.Text = selectedUser.AccessLevelId.ToString();
+                TbxUpdateAccessLevelId.Visibility = Visibility.Visible;
+                CmbBxUpdateAdminLevel.Visibility = Visibility.Collapsed;
+                Lbl_UserUpdateSuccessLabel.Visibility = Visibility.Visible;
+                BtnUpdateUser.Visibility = Visibility.Collapsed;
+                BtnCancel.Visibility = Visibility.Collapsed;
+                BtnReturn.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          
         }
 
         private void UpdateFormReset()
         {
+            // Reset the update form.
             TbxUpdateUserGiven.Clear();
-            TbxUpdateUserGiven.IsEnabled = true;
+            TbxUpdateUserGiven.IsReadOnly = false;
             TbxUpdateUserSurname.Clear();
-            TbxUpdateUserSurname.IsEnabled = true;
+            TbxUpdateUserSurname.IsReadOnly = false;
             TbxUpdateUserName.Clear();
-            TbxUpdateUserName.IsEnabled = true;
+            TbxUpdateUserName.IsReadOnly = false;
             TbxUpdatePassword.Clear();
-            TbxUpdatePassword.IsEnabled = true;
+            TbxUpdatePassword.IsReadOnly = false;
             TbxUpdateUserID.Clear();
 
             LblAccLvlId.Visibility = Visibility.Hidden;
@@ -116,6 +136,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void RefreshUserDetails()
         {
+            // Refresh the listview
             systemUsers.Clear();
             LstUserSearch.ItemsSource = systemUsers;           
             foreach (var systemUser in smaDB.SystemUsers)
@@ -129,12 +150,14 @@ namespace SchoolAbsenceMonitorUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Instantiate the listview on page load
             LstUserSearch.ItemsSource = systemUsers;
             foreach (var systemUser in smaDB.SystemUsers)
             {
                 systemUsers.Add(systemUser);
             }
             
+            // Populate the combo box.
             PopulateComboBox();
         }
         public List<AccessLevel> AccessLevels {get;set;}
@@ -159,7 +182,7 @@ namespace SchoolAbsenceMonitorUI
             
             if (TbxGiven.Text.Length>0 && TbxSurname.Text.Length>0 && TbxUserId.Text.Length>0 && TbxPassword.Text.Length >0 && selectAccessLevel >0)
             {
-              
+                    // Add the new user details to the system
                     if (userUtils.AddSystemUser(new SystemUser
                     {
                         GivenName = TbxGiven.Text,
@@ -189,6 +212,7 @@ namespace SchoolAbsenceMonitorUI
         {
             try
             {
+                // Update the user details 
                 Lbl_UpdateUserErrorLabel.Visibility = Visibility.Hidden;
                 int selectAccessLevel = Convert.ToInt16(CmbBxUpdateAdminLevel.SelectedValue.ToString());
                 userUtils.UpdateUserDetails(new SystemUser
@@ -205,6 +229,7 @@ namespace SchoolAbsenceMonitorUI
             }
             catch (Exception)
             {
+                // Display an error messae if there is an exception
                 Lbl_UpdateUserErrorLabel.Visibility = Visibility.Visible;
                 Lbl_UpdateUserErrorLabel.Content = "Select an Access Level from the dropdown";
             }
@@ -212,6 +237,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
+            // Reset the form and return to the search page
             Stk_UpdateUserForm.Visibility = Visibility.Hidden;
             ReloadUserSearch("Update");
             Stk_SearchUser.Visibility = Visibility.Visible;
@@ -219,11 +245,13 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
+            // Reset the form and return to the search page
             ReloadUserSearch("Update");
         }
 
         private void DeleteFormReset()
         {
+            // Reset the Delete form
             TbxDeleteUserGiven.Clear();
             TbxDeleteUserSurname.Clear();
             TbxDeleteUserName.Clear();
@@ -238,18 +266,55 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnDeleteUser_Click(object sender, RoutedEventArgs e)
         {           
-
+            // Ask the user to confrim deletion before continuing with the operation.
             bool confirmDelete = MessageBox.Show("This action cannot be undone","Confirm Deletion", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
 
             if (confirmDelete)
             {
                 try
                 {
-                    userUtils.DeleteSystemUser(Convert.ToInt16(TbxDeleteUserId.Text.ToString()));
-                    BtnDeleteUser.Visibility = Visibility.Collapsed;
-                    BtnDeleteUserCancel.Visibility = Visibility.Collapsed;
-                    BtnDeleteUserReturn.Visibility = Visibility.Visible;
-                    Lbl_UserDeleteSuccessLabel.Visibility = Visibility.Visible;
+                   int userDeleted = userUtils.DeleteSystemUser(Convert.ToInt16(TbxDeleteUserId.Text.ToString()));
+
+                    if (userDeleted == 1)
+                    {
+                        BtnDeleteUser.Visibility = Visibility.Collapsed;
+                        BtnDeleteUserCancel.Visibility = Visibility.Collapsed;
+                        BtnDeleteUserReturn.Visibility = Visibility.Visible;
+                        Lbl_UserDeleteSuccessLabel.Visibility = Visibility.Visible;
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 6,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"SystemUser record deleted at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 1006,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Error deleting SystemUser record { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        }
+                    }
+
                 }
                 catch (Exception)
                 {

@@ -32,8 +32,10 @@ namespace SchoolAbsenceMonitorUI
         public List<Pupil> attendingPupils = new List<Pupil>();
         public List<Pupil> absentPupils = new List<Pupil>();
         public int selectedClass = 0;
+        public int absenceCount = 0;
         public DateTime selectedDate = new DateTime();
         public string absenceReport = "";
+        public string selectedReportingClass = "";
 
 
         public Attendance()
@@ -73,7 +75,9 @@ namespace SchoolAbsenceMonitorUI
 
             try
             {
-              
+
+                var reportingClass = (Class)CmbBxClassSelector.SelectedItem;
+                selectedReportingClass = reportingClass.ClassName;
                 // Pass the int value of the selected class
                 selectedClass = Convert.ToInt16(CmbBxClassSelector.SelectedValue.ToString());
 
@@ -127,7 +131,7 @@ namespace SchoolAbsenceMonitorUI
                 }
                 else
                 {
-                    // Validate selected so attendances and absences can now be recorded
+                    // Valid date selected so attendances and absences can now be recorded
 
                     // Clear the list of attending pupils
                     attendingPupils.Clear();
@@ -142,6 +146,7 @@ namespace SchoolAbsenceMonitorUI
                         absentPupils.Remove((Pupil)item);
                     }
 
+                    absenceCount = absentPupils.Count;
                     // If there are pupils in the attending list create an attendance object and submit the attendances for all pupils to the database
                     if (attendingPupils.Count > 0)
                     {
@@ -207,8 +212,8 @@ namespace SchoolAbsenceMonitorUI
                             LstPupilAbsence.ItemsSource = absentPupils;
                             LstPupilAbsence.Items.Refresh();
                             PopulateAbsenceTypeList();
-                            LblPageHeading.Content = "Absence Reporting";                              
-
+                            LblPageHeading.Content = "Absence Reporting";
+                            Lbl_ComfirmationLbl.Content = $"Absence Report for: {selectedReportingClass}";
 
 
                         }
@@ -252,33 +257,88 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnConfirmAbsence_Click(object sender, RoutedEventArgs e)
         {
+          
+            // The user can submit absence reports for each of the pupils marked as absent at this point.
             if (absentPupils.Count >0)
             {
-                Pupil absentPupil = (Pupil)LstPupilAbsence.SelectedItem;
-                int selectedAbsenceTypeId = CmbBxAbsenceTypeSelector.SelectedIndex;
-                var currentAbsenceType = (AbsenceType) CmbBxAbsenceTypeSelector.SelectedItem;
-                string selectedAbsenceType = currentAbsenceType.AbsenceType1;
+                try
+                {
+                    // The pupil selected from the listview
+                    Pupil absentPupil = (Pupil)LstPupilAbsence.SelectedItem;
 
+                    // The absence type selected from the dropdown
+                    var currentAbsenceType = (AbsenceType)CmbBxAbsenceTypeSelector.SelectedItem;
 
-                string selectedAbsenceType1 = CmbBxAbsenceTypeSelector.SelectedValue.ToString();
-                string selectedAbsenceType2 = CmbBxAbsenceTypeSelector.SelectedValuePath.ToString();
-                string selectedAbsenceType3 = CmbBxAbsenceTypeSelector.DisplayMemberPath.ToString();
-                string selectedAbsenceType4 = CmbBxAbsenceTypeSelector.Items.ToString();
-                absenceReport = absenceReport + $"{absentPupil.FullName} has been reported absent on {selectedDate.ToShortDateString()}: "
-                   + Environment.NewLine + $"Absence Reason: {selectedAbsenceType}"
-                   + Environment.NewLine;
+                    // Record the absence on the database.
+                    int absenceAdded = pupilUtils.AddPupilAbsence(new Absence
+                    {
+                        AbsenceTypeId = currentAbsenceType.AbsenceTypeId,
+                        AbsenceDate = selectedDate.Date
+                    }, absentPupil.PupilId);
 
-                absentPupils.Remove(absentPupil);
-                RefreshAbsentPupilList(absentPupils);
+                    // If the record is sucessfully added record it in the system logs.
+                    if (absenceAdded == 1)
+                    {
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 3,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Absence added at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        // If there was a problem in the save operation try and update the system logs.
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 1006,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Problem adding Pupil absence record at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
 
-                Tblk_ReportBlock.Text = absenceReport;
+                    // Populate the variable that will be shown back to the user with the absence details being reported.
+                    absenceReport = absenceReport + $"{absentPupil.FullName} has been reported absent on {selectedDate.ToShortDateString()}: "
+                       + Environment.NewLine + $"Absence Reason: {currentAbsenceType.AbsenceType1}"
+                       + Environment.NewLine;
 
+                    // Remove the student from the Listview after their details are recorded
+                    absentPupils.Remove(absentPupil);
+                    // Refresh the Listview
+                    RefreshAbsentPupilList(absentPupils);
+                    // Print the selected pupils details to screen 
+                    Tblk_ReportBlock.Text = absenceReport;
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Make sure you have a pupil and absence reason selected", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {
+                string finalReport = Environment.NewLine + $"FINAL REPORT for {selectedReportingClass}" + Environment.NewLine + $"{attendingPupils.Count} attending school and {absenceCount} " +
+                    $"reported absent on {selectedDate.ToShortDateString()} ";
+
+                Tblk_ReportBlock.Text = absenceReport + finalReport;
                 LstPupilAbsence.Visibility = Visibility.Collapsed;
                 StkPupilConfirmation.Visibility = Visibility.Collapsed;
-                BtnFormReset.Visibility = Visibility.Visible;
                 BtnSubmitReport.Visibility = Visibility.Visible;
             }
            

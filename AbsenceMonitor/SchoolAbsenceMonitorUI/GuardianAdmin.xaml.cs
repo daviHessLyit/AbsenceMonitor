@@ -270,7 +270,7 @@ namespace SchoolAbsenceMonitorUI
                                     UserId = systemUser.UserId,
                                     EventTypeId = 1006,
                                     EventDateTime = DateTime.Now,
-                                    EventData = $"Error deleting Teacher record { DateTime.Now} , by {systemUser.Username}"
+                                    EventData = $"Error deleting Guardian record { DateTime.Now} , by {systemUser.Username}"
                                 });
                             }
                             catch (EntityException)
