@@ -126,7 +126,7 @@ namespace SMAClassLibrary
         }
 
 
-        public int RecordPupilAttendance(DateTime attendanceDate, List<Pupil> pupils)
+        public int RecordPupilAttendance(DateTime attendanceDate, int selectedClassId, List<Pupil> pupils)
         {
             int attendanceId = 0;
             List<PupilAttendance> pupilAttendances = new List<PupilAttendance>();
@@ -137,18 +137,12 @@ namespace SMAClassLibrary
                  * Use this record if it exists otherwise create a new attendance record.
                  */
 
-                if (smaDB.Attendances.Any(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate)))
-                {
-                    var existingAttendance = smaDB.Attendances.Where(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate)).FirstOrDefault();
-
-                    attendanceId = existingAttendance.AttendanceId;
-                }
-                else
-                {
                     // Create a new attendance object with the date passed in by the user.
                     Attendance attendance = new Attendance
                     {
-                        AttendanceDate = attendanceDate.Date
+                        AttendanceDate = attendanceDate.Date,
+                        ClassId = selectedClassId
+
                     };
 
                     // Add the attendance to the database
@@ -163,7 +157,7 @@ namespace SMAClassLibrary
                     {
                         MessageBox.Show("Problem adding attendance records, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }            
+                        
                 
                 // Loop through the list of pupils and create a pupilAttendance object for each pupil
                 foreach (var pupil in pupils)

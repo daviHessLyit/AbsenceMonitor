@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SMA_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SMA_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absence">
           <Key>
             <PropertyRef Name="AbsenceId" />
@@ -33,6 +33,7 @@
           </Key>
           <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AttendanceDate" Type="date" Nullable="false" />
+          <Property Name="ClassId" Type="int" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -127,6 +128,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Attendance_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pupil_ToClass">
           <End Role="Class" Type="Self.Class" Multiplicity="1" />
           <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
@@ -152,7 +165,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PupilAbsence_ToAbsence">
-          <End Role="Absence" Type="Self.Absence" Multiplicity="1" />
+          <End Role="Absence" Type="Self.Absence" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PupilAbsence" Type="Self.PupilAbsence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Absence">
@@ -164,7 +179,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PupilAbsence_ToPupil">
-          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PupilAbsence" Type="Self.PupilAbsence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pupil">
@@ -176,7 +193,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PupilAttendance_ToAttendance">
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PupilAttendance" Type="Self.PupilAttendance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Attendance">
@@ -188,7 +207,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PupilAttendance_ToPupil">
-          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PupilAttendance" Type="Self.PupilAttendance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pupil">
@@ -265,6 +286,10 @@
             <End Role="AbsenceType" EntitySet="AbsenceType" />
             <End Role="Absence" EntitySet="Absence" />
           </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Class" Association="Self.FK_Attendance_Class">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pupil_ToClass" Association="Self.FK_Pupil_ToClass">
             <End Role="Class" EntitySet="Class" />
             <End Role="Pupil" EntitySet="Pupil" />
@@ -306,8 +331,7 @@
             <End Role="Teacher" EntitySet="Teacher" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SMA_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -344,6 +368,8 @@
           <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="PupilAttendances" Relationship="Self.FK_PupilAttendance_ToAttendance" FromRole="Attendance" ToRole="PupilAttendance" />
+          <Property Name="ClassId" Type="Int32" />
+          <NavigationProperty Name="Class" Relationship="SMA_DBModel.FK_Attendance_Class" FromRole="Attendance" ToRole="Class" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -353,6 +379,7 @@
           <Property Name="ClassName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pupils" Relationship="Self.FK_Pupil_ToClass" FromRole="Class" ToRole="Pupil" />
           <NavigationProperty Name="Teachers" Relationship="Self.FK_Teacher_ToClass" FromRole="Class" ToRole="Teacher" />
+          <NavigationProperty Name="Attendances" Relationship="SMA_DBModel.FK_Attendance_Class" FromRole="Class" ToRole="Attendance" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -633,7 +660,23 @@
             <End Role="SystemUser" EntitySet="SystemUsers" />
             <End Role="SystemEvent" EntitySet="SystemEvents" />
           </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Class" Association="SMA_DBModel.FK_Attendance_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Attendance_Class">
+          <End Type="SMA_DBModel.Class" Role="Class" Multiplicity="0..1" />
+          <End Type="SMA_DBModel.Attendance" Role="Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -668,6 +711,7 @@
           <EntitySetMapping Name="Attendances">
             <EntityTypeMapping TypeName="SMA_DBModel.Attendance">
               <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
                 <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
               </MappingFragment>

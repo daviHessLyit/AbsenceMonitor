@@ -26,8 +26,9 @@
         <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
                     <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="25*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Select Class From the List" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
                 <ComboBox AllowDrop="True"
@@ -42,6 +43,7 @@
                           DisplayMemberPath="ClassName"
                           SelectedValuePath="ClassId"
                           SelectionChanged="CmbBxClassSelector_SelectionChanged"/>
+                <Label Name="LblConfirmation" Content="Attendance / Absence Report Committed" FontSize="14" Grid.Row="2" HorizontalAlignment="Left" Visibility="Collapsed"/>
             </Grid>   
         </StackPanel>
         <!-- Stack Panel with dynamically created list of Pupil Names for the selected class -->
@@ -178,7 +180,15 @@
                 </StackPanel>
                 <StackPanel Grid.Row="3">
                     <Label Margin="10,10" Name="Lbl_ComfirmationLbl" Content="Absence Report for: " FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left"/>                
-                    <TextBlock Name="Tblk_ReportBlock" Margin="10,10" HorizontalAlignment="Right" Width="400" Height="350" TextWrapping="Wrap" Visibility="Visible" FontSize="14"/>                    
+                    <TextBlock Name="Tblk_ReportBlock"
+                               Margin="10,10"
+                               HorizontalAlignment="Right"
+                               Width="400" Height="350"
+                               TextWrapping="Wrap"
+                               Visibility="Visible"
+                               Background="White"
+                               Foreground="Blue"
+                               FontSize="14"/>                    
                 </StackPanel>
                 
                 <Button Name="BtnSubmitReport"
@@ -189,7 +199,7 @@
                         Content="Submit Report"
                         Margin="10,10"
                         HorizontalAlignment="Left"
-                        Visibility="Hidden"/>       
+                        Visibility="Hidden" Click="BtnSubmitReport_Click"/>       
             </Grid>
         </StackPanel>
     </Grid>

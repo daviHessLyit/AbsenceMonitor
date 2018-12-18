@@ -19,6 +19,7 @@ namespace SMAClassLibrary
         {
             this.Pupils = new HashSet<Pupil>();
             this.Teachers = new HashSet<Teacher>();
+            this.Attendances = new HashSet<Attendance>();
         }
     
         public int ClassId { get; set; }
@@ -28,5 +29,7 @@ namespace SMAClassLibrary
         public virtual ICollection<Pupil> Pupils { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Teacher> Teachers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

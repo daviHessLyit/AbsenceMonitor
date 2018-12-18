@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,7 +76,7 @@ namespace SchoolAbsenceMonitorUI
 
             try
             {
-
+                LblConfirmation.Visibility = Visibility.Collapsed;
                 var reportingClass = (Class)CmbBxClassSelector.SelectedItem;
                 selectedReportingClass = reportingClass.ClassName;
                 // Pass the int value of the selected class
@@ -131,100 +132,108 @@ namespace SchoolAbsenceMonitorUI
                 }
                 else
                 {
-                    // Valid date selected so attendances and absences can now be recorded
-
-                    // Clear the list of attending pupils
-                    attendingPupils.Clear();
-
-                    // Populate the list of absent pupils with all pupils from the selected class
-                    absentPupils = pupilUtils.GetPupilsByClass(selectedClass);
-
-                    // Loop through the selected pupils from the list view, add seleted pupils to the attending list and remove from the absent list.
-                    foreach (var item in LstPupilAttendance.SelectedItems)
+                    if (smaDB.Attendances.Any(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(selectedDate) && a.ClassId == selectedClass))
                     {
-                        attendingPupils.Add((Pupil)item);
-                        absentPupils.Remove((Pupil)item);
-                    }
-
-                    absenceCount = absentPupils.Count;
-                    // If there are pupils in the attending list create an attendance object and submit the attendances for all pupils to the database
-                    if (attendingPupils.Count > 0)
-                    {
-                        try
-                        {
-                            int attendanceAdded = pupilUtils.RecordPupilAttendance(selectedDate, attendingPupils);
-
-                            if (attendanceAdded == attendingPupils.Count)
-                            {
-                                try
-                                {
-                                    systemEventUtils.AddSystemEvent(new SystemEvent
-                                    {
-                                        UserId = systemUser.UserId,
-                                        EventTypeId = 3,
-                                        EventDateTime = DateTime.Now,
-                                        EventData = $"Attendances added at { DateTime.Now} , by {systemUser.Username}"
-                                    });
-                                }
-                                catch (EntityException)
-                                {
-                                    MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                }
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    systemEventUtils.AddSystemEvent(new SystemEvent
-                                    {
-                                        UserId = systemUser.UserId,
-                                        EventTypeId = 1006,
-                                        EventDateTime = DateTime.Now,
-                                        EventData = $"Problem adding Pupil attendance records at { DateTime.Now} , by {systemUser.Username}"
-                                    });
-                                }
-                                catch (EntityException)
-                                {
-                                    MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                }
-                            }
-
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-
-                    /*
-                     * If there are absent pupils we need to loop through and create pupilAbsence objects for each one.
-                     * Initial create an absence object with the date and absence reason added. Then create the absence reason with the absenceId and pupilId added.
-                     */
-                    if (absentPupils.Count > 0)
-                    {
-                        try
-                        {
-                            // There are pupils absent from the selected class so individual reasons 
-                            StkConfirmationPanel.Visibility = Visibility.Visible;
-                            Stk_ClassList.Visibility = Visibility.Hidden;
-                            Stk_MenuPanel.Visibility = Visibility.Hidden;
-
-                            LstPupilAbsence.ItemsSource = absentPupils;
-                            LstPupilAbsence.Items.Refresh();
-                            PopulateAbsenceTypeList();
-                            LblPageHeading.Content = "Absence Reporting";
-                            Lbl_ComfirmationLbl.Content = $"Absence Report for: {selectedReportingClass}";
-
-
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        MessageBox.Show("Attendance already recorded for this class  on the selected date", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
-                       // Must have been full attendance for the selected class 
+                        // Valid date selected so attendances and absences can now be recorded
+
+                        // Clear the list of attending pupils
+                        attendingPupils.Clear();
+
+                        // Populate the list of absent pupils with all pupils from the selected class
+                        absentPupils = pupilUtils.GetPupilsByClass(selectedClass);
+
+                        // Loop through the selected pupils from the list view, add seleted pupils to the attending list and remove from the absent list.
+                        foreach (var item in LstPupilAttendance.SelectedItems)
+                        {
+                            attendingPupils.Add((Pupil)item);
+                            absentPupils.Remove((Pupil)item);
+                        }
+
+                        absenceCount = absentPupils.Count;
+                        // If there are pupils in the attending list create an attendance object and submit the attendances for all pupils to the database
+                        if (attendingPupils.Count > 0)
+                        {
+                            try
+                            {
+                                int attendanceAdded = pupilUtils.RecordPupilAttendance(selectedDate, selectedClass, attendingPupils);
+
+                                if (attendanceAdded == attendingPupils.Count)
+                                {
+                                    try
+                                    {
+                                        systemEventUtils.AddSystemEvent(new SystemEvent
+                                        {
+                                            UserId = systemUser.UserId,
+                                            EventTypeId = 3,
+                                            EventDateTime = DateTime.Now,
+                                            EventData = $"Attendances added at { DateTime.Now} , by {systemUser.Username}"
+                                        });
+                                    }
+                                    catch (EntityException)
+                                    {
+                                        MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        systemEventUtils.AddSystemEvent(new SystemEvent
+                                        {
+                                            UserId = systemUser.UserId,
+                                            EventTypeId = 1006,
+                                            EventDateTime = DateTime.Now,
+                                            EventData = $"Problem adding Pupil attendance records at { DateTime.Now} , by {systemUser.Username}"
+                                        });
+                                    }
+                                    catch (EntityException)
+                                    {
+                                        MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+
+                        /*
+                         * If there are absent pupils we need to loop through and create pupilAbsence objects for each one.
+                         * Initial create an absence object with the date and absence reason added. Then create the absence reason with the absenceId and pupilId added.
+                         */
+                        if (absentPupils.Count > 0)
+                        {
+                            try
+                            {
+                                // There are pupils absent from the selected class so individual reasons 
+                                StkConfirmationPanel.Visibility = Visibility.Visible;
+                                Stk_ClassList.Visibility = Visibility.Hidden;
+                                Stk_MenuPanel.Visibility = Visibility.Hidden;
+                                RefreshAbsentPupilList(absentPupils);                              
+                                PopulateAbsenceTypeList();
+                                LblPageHeading.Content = "Absence Reporting";
+                                Lbl_ComfirmationLbl.Content = $"Absence Report for: {selectedReportingClass}";
+
+
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                        else
+                        {
+                            Stk_ClassList.Visibility = Visibility.Hidden;
+                            Stk_MenuPanel.Visibility = Visibility.Visible;
+                            LblConfirmation.Visibility = Visibility.Visible;
+                            PopulateClassList();
+                        }
                     }
                 }
 
@@ -348,6 +357,20 @@ namespace SchoolAbsenceMonitorUI
         {
             LstPupilAbsence.ItemsSource = absentPupils;
             LstPupilAbsence.Items.Refresh();
+        }
+
+        private void BtnSubmitReport_Click(object sender, RoutedEventArgs e)
+        {
+            StkPupilConfirmation.Visibility = Visibility.Visible;
+            StkConfirmationPanel.Visibility = Visibility.Hidden;
+            Tblk_ReportBlock.Text = "";
+            absenceReport = "";
+            BtnSubmitReport.Visibility = Visibility.Collapsed;
+            LstPupilAbsence.Visibility = Visibility.Visible;
+            Stk_MenuPanel.Visibility = Visibility.Visible;            
+            LblConfirmation.Visibility = Visibility.Visible;
+            PopulateClassList();
+
         }
     }
 }
