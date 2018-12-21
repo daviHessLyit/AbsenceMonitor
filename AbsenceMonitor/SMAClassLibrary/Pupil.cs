@@ -35,6 +35,8 @@ namespace SMAClassLibrary
             }
         }
 
+        public int AbsenceCount { get; set; }
+
         public virtual Class Class { get; set; }
         public virtual Guardian Guardian { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

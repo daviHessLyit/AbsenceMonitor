@@ -226,6 +226,23 @@ namespace SMAClassLibrary
             return smaDB.SaveChanges();
         }
 
+        /// <summary>
+        /// Method returns a list of pupils and their AbsenceCounts for the selected class
+        /// </summary>
+        /// <param name="classId">
+        /// The classId selected by the user
+        /// </param>
+        /// <returns>
+        /// <List> pupils ordered by AbsenceCount Descending
+        /// </returns>
+        public List<Pupil> CountPupilAbsences(int classId)
+        {
+            // Get a list of pupils for the selected school class
+            List<Pupil> updatedPupils = smaDB.Pupils.Where(p => p.ClassId == classId).ToList();           
+
+            // Sort the list in Ascending order on the AbsenceCount before returning.
+            return updatedPupils.OrderByDescending(p => p.PupilAbsences.Count).ToList();
+        }
 
     }
 }

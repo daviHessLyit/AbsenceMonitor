@@ -332,6 +332,7 @@ namespace SchoolAbsenceMonitorUI
                     // Refresh the Listview
                     RefreshAbsentPupilList(absentPupils);
                     // Print the selected pupils details to screen 
+                    Tblk_ReportBlock.Margin = new Thickness(10);
                     Tblk_ReportBlock.Text = absenceReport;
 
                 }

@@ -179,16 +179,18 @@
                     </Grid>                    
                 </StackPanel>
                 <StackPanel Grid.Row="3">
-                    <Label Margin="10,10" Name="Lbl_ComfirmationLbl" Content="Absence Report for: " FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left"/>                
+                    <Label Margin="10,10" Name="Lbl_ComfirmationLbl" Content="Absence Report for: " FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left"/>
+                    <ScrollViewer HorizontalAlignment="Right" VerticalAlignment="Top" MinWidth="700" MinHeight="500" MaxHeight="500" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,10">
+                   
                     <TextBlock Name="Tblk_ReportBlock"
                                Margin="10,10"
-                               HorizontalAlignment="Right"
-                               Width="400" Height="350"
                                TextWrapping="Wrap"
                                Visibility="Visible"
-                               Background="White"
-                               Foreground="Blue"
-                               FontSize="14"/>                    
+                               Background="AliceBlue"
+                               Foreground="Black"
+                               FontSize="14"
+                               Padding="10,10"/>         
+                    </ScrollViewer>               
                 </StackPanel>
                 
                 <Button Name="BtnSubmitReport"
