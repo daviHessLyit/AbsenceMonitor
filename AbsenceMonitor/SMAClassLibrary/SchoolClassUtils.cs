@@ -22,6 +22,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int AddSchoolClass(Class newSchoolClass)
         {
+            // Add the class record to the database
             var schoolClass = smaDB.Classes.Where(c => c.ClassName == newSchoolClass.ClassName).FirstOrDefault();
             if (schoolClass !=null)
             {
@@ -46,6 +47,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int DeleteSchoolClass(int classId)
         {
+            // Delete the selected class record from the database
             Class selectedClass = new Class();
 
             selectedClass = smaDB.Classes.Where(c => c.ClassId == classId).FirstOrDefault();
@@ -65,6 +67,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int UpdateClass(Class updateSchoolClass)
         {
+            // Update the selected class record on the database
             Class existingSchoolClass = new Class();
 
             existingSchoolClass = smaDB.Classes.Where(c => c.ClassId == updateSchoolClass.ClassId).FirstOrDefault();
@@ -87,6 +90,7 @@ namespace SMAClassLibrary
         /// </returns>
         public Class GetSchoolClass(int schoolClassId)
         {
+            // Get the selected class record from the database
             Class schoolClass = new Class();
 
             schoolClass = smaDB.Classes.Where(c => c.ClassId == schoolClassId).FirstOrDefault();

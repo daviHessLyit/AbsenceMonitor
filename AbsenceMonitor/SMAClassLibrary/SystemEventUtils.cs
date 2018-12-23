@@ -41,6 +41,7 @@ namespace SMAClassLibrary
         /// </returns>
         public List<SystemEvent> SortEventsByDate(List<SystemEvent> systemEvents)
         {
+            // Sort events by the date and order the list
            var sortedEvents = systemEvents.OrderByDescending(e => e.EventDateTime.Date)
                                            .OrderByDescending(e => e.EventDateTime.Year);
 
@@ -58,6 +59,7 @@ namespace SMAClassLibrary
         /// </returns>
         public List<SystemEvent> SortEventsByType(List<SystemEvent> systemEvents)
         {
+            // Sort events by the type and order the list on the date field
             var sortedEvents = systemEvents.OrderBy(e => e.EventTypeId)
                                            .OrderByDescending(e => e.EventDateTime.Date)
                                            .OrderByDescending(e => e.EventDateTime.Year);
@@ -76,6 +78,7 @@ namespace SMAClassLibrary
         /// </returns>
         public List<SystemEvent> SortEventsByUser(List<SystemEvent> systemEvents)
         {
+            // Sort the events by userId
             var sortedEvents = systemEvents.OrderBy(e => e.UserId)
                                            .OrderByDescending(e => e.EventTypeId);
             return sortedEvents.AsEnumerable().ToList();
@@ -92,6 +95,7 @@ namespace SMAClassLibrary
         /// </returns>
         public List<SystemEvent> SortEventsByUsername(List<SystemEvent> systemEvents, string userName)
         {
+            // Return a list of system events for the selected user
             List<SystemEvent> sortedEvents = new List<SystemEvent>();
 
             try
@@ -124,7 +128,8 @@ namespace SMAClassLibrary
         /// List<SystemEvent> sortedEvents
         /// </returns>
         public List<SystemEvent> SortEventsByDate( DateTime selectedDate)
-        {           
+        {         
+            // Return a list of events for the selected date
             try
             {
                 List<SystemEvent> sortedEvents = smaDB.SystemEvents.Where(e => DbFunctions.TruncateTime( e.EventDateTime) == DbFunctions.TruncateTime(selectedDate)).ToList();
@@ -132,7 +137,6 @@ namespace SMAClassLibrary
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

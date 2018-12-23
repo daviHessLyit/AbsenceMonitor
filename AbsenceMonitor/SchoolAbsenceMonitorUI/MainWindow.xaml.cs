@@ -31,11 +31,7 @@ namespace SchoolAbsenceMonitorUI
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Button click exits the application gracefully
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+       
         private void BtnExitApp_Click(object sender, RoutedEventArgs e)
         {
             // Exit the application
@@ -43,6 +39,9 @@ namespace SchoolAbsenceMonitorUI
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Method used to log the user into the application
+        /// </summary>
         private void UserLogin()
         {
             // Create local variables
@@ -61,10 +60,12 @@ namespace SchoolAbsenceMonitorUI
 
                     try
                     {
+                        // Get the system user who matches the form data
                         var systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.Username == userName && s.Password == userPassword);
 
                         if (systemUser.UserId > 0)
                         {
+                            // Set the system user to the validated user 
                             validatedUser = systemUser;
                             userValidated = true;
                         }
@@ -72,12 +73,14 @@ namespace SchoolAbsenceMonitorUI
                     }
                     catch (Exception)
                     {
+                        // Display an error if the login was unsuccessful
                         if (loginAttemptCount < 3)
                         {
                             Lbl_ErrorLabel.Content = "Username or Password incorrect";
                             Lbl_ErrorLabel.Visibility = Visibility.Visible;
                             TbxPassword.Clear();
                             TbxUsername.Clear();
+                            // Update the system logs if the login was unsucessful
                             systemEventUtils.AddSystemEvent(new SystemEvent
                             {
                                 UserId = 1002,
@@ -88,8 +91,9 @@ namespace SchoolAbsenceMonitorUI
                         }
                         else
                         {
+                            // Display an error after 3 failed logins
                             MessageBox.Show("3 Failed Logins System now shutdown, Please contact the System Administrator", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                            // Update the system logs if the login was unsucessful
                             systemEventUtils.AddSystemEvent(new SystemEvent
                             {
                                 UserId = 1002,
@@ -115,6 +119,7 @@ namespace SchoolAbsenceMonitorUI
                         Lbl_ErrorLabel.Visibility = Visibility.Visible;
                         TbxPassword.Clear();
                         TbxUsername.Clear();
+                        // Update the system logs if the login was unsucessful
                         systemEventUtils.AddSystemEvent(new SystemEvent
                         {
                             UserId = 1002,
@@ -125,8 +130,9 @@ namespace SchoolAbsenceMonitorUI
                     }
                     else
                     {
+                        // Display an error after 3 failed logins
                         MessageBox.Show("3 Failed Logins System now shutdown, Please contact the System Administrator", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                        // Update the system logs if the login was unsucessful
                         systemEventUtils.AddSystemEvent(new SystemEvent
                         {
                             UserId = 1002,
@@ -145,8 +151,9 @@ namespace SchoolAbsenceMonitorUI
             }
             else
             {
+                // Display an error after 3 failed logins
                 MessageBox.Show("3 Failed Logins System now shutdown, Please contact the System Administrator", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                // Update the system logs if the login was unsucessful
                 systemEventUtils.AddSystemEvent(new SystemEvent
                 {
                     UserId = 1002,
@@ -173,7 +180,7 @@ namespace SchoolAbsenceMonitorUI
                 {
                     mainDashboard.systemUser = validatedUser;
                 }
-
+                // Update the system logs if the login was sucessful
                 systemEventUtils.AddSystemEvent(new SystemEvent
                 {
                     UserId = validatedUser.UserId,
@@ -187,23 +194,17 @@ namespace SchoolAbsenceMonitorUI
             }
         }
 
-        /// <summary>
-        /// Button click event attempts to login to the system with the details provided
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+       
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            // Call the login method
             UserLogin();
         }
 
-        /// <summary>
-        /// Button click event resets the login form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
+            // Clear the login form
             Lbl_ErrorLabel.Visibility = Visibility.Collapsed;
             TbxPassword.Clear();
             TbxUsername.Clear();
@@ -211,6 +212,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnLogin_KeyDown(object sender, KeyEventArgs e)
         {
+            // Call the login method
             UserLogin();
         }
     }

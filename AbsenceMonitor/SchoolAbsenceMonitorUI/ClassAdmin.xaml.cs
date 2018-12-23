@@ -35,19 +35,20 @@ namespace SchoolAbsenceMonitorUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Populate the list of classes and add to the list view on page load
             LstClassSearch.ItemsSource = classes;
             foreach (var schoolClass in smaDB.Classes)
             {
                 classes.Add(schoolClass);
             }
-
+            LstClassSearch.Items.Refresh();
         }
 
         private void BtnAddClass_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
+                // Add the class record to the database
                  int classAdded = schoolClassUtils.AddSchoolClass(new Class
                             {
                                 ClassName = TbxClassName.Text
@@ -55,12 +56,14 @@ namespace SchoolAbsenceMonitorUI
 
                 if (classAdded == 1)
                 {
+                    // Display a success message if the record was added sucessfully
                     Lbl_ClassAddSuccessLabel.Visibility = Visibility.Visible;
                     TbxClassName.IsEnabled = false;
                     BtnAddClass.Visibility = Visibility.Collapsed;
                     BtnCancel.Visibility = Visibility.Collapsed;
                     BtnReturn.Visibility = Visibility.Visible;
 
+                    // Update the system logs if the record was added sucessfully
                     try
                     {
                         systemEventUtils.AddSystemEvent(new SystemEvent
@@ -73,15 +76,18 @@ namespace SchoolAbsenceMonitorUI
                     }
                     catch (EntityException)
                     {
+                        // Show an error on failure
                         MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
                     }
 
                 }
                 else
                 {
+                    // Display a success message if the record wasn't added sucessfully
                     TbxClassName.Clear();
                     Lbl_ClassErrorLabel.Visibility = Visibility.Visible;
+
+                    // Update the system logs if the record wasn't added sucessfully
                     try
                     {
                         systemEventUtils.AddSystemEvent(new SystemEvent
@@ -94,12 +100,14 @@ namespace SchoolAbsenceMonitorUI
                     }
                     catch (EntityException)
                     {
+                        // Show an error on failure
                         MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             catch (EntityException)
             {
+                // Show an error on failure
                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
           
@@ -109,6 +117,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
+            // Clear the form data and reload the search view
             TbxClassName.Text = "";
             Stk_AddClass.Visibility = Visibility.Hidden;
             RefreshClassList();
@@ -117,6 +126,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
+            // Clear the form data and reload the search view
             Stk_AddClass.Visibility = Visibility.Hidden;
             Lbl_ClassAddSuccessLabel.Visibility = Visibility.Collapsed;
             TbxClassName.Text = "";
@@ -129,51 +139,74 @@ namespace SchoolAbsenceMonitorUI
 
         private void RefreshClassList()
         {
+            // Refresh the list of classes and add to the listview
             classes.Clear();
             LstClassSearch.ItemsSource = classes;
             foreach (var schoolClass in smaDB.Classes)
             {
                 classes.Add(schoolClass);
             }
-
             LstClassSearch.Items.Refresh();
         }
 
         private void MnuIUpdateClass_Click(object sender, RoutedEventArgs e)
         {
-            Stk_SearchClass.Visibility = Visibility.Hidden;
-            var selectedClass = schoolClassUtils.GetSchoolClass(Convert.ToInt16(LstClassSearch.SelectedValue.ToString()));
-            TbxUpdateClassID.Text = selectedClass.ClassId.ToString();
-            TbxUpdateClassDescription.Text = selectedClass.ClassName.ToString();
-            Stk_UpdateClass.Visibility = Visibility.Visible;
+            try
+            {
+                Stk_SearchClass.Visibility = Visibility.Hidden;
+                // Populate the form with the selected class details
+                var selectedClass = schoolClassUtils.GetSchoolClass(Convert.ToInt16(LstClassSearch.SelectedValue.ToString()));
+                TbxUpdateClassID.Text = selectedClass.ClassId.ToString();
+                TbxUpdateClassDescription.Text = selectedClass.ClassName.ToString();
+                Stk_UpdateClass.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                // Show an error on failure
+                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void MnuIDeleteClass_Click(object sender, RoutedEventArgs e)
         {
-            Stk_SearchClass.Visibility = Visibility.Hidden;
-            // get the selected class id
-            var selectedClass = schoolClassUtils.GetSchoolClass(Convert.ToInt16(LstClassSearch.SelectedValue.ToString()));
-            TbxDeleteClassDescription.Text = selectedClass.ClassName.ToString();
-            TbxDeleteClassID.Text = selectedClass.ClassId.ToString();
-            Stk_DeleteClass.Visibility = Visibility.Visible;
+            try
+            {
+                Stk_SearchClass.Visibility = Visibility.Hidden;
+                // Populate the form with the selected class details
+                var selectedClass = schoolClassUtils.GetSchoolClass(Convert.ToInt16(LstClassSearch.SelectedValue.ToString()));
+                TbxDeleteClassDescription.Text = selectedClass.ClassName.ToString();
+                TbxDeleteClassID.Text = selectedClass.ClassId.ToString();
+                Stk_DeleteClass.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                // Show an error on failure
+                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BtnDeletClass_Click(object sender, RoutedEventArgs e)
         {
+            // Ask the user to confirm the deletion of the selected record
             bool confirmDelete = MessageBox.Show("This action cannot be undone", "Confirm Deletion", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
 
             if (confirmDelete)
             {
+                // Delete the record if confirmed by the user
                  try
                  {
+                    // Delete the selected record from the database
                     int classDeleted = schoolClassUtils.DeleteSchoolClass(Convert.ToInt16(TbxDeleteClassID.Text.ToString()));
                     if (classDeleted == 1)
                     {
+                        // Display a success message if the deletion was successful
+
                         BtnDeletClass.Visibility = Visibility.Collapsed;
                         BtnDeleteCancel.Visibility = Visibility.Collapsed;
                         Lbl_DeleteClassLabel.Visibility = Visibility.Visible;
                         BtnDeleteReturn.Visibility = Visibility.Visible;
                         Lbl_DeleteClassLabel.Content = "The selected Class details have been deleted";
+
                         // Update the System Events if the deletion is successful
                         try
                         {
@@ -187,15 +220,18 @@ namespace SchoolAbsenceMonitorUI
                         }
                         catch (EntityException)
                         {
+                            // Show an error on failure
                             MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else
                     {
+                        // Display a error message if the deletion wasn't successful
                         BtnDeletClass.Visibility = Visibility.Collapsed;
                         BtnDeleteCancel.Visibility = Visibility.Collapsed;
                         Lbl_ClassDeleteErrorLabel.Visibility = Visibility.Visible;
                         BtnDeleteReturn.Visibility = Visibility.Visible;
+                        // Update the system logs if the deletion wasn't successful
                         try
                         {
                             systemEventUtils.AddSystemEvent(new SystemEvent
@@ -208,20 +244,21 @@ namespace SchoolAbsenceMonitorUI
                         }
                         catch (EntityException)
                         {
+                            // Show an error on failure
                             MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
                         }
                     }
-
 
                 }
                  catch (EntityException)
                  {
+                    // Show an error on failure
                     MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                  }
             }
             else
             {
+                // Reset the form if the cancel option is selected
                 BtnDeletClass.Visibility = Visibility.Collapsed;
                 BtnDeleteCancel.Visibility = Visibility.Collapsed;
                 Lbl_DeleteClassLabel.Visibility = Visibility.Visible;
@@ -233,6 +270,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnDeleteCancel_Click(object sender, RoutedEventArgs e)
         {
+            // Reset the form data
             TbxDeleteClassDescription.Text = "";
             TbxDeleteClassID.Text = "";
             BtnDeleteReturn.Visibility = Visibility.Collapsed;
@@ -243,6 +281,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnDeleteReturn_Click(object sender, RoutedEventArgs e)
         {
+            // Reset the form data
             BtnDeletClass.Visibility = Visibility.Visible;
             BtnDeleteCancel.Visibility = Visibility.Visible;
             Lbl_DeleteClassLabel.Visibility = Visibility.Collapsed;
@@ -254,6 +293,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnUpdateCancel_Click(object sender, RoutedEventArgs e)
         {
+            // Reset the form data
             TbxUpdateClassDescription.Text = "";
             TbxUpdateClassID.Text = "";
             Stk_UpdateClass.Visibility = Visibility.Hidden;
@@ -264,7 +304,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void BtnUpdateReturn_Click(object sender, RoutedEventArgs e)
         {
-           
+            // Reset the form data
             BtnUpdateClass.Visibility = Visibility.Visible;
             BtnUpdateCancel.Visibility = Visibility.Visible;
             BtnUpdateReturn.Visibility = Visibility.Collapsed;
@@ -277,6 +317,7 @@ namespace SchoolAbsenceMonitorUI
         {
             try
             {
+                // Update the class record on the database
                 int classUpdated = schoolClassUtils.UpdateClass(new Class
                 {
                     ClassName = TbxUpdateClassDescription.Text.ToString(),
@@ -285,11 +326,13 @@ namespace SchoolAbsenceMonitorUI
 
                 if (classUpdated == 1)
                 {
+                    // Display a success message if the update was successful
                     BtnUpdateClass.Visibility = Visibility.Collapsed;
                     BtnUpdateCancel.Visibility = Visibility.Collapsed;
                     BtnUpdateReturn.Visibility = Visibility.Visible;
                     Lbl_UpdateClassLabel.Content = "Class Record Successfully Updated";
 
+                    // Update the system logs if the update was successful
                     try
                     {
                         systemEventUtils.AddSystemEvent(new SystemEvent
@@ -302,15 +345,19 @@ namespace SchoolAbsenceMonitorUI
                     }
                     catch (EntityException)
                     {
+                        // Show an error on failure
                         MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
+                    // Display a success message if the update wasn't successful
                     BtnUpdateClass.Visibility = Visibility.Collapsed;
                     BtnUpdateCancel.Visibility = Visibility.Collapsed;
                     BtnUpdateReturn.Visibility = Visibility.Visible;
                     Lbl_ClassUpdateErrorLabel.Visibility = Visibility.Visible;
+
+                    // Update the system logs if the update wasn't successful
                     try
                     {
                         systemEventUtils.AddSystemEvent(new SystemEvent
@@ -323,12 +370,14 @@ namespace SchoolAbsenceMonitorUI
                     }
                     catch (EntityException)
                     {
+                        // Show an error on failure
                         MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             catch (EntityException)
             {
+                // Show an error on failure
                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

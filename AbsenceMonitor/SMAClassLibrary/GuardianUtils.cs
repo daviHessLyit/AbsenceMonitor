@@ -21,6 +21,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int AddGuardian(Guardian addedGuardian)
         {
+            // Add the guardian record to the system database
             var guardian = smaDB.Guardians.Where(g => g.GivenName == addedGuardian.GivenName && g.Surname == addedGuardian.Surname && g.MobileNo == addedGuardian.MobileNo).FirstOrDefault();
 
             if (guardian != null)
@@ -46,6 +47,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int UpdateGuardian(Guardian guardian)
         {
+            // Update the selected guardian record on the system database
             Guardian existingGuardian = new Guardian();
 
             existingGuardian = smaDB.Guardians.Where(g => g.GuardianId == guardian.GuardianId).FirstOrDefault();
@@ -80,7 +82,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int DeleteGuardian(int guardianId)
         {
-
+            // Delete the selected guardian record on the system database
             Guardian guardian = new Guardian();
 
             guardian = smaDB.Guardians.Where(g => g.GuardianId == guardianId).FirstOrDefault();
@@ -101,6 +103,7 @@ namespace SMAClassLibrary
         /// </returns>
         public Guardian GetGuardianDetails(int guardianId)
         {
+            // Return the selectd guardian record
             Guardian guardian = new Guardian();
 
             guardian = smaDB.Guardians.Where(g => g.GuardianId == guardianId).FirstOrDefault();

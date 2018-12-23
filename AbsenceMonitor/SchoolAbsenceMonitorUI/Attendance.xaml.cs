@@ -50,30 +50,22 @@ namespace SchoolAbsenceMonitorUI
             PopulateClassList();
         }
 
-        /// <summary>
-        /// Method populates a list of class object and assigns them to the dropdown list
-        /// </summary>
         private void PopulateClassList()
         {
+            // Populate the list of classes
             SchoolClasses = smaDB.Classes.ToList();
             CmbBxClassSelector.ItemsSource = SchoolClasses;
         }
 
         private void PopulateAbsenceTypeList()
         {
+            // Populate the list of AbsenceTypes
             AbsenceTypes = smaDB.AbsenceTypes.ToList();
             CmbBxAbsenceTypeSelector.ItemsSource = AbsenceTypes;
         }
 
-
-        /// <summary>
-        /// Method populates the select class pupils into the ListView
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CmbBxClassSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {        
-
             try
             {
                 LblConfirmation.Visibility = Visibility.Collapsed;
@@ -128,12 +120,19 @@ namespace SchoolAbsenceMonitorUI
                 selectedDate = Dp_DateSelector.SelectedDate.Value;
                 if (!validationUtils.VerifyDate(selectedDate))
                 {
+                    // Show an error if the date wasn't valid
                     MessageBox.Show("Select a Valid Date, Date cannot in the future", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
+                    /*
+                     * Check if the attendance date and class id already exist on the database
+                     * Display an error if they do
+                     * This check should also prevent absences being set for the same date incorrectly because an absence can't be added unless passing this check
+                     */
                     if (smaDB.Attendances.Any(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(selectedDate) && a.ClassId == selectedClass))
                     {
+                        // Show an error if database already has an attendance recorded for that class on the selected date.
                         MessageBox.Show("Attendance already recorded for this class  on the selected date", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
@@ -160,9 +159,10 @@ namespace SchoolAbsenceMonitorUI
                             try
                             {
                                 int attendanceAdded = pupilUtils.RecordPupilAttendance(selectedDate, selectedClass, attendingPupils);
-
+                                // Check if the amount of records added matches the count of attending pupils
                                 if (attendanceAdded == attendingPupils.Count)
                                 {
+                                    // Update the system logs if the attendances were recorded successfully
                                     try
                                     {
                                         systemEventUtils.AddSystemEvent(new SystemEvent
@@ -175,11 +175,13 @@ namespace SchoolAbsenceMonitorUI
                                     }
                                     catch (EntityException)
                                     {
+                                        // Show an error on failure
                                         MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                     }
                                 }
                                 else
                                 {
+                                    // Update the system logs if the attendances weren't recorded successfully
                                     try
                                     {
                                         systemEventUtils.AddSystemEvent(new SystemEvent
@@ -192,6 +194,7 @@ namespace SchoolAbsenceMonitorUI
                                     }
                                     catch (EntityException)
                                     {
+                                        // Show an error on failure
                                         MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                     }
                                 }
@@ -199,6 +202,7 @@ namespace SchoolAbsenceMonitorUI
                             }
                             catch (Exception)
                             {
+                                // Show an error on failure
                                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
@@ -224,11 +228,13 @@ namespace SchoolAbsenceMonitorUI
                             }
                             catch (Exception)
                             {
+                                // Show an error on failure
                                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
                         else
                         {
+                            // If there are no absences just display a success message for the attendance reporting.
                             Stk_ClassList.Visibility = Visibility.Hidden;
                             Stk_MenuPanel.Visibility = Visibility.Visible;
                             LblConfirmation.Visibility = Visibility.Visible;
@@ -241,6 +247,7 @@ namespace SchoolAbsenceMonitorUI
             }
             catch (Exception)
             {
+                // Show an error on validation failure
                 MessageBox.Show("Select a Valid Date, Date cannot be empty", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
           
@@ -300,6 +307,7 @@ namespace SchoolAbsenceMonitorUI
                         }
                         catch (EntityException)
                         {
+                            // Show an error on failure
                             MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
@@ -318,6 +326,7 @@ namespace SchoolAbsenceMonitorUI
                         }
                         catch (EntityException)
                         {
+                            // Show an error on failure
                             MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
@@ -338,11 +347,13 @@ namespace SchoolAbsenceMonitorUI
                 }
                 catch (Exception)
                 {
+                    // Show a message to the user to ensure all required fields are selected
                     MessageBox.Show("Make sure you have a pupil and absence reason selected", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else
             {
+                // Display the final report to the user and make the submit report button available
                 string finalReport = Environment.NewLine + $"FINAL REPORT for {selectedReportingClass}" + Environment.NewLine + $"{attendingPupils.Count} attending school and {absenceCount} " +
                     $"reported absent on {selectedDate.ToShortDateString()} ";
 
@@ -356,12 +367,14 @@ namespace SchoolAbsenceMonitorUI
 
         private void RefreshAbsentPupilList(List<Pupil> absentPupils)
         {
+            // Refresh the list 
             LstPupilAbsence.ItemsSource = absentPupils;
             LstPupilAbsence.Items.Refresh();
         }
 
         private void BtnSubmitReport_Click(object sender, RoutedEventArgs e)
         {
+            // Return to the main Attendance view and make the success message visible.
             StkPupilConfirmation.Visibility = Visibility.Visible;
             StkConfirmationPanel.Visibility = Visibility.Hidden;
             Tblk_ReportBlock.Text = "";

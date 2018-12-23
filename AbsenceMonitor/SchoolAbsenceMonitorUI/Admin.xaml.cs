@@ -33,12 +33,6 @@ namespace SchoolAbsenceMonitorUI
             InitializeComponent();            
         }
 
-        private void BtnReset_Click(object sender, RoutedEventArgs e)
-        {
-            Stk_AddUser.Visibility = Visibility.Hidden;
-            Stk_UpdateUserForm.Visibility = Visibility.Hidden;
-        }
-
         private void MnuIUpdateUser_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -57,6 +51,7 @@ namespace SchoolAbsenceMonitorUI
             }
             catch (Exception)
             {
+                // Show an error on failure
                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
            
@@ -89,6 +84,7 @@ namespace SchoolAbsenceMonitorUI
             }
             catch (Exception)
             {
+                // Show an error on failure
                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
           
@@ -136,7 +132,7 @@ namespace SchoolAbsenceMonitorUI
 
         private void RefreshUserDetails()
         {
-            // Refresh the listview
+            // Refresh the SystemUsers listview
             systemUsers.Clear();
             LstUserSearch.ItemsSource = systemUsers;           
             foreach (var systemUser in smaDB.SystemUsers)
@@ -163,6 +159,7 @@ namespace SchoolAbsenceMonitorUI
         public List<AccessLevel> AccessLevels {get;set;}
         private void PopulateComboBox()
         {
+            // Populate the dropdown with access levels
             AccessLevels = smaDB.AccessLevels.ToList();
             DataContext = AccessLevels;
 
@@ -177,6 +174,7 @@ namespace SchoolAbsenceMonitorUI
             }
             catch (Exception)
             {
+                // Show an error message if no access level has been selected.
                 MessageBox.Show("Select an Access Level", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             

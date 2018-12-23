@@ -62,9 +62,10 @@ namespace SMAClassLibrary
         // Method returns the selected user record from the data
         public SystemUser GetUserDetails(int systemUserId)
         {
-            SystemUser requestSystemUser = smaDB.SystemUsers.Where(s => s.UserId == systemUserId).FirstOrDefault();
+            // Get the selected user recod fom the database
+            SystemUser requestedSystemUser = smaDB.SystemUsers.Where(s => s.UserId == systemUserId).FirstOrDefault();
 
-            return requestSystemUser;
+            return requestedSystemUser;
         }
 
     }

@@ -21,6 +21,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int AddAbsenceType(AbsenceType newAbsenceType)
         {
+            // Add the absenceType to the database
             var absenceType = smaDB.AbsenceTypes.Where(a => a.AbsenceType1 == newAbsenceType.AbsenceType1).FirstOrDefault();
             if (absenceType != null)
             {
@@ -45,6 +46,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int DeleteAbsenceType(int absenceTypeId)
         {
+            // Add selected absenceType from the database
             AbsenceType absenceType = new AbsenceType();
 
             absenceType = smaDB.AbsenceTypes.Where(a=> a.AbsenceTypeId == absenceTypeId).FirstOrDefault();
@@ -64,6 +66,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int UpdateAbsenceType(AbsenceType absenceType)
         {
+            // Update the absenceType on the database
             AbsenceType existingAbsenceType = new AbsenceType();
             existingAbsenceType = smaDB.AbsenceTypes.Where(a => a.AbsenceTypeId == absenceType.AbsenceTypeId).FirstOrDefault();
 
@@ -85,6 +88,7 @@ namespace SMAClassLibrary
         /// </returns>
         public AbsenceType GetAbsenceType(int absenceTypeId)
         {
+            // Populate and return the selected absenceType
             AbsenceType absenceType = new AbsenceType();
 
             absenceType = smaDB.AbsenceTypes.Where(a => a.AbsenceTypeId == absenceTypeId).FirstOrDefault();

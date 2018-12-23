@@ -22,6 +22,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int AddTeacher(Teacher newTeacher)
         {
+            // Add the new teacher record to the system database
             var teacher = smaDB.Teachers.Where(t => t.GivenName == newTeacher.GivenName && t.Surname == newTeacher.Surname && t.ClassId == newTeacher.ClassId).FirstOrDefault();
 
             if (teacher != null)
@@ -46,6 +47,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int DeleteTeacher(int teacherId)
         {
+            // Delete the selected teacher record from the system database
             Teacher teacher = new Teacher();
             teacher = smaDB.Teachers.Where(t => t.TeacherId == teacherId).FirstOrDefault();
             smaDB.Entry(teacher).State = System.Data.Entity.EntityState.Deleted;
@@ -63,6 +65,7 @@ namespace SMAClassLibrary
         /// </returns>
         public Teacher GetTeacher(int teacherId)
         {
+            // Return the selected teacher record from the system database
             Teacher requestedTeacher = new Teacher();
             requestedTeacher = smaDB.Teachers.Where(t => t.TeacherId == teacherId).FirstOrDefault();
             return requestedTeacher;
@@ -79,6 +82,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int UpdateTeacher(Teacher updateTeacher)
         {
+            // Update the selected teacher record on the system database.
             Teacher existingTeacher = new Teacher();
 
             existingTeacher = smaDB.Teachers.Where(t => t.TeacherId == updateTeacher.TeacherId).FirstOrDefault();

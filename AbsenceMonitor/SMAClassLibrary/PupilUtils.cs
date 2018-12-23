@@ -85,7 +85,7 @@ namespace SMAClassLibrary
         {
             // Delete the pupil from the database meeting the criteria
             smaDB.Entry(smaDB.Pupils.Where(p => p.PupilId == pupilId)).State = System.Data.Entity.EntityState.Deleted;
-
+            // Return an int signifying successful deletion
             return smaDB.SaveChanges();
         }
 
@@ -104,7 +104,7 @@ namespace SMAClassLibrary
 
             // Return a pupil object matching the pupilId passed by the user.
             pupil = smaDB.Pupils.Where(p => p.PupilId == pupilId).FirstOrDefault();
-
+            // Return the selected pupil
             return pupil;
         }
 
@@ -121,13 +121,28 @@ namespace SMAClassLibrary
         {
             // Return a list of pupils from the selected class.
             var classPupils = smaDB.Pupils.Where(p => p.ClassId == classId);
-
+            // Return the list of pupils
             return classPupils.ToList();
         }
 
-
+        /// <summary>
+        /// Method adds a list of Attendance records and PupilAttendances to the system database
+        /// </summary>
+        /// <param name="attendanceDate">
+        /// Date selected by the user
+        /// </param>
+        /// <param name="selectedClassId">
+        /// Class selected by the user
+        /// </param>
+        /// <param name="pupils">
+        /// List of pupils from the selected class
+        /// </param>
+        /// <returns>
+        /// int signifying success (1) or failure (0) of operation
+        /// </returns>
         public int RecordPupilAttendance(DateTime attendanceDate, int selectedClassId, List<Pupil> pupils)
         {
+            // Initialise the attendanceId and a List of PupilAttendances
             int attendanceId = 0;
             List<PupilAttendance> pupilAttendances = new List<PupilAttendance>();
             try
@@ -155,6 +170,7 @@ namespace SMAClassLibrary
                     }
                     catch (Exception)
                     {
+                        // Show an error on failure
                         MessageBox.Show("Problem adding attendance records, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                         
@@ -179,16 +195,18 @@ namespace SMAClassLibrary
                     }
                     catch (Exception)
                     {
+                        // Show an error on failure
                         MessageBox.Show("Problem adding pupil attendance records", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     
                 }
-
+                // Return an int signifying success
                 return smaDB.SaveChanges();
 
             }
             catch (Exception)
             {
+                // Show an error on failure
                 MessageBox.Show("Problem adding attendance records", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return 0;
             }           
