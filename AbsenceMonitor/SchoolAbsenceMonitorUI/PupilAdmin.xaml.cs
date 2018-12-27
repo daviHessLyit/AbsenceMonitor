@@ -30,6 +30,7 @@ namespace SchoolAbsenceMonitorUI
         PupilUtils pupilUtils = new PupilUtils();
         Absence pupilAbsence = new Absence();
         public List<AbsenceType> AbsenceTypes { get; set; }
+        public List<Class> SchoolClasses { get; set; }
 
 
         public PupilAdmin()
@@ -43,7 +44,6 @@ namespace SchoolAbsenceMonitorUI
             TbxPupilGiven.Text = "";
             TbxPupilSurname.Text = "";
             TbxPupilGuardianID.Text = "";
-            TbxPupilClassID.Text = "";
             LblPupilErrorLabel.Visibility = Visibility.Collapsed;
         }
 
@@ -54,7 +54,6 @@ namespace SchoolAbsenceMonitorUI
             TbxPupilGiven.Text = "";
             TbxPupilSurname.Text = "";
             TbxPupilGuardianID.Text = "";
-            TbxPupilClassID.Text = "";
             BtnAddPupil.Visibility = Visibility.Visible;
             BtnAddPupilCancel.Visibility = Visibility.Visible;
             BtnAddPupilReturn.Visibility = Visibility.Collapsed;
@@ -68,10 +67,10 @@ namespace SchoolAbsenceMonitorUI
         {
             // Verify the form data
             bool validFormData = validationUtils.VerifyPupilFormData(
-                TbxPupilGiven.Text.ToString(),
-                TbxPupilSurname.Text.ToString(),
-                TbxPupilGuardianID.Text.ToString(),
-                TbxPupilClassID.Text.ToString());
+                TbxPupilGiven.Text.Trim(),
+                TbxPupilSurname.Text.Trim(),
+                TbxPupilGuardianID.Text.ToString().Trim(),
+                CmbBxClassSelector.SelectedValue.ToString());
             // Continue if the data is valid
             if (validFormData)
             {
@@ -82,10 +81,10 @@ namespace SchoolAbsenceMonitorUI
                     // Add the pupil record to the database
                     int pupilAdded = pupilUtils.AddPupil(new Pupil
                     {
-                        GivenName = TbxPupilGiven.Text.ToString(),
-                        Surname = TbxPupilSurname.Text.ToString(),
-                        GuardianId = Convert.ToInt16(TbxPupilGuardianID.Text.ToString()),
-                        ClassId = Convert.ToInt16(TbxPupilGuardianID.Text.ToString())
+                        GivenName = TbxPupilGiven.Text.Trim(),
+                        Surname = TbxPupilSurname.Text.Trim(),
+                        GuardianId = Convert.ToInt16(TbxPupilGuardianID.Text.ToString().Trim()),
+                        ClassId = Convert.ToInt16(CmbBxClassSelector.SelectedValue.ToString())
                     });
 
                     // If sucessfully added, display a success message and make the return button available.
@@ -94,7 +93,6 @@ namespace SchoolAbsenceMonitorUI
                         TbxPupilGiven.IsReadOnly = true;
                         TbxPupilSurname.IsReadOnly = true;
                         TbxPupilGuardianID.IsReadOnly = true;
-                        TbxPupilClassID.IsReadOnly = true;
                         BtnAddPupil.Visibility = Visibility.Collapsed;
                         BtnAddPupilCancel.Visibility = Visibility.Collapsed;
                         BtnAddPupilReturn.Visibility = Visibility.Visible;
@@ -123,7 +121,6 @@ namespace SchoolAbsenceMonitorUI
                         TbxPupilGiven.Text = "";
                         TbxPupilSurname.Text = "";
                         TbxPupilGuardianID.Text = "";
-                        TbxPupilClassID.Text = "";
                         BtnAddPupil.Visibility = Visibility.Collapsed;
                         BtnAddPupilCancel.Visibility = Visibility.Collapsed;
                         BtnAddPupilReturn.Visibility = Visibility.Visible;
@@ -189,6 +186,15 @@ namespace SchoolAbsenceMonitorUI
             LstPupilSearch.ItemsSource = pupilList;
             // Populate the list of absence types
             PopulateComboBox();
+            PopulateClassList();
+        }
+
+
+        private void PopulateClassList()
+        {
+            // Populate the dropdown menu
+            SchoolClasses = smaDB.Classes.ToList();
+            CmbBxClassSelector.ItemsSource = SchoolClasses;
         }
 
         private void PopulateComboBox()
@@ -199,9 +205,7 @@ namespace SchoolAbsenceMonitorUI
         }
 
         private void RefreshPupilList()
-        {
-            //Clear the pupil list
-            LstPupilSearch.Items.Clear();
+        {            
             // Repopulate the pupil list
             var pupilList = from _pupil in smaDB.Pupils.ToList()
                             join _schoolClass in smaDB.Classes on _pupil.ClassId equals _schoolClass.ClassId
@@ -251,8 +255,8 @@ namespace SchoolAbsenceMonitorUI
                 // Update the pupil record on the database
                 int pupilUpdated = pupilUtils.UpdatePupil(new Pupil
                 {
-                    GivenName = TbxUpdatePupilGiven.Text.ToString(),
-                    Surname = TbxUpdatePupilSurname.Text.ToString(),
+                    GivenName = TbxUpdatePupilGiven.Text.Trim(),
+                    Surname = TbxUpdatePupilSurname.Text.Trim(),
                     ClassId = Convert.ToInt16(TbxUpdatePupilClassID.Text.ToString()),
                     GuardianId = Convert.ToInt16(TbxUpdatePupilGuardianID.Text.ToString()),
                     PupilId = Convert.ToInt16(TbxUpdatePupilID.Text.ToString())

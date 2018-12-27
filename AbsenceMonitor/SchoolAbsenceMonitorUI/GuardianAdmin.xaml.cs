@@ -75,11 +75,11 @@ namespace SchoolAbsenceMonitorUI
                     // Add the guardian record to the database
                     int guardianAdded = guardianUtils.AddGuardian(new Guardian
                     {
-                        GivenName = TbxGuadianGiven.Text.ToString(),
-                        Surname = TbxGuadianSurname.Text.ToString(),
-                        MobileNo = TbxGuadianMobile.Text.ToString(),
-                        EmergencyNo = TbxGuadianEmergency.Text.ToString(),
-                        Address = TbkGuardianAddress.Text.ToString()
+                        GivenName = TbxGuadianGiven.Text.Trim(),
+                        Surname = TbxGuadianSurname.Text.Trim(),
+                        MobileNo = TbxGuadianMobile.Text.Trim(),
+                        EmergencyNo = TbxGuadianEmergency.Text.Trim(),
+                        Address = TbkGuardianAddress.Text.Trim()
                     });
 
                     if (guardianAdded ==1)
@@ -370,11 +370,11 @@ namespace SchoolAbsenceMonitorUI
                 // Update the selected user on the database
                 int guardianUpated = guardianUtils.UpdateGuardian(new Guardian
                 {
-                    GivenName = TbxUpdateGuardianGiven.Text.ToString(),
-                    Surname = TbxUpdateGuardianSurname.Text.ToString(),
-                    MobileNo = TbxUpdateGuardianMobile.Text.ToString(),
-                    EmergencyNo = TbxUpdateGuardianEmerg.Text.ToString(),
-                    Address = TbxUpdateAddress.Text.ToString(),
+                    GivenName = TbxUpdateGuardianGiven.Text.Trim(),
+                    Surname = TbxUpdateGuardianSurname.Text.Trim(),
+                    MobileNo = TbxUpdateGuardianMobile.Text.Trim(),
+                    EmergencyNo = TbxUpdateGuardianEmerg.Text.Trim(),
+                    Address = TbxUpdateAddress.Text.Trim(),
                     GuardianId = Convert.ToInt16(TbxUpdateGuardianID.Text.ToString())
 
                 });

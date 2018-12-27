@@ -73,8 +73,8 @@ namespace SchoolAbsenceMonitorUI
                 // Add the teacher record to the database
                 int teacherAddedSuccess = teacherUtils.AddTeacher(new Teacher
                 {
-                    GivenName = TbxTeacherGiven.Text.ToString(),
-                    Surname = TbxTeacherSurname.Text.ToString(),
+                    GivenName = TbxTeacherGiven.Text.Trim(),
+                    Surname = TbxTeacherSurname.Text.Trim(),
                     ClassId = Convert.ToUInt16(CmbBxClassSelector.SelectedValue.ToString())
 
                 });
@@ -322,8 +322,8 @@ namespace SchoolAbsenceMonitorUI
                 int teacherUpdated = teacherUtils.UpdateTeacher(new Teacher
                 {
                     TeacherId = Convert.ToInt16(TbxUpdateTeacherID.Text.ToString()),
-                    GivenName = TbxUpdateTeacherGiven.Text.ToString(),
-                    Surname = TbxUpdateTeacherSurname.Text.ToString(),
+                    GivenName = TbxUpdateTeacherGiven.Text.Trim(),
+                    Surname = TbxUpdateTeacherSurname.Text.Trim(),
                     ClassId = Convert.ToInt16(CmbBxClassUpdateSelector.SelectedValue.ToString())
                 });
 

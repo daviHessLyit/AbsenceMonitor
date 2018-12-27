@@ -85,7 +85,8 @@ namespace SMAClassLibrary
         public int DeletePupil(int pupilId)
         {
             // Delete the pupil from the database meeting the criteria
-            smaDB.Entry(smaDB.Pupils.Where(p => p.PupilId == pupilId)).State = EntityState.Deleted;
+            Pupil pupil = GetPupilDetails(pupilId);
+            smaDB.Pupils.Remove(pupil);
             // Return an int signifying successful deletion
             return smaDB.SaveChanges();
         }

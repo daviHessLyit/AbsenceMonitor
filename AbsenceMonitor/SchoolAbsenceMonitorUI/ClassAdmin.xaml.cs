@@ -51,7 +51,7 @@ namespace SchoolAbsenceMonitorUI
                 // Add the class record to the database
                  int classAdded = schoolClassUtils.AddSchoolClass(new Class
                             {
-                                ClassName = TbxClassName.Text
+                                ClassName = TbxClassName.Text.Trim()
                             });
 
                 if (classAdded == 1)
@@ -320,7 +320,7 @@ namespace SchoolAbsenceMonitorUI
                 // Update the class record on the database
                 int classUpdated = schoolClassUtils.UpdateClass(new Class
                 {
-                    ClassName = TbxUpdateClassDescription.Text.ToString(),
+                    ClassName = TbxUpdateClassDescription.Text.ToString().Trim(),
                     ClassId = Convert.ToInt16(TbxUpdateClassID.Text.ToString())
                 });
 
