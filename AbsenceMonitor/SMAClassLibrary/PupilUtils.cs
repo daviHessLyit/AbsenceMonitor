@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace SMAClassLibrary
             else
             {
                 // Commit the new pupil to the database.
-                smaDB.Entry(addedPupil).State = System.Data.Entity.EntityState.Added;
+                smaDB.Entry(addedPupil).State = EntityState.Added;
                 return smaDB.SaveChanges();
             }
         }
@@ -84,7 +85,7 @@ namespace SMAClassLibrary
         public int DeletePupil(int pupilId)
         {
             // Delete the pupil from the database meeting the criteria
-            smaDB.Entry(smaDB.Pupils.Where(p => p.PupilId == pupilId)).State = System.Data.Entity.EntityState.Deleted;
+            smaDB.Entry(smaDB.Pupils.Where(p => p.PupilId == pupilId)).State = EntityState.Deleted;
             // Return an int signifying successful deletion
             return smaDB.SaveChanges();
         }
@@ -163,7 +164,7 @@ namespace SMAClassLibrary
                     // Add the attendance to the database
                     try
                     {
-                        smaDB.Entry(attendance).State = System.Data.Entity.EntityState.Added;
+                        smaDB.Entry(attendance).State = EntityState.Added;
                         smaDB.SaveChanges();
                         attendanceId = attendance.AttendanceId;
 
@@ -283,25 +284,30 @@ namespace SMAClassLibrary
              * First delete pupilAbsence
              * Secondly delete the associated absence
              */
+            int deletionCompleted = 0;
             try
             {
-                smaDB.Entry(smaDB.PupilAbsences.Where(p => p.PupilId == pupilId && p.AbsenceId == absenceId)).State = EntityState.Deleted;
-                smaDB.SaveChanges();
+                PupilAbsence pupilAbsence = smaDB.PupilAbsences.Where(p => p.AbsenceId == absenceId && p.PupilId == pupilId).FirstOrDefault();
+                smaDB.PupilAbsences.Remove(pupilAbsence);
+                deletionCompleted = smaDB.SaveChanges();
 
-                smaDB.Entry(smaDB.Absences.Where(a => a.AbsenceId == absenceId)).State = EntityState.Deleted;
-                smaDB.SaveChanges();
+                Absence absence = smaDB.Absences.Where(a => a.AbsenceId == absenceId).FirstOrDefault();
+                smaDB.Absences.Remove(absence);
+                deletionCompleted = smaDB.SaveChanges();
+
+                // If the absence has been deleted we need to create an attendance for that date for that pupil
+                if (deletionCompleted == 1)
+                {
+                    deletionCompleted = CreatePupilAttendane(pupilId, absenceDate); 
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Show an error on failure
-                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"System Database Error, Please contact the System Administrator{ex.GetBaseException().ToString()}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            // If the absence has been deleted we need to create an attendance for that date for that pupil
-
-            int attendanceCreated =  CreatePupilAttendane(pupilId, absenceDate);
-
-            return attendanceCreated;
+            return deletionCompleted;
         }
 
         /// <summary>
@@ -353,6 +359,27 @@ namespace SMAClassLibrary
             }
 
             return attendanceCreated; 
+        }
+
+        /// <summary>
+        /// Method updates the selected absence
+        /// </summary>
+        /// <param name="absenceId">
+        /// AbsenceId of the selected absence
+        /// </param>
+        /// <param name="absenceTypeId">
+        /// AbsenceTypeId of the selected AbsenceType
+        /// </param>
+        /// <returns>
+        /// int signifying success (1) or failure (0) of operation
+        /// </returns>
+        public int UpdatePupilAbsence(int absenceId, int absenceTypeId )
+        {
+            // Get the absence to be updated
+            Absence updatedAbsence = smaDB.Absences.FirstOrDefault(a => a.AbsenceId == absenceId);
+            // Update the absenceTypeId with the selected value
+            updatedAbsence.AbsenceTypeId = absenceTypeId;
+            return smaDB.SaveChanges();
         }
     }
 }
