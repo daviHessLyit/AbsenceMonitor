@@ -226,7 +226,7 @@ namespace SMAClassLibrary
         /// </returns>
         public int AddPupilAbsence(Absence absence, int pupilId)
         {
-            // Add the absence passed into  the method to the system database
+            // Add the absence passed into the method to the system database
             smaDB.Absences.Add(absence);
             smaDB.SaveChanges();
 
@@ -245,22 +245,114 @@ namespace SMAClassLibrary
         }
 
         /// <summary>
-        /// Method returns a list of pupils and their AbsenceCounts for the selected class
+        /// Method returns a count of pupil absences
         /// </summary>
-        /// <param name="classId">
-        /// The classId selected by the user
+        /// <param name="pupilId">
+        /// pupilId selected by the user
         /// </param>
         /// <returns>
-        /// <List> pupils ordered by AbsenceCount Descending
+        /// Count of pupil absences
         /// </returns>
-        public List<Pupil> CountPupilAbsences(int classId)
+        public int CountPupilAbsences(int pupilId)
         {
-            // Get a list of pupils for the selected school class
-            List<Pupil> updatedPupils = smaDB.Pupils.Where(p => p.ClassId == classId).ToList();           
+            // Get a count of absences for the selected pupil
+            int absenceCount = smaDB.PupilAbsences.Where(p => p.PupilId == pupilId).ToList().Count();
 
-            // Sort the list in Ascending order on the AbsenceCount before returning.
-            return updatedPupils.OrderByDescending(p => p.PupilAbsences.Count).ToList();
+            // Return the count
+            return absenceCount;
         }
 
+        /// <summary>
+        /// Method deletes the absence selected by the user and creates an attendance for the pupil for that date
+        /// </summary>
+        /// <param name="absenceId">
+        /// The absenceId of the absence to be selected
+        /// </param>
+        /// <param name="pupilId">
+        /// The selected pupil's pupilId
+        /// </param>
+        /// <param name="absenceDate">
+        /// The date of the absence
+        /// </param>
+        /// <returns>
+        /// int signifying success (1) or failure (0) of operation
+        /// </returns>
+        public int DeletePupilAbsence(int absenceId, int pupilId, DateTime absenceDate)
+        {
+            /* Need to do two deletd operations at this point:
+             * First delete pupilAbsence
+             * Secondly delete the associated absence
+             */
+            try
+            {
+                smaDB.Entry(smaDB.PupilAbsences.Where(p => p.PupilId == pupilId && p.AbsenceId == absenceId)).State = EntityState.Deleted;
+                smaDB.SaveChanges();
+
+                smaDB.Entry(smaDB.Absences.Where(a => a.AbsenceId == absenceId)).State = EntityState.Deleted;
+                smaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+                // Show an error on failure
+                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            // If the absence has been deleted we need to create an attendance for that date for that pupil
+
+            int attendanceCreated =  CreatePupilAttendane(pupilId, absenceDate);
+
+            return attendanceCreated;
+        }
+
+        /// <summary>
+        /// Method creates an pupilAttendance record for the selected pupil
+        /// </summary>
+        /// <param name="pupilId"></param>
+        /// <param name="attendanceDate"></param>
+        /// <returns>
+        /// int signifying success (1) or failure (0) of operation
+        /// </returns>
+        public int CreatePupilAttendane(int pupilId, DateTime attendanceDate)
+        {
+            /* Need to check the database to see if an attendance exists for the selected date and is associated to the pupil's class
+             * Get the id of the attendance if it exists and create the pupilAttendance 
+             * If no attendance exists for the date and class selected we need to create one for that date and then create the pupilAttendance
+             */
+            Pupil selectedPupil = GetPupilDetails(pupilId);
+            int attendanceCreated = 0;
+            if (smaDB.Attendances.Any(a=> DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate) && a.ClassId == selectedPupil.ClassId))
+            {
+                // An attendance exists for the date and class 
+                var attendance = smaDB.Attendances.Where(a=> DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate) && a.ClassId == selectedPupil.ClassId).FirstOrDefault();
+                smaDB.PupilAttendances.Add(new PupilAttendance
+                {
+                    AttendanceId = attendance.AttendanceId,
+                    PupilId = pupilId
+                });
+                attendanceCreated = smaDB.SaveChanges();
+            }
+            else
+            {
+                // No attendance exists for the date and class 
+                smaDB.Attendances.Add(new Attendance
+                {
+                    AttendanceDate = attendanceDate,
+                    ClassId = selectedPupil.ClassId
+                });
+                smaDB.SaveChanges();
+
+                // Create the pupilAttendance for the selected date
+                var attendance = smaDB.Attendances.Where(a => DbFunctions.TruncateTime(a.AttendanceDate) == DbFunctions.TruncateTime(attendanceDate) && a.ClassId == selectedPupil.ClassId).FirstOrDefault();
+                smaDB.PupilAttendances.Add(new PupilAttendance
+                {
+                    AttendanceId = attendance.AttendanceId,
+                    PupilId = pupilId
+                });
+                attendanceCreated = smaDB.SaveChanges();
+
+            }
+
+            return attendanceCreated; 
+        }
     }
 }

@@ -89,26 +89,25 @@
                                       Name="CmbBxAdminLevel"                                      
                                       ItemsSource="{Binding}"
                                       DisplayMemberPath="AccessLevel1"
-                                      SelectedValuePath="AccessLevelId"  />
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" Name="Lbl_ErrorLabel"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="Red"
-                                   Content="Error Creating New User"
-                                   Visibility="Hidden"
-                                   HorizontalAlignment="Center"/>
+                                      SelectedValuePath="AccessLevelId"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
                     <Button Name="BtnAddUser" Height="26" Width="150" Content="Add User" Margin="15,15" Click="BtnAddUser_Click"/>
-                    <Button Name="BtnAddUserCancel" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnAddUserCancel_Click"/>
+                    <Button Name="BtnAddUserCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnAddUserCancel_Click"/>
                     <Button Name="BtnAddUserReturn" Height="26" Width="150" Content="Return" Margin="15,15" Visibility="Collapsed" Click="BtnAddUserReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserAddSuccessLabel"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="BlueViolet"
+                                   Content="New User added to the System"
+                                   Visibility="Collapsed"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserAddErrorLabel"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Username already exists in the System"
-                                   Visibility="Hidden"/>
+                                   Visibility="Collapsed"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -264,13 +263,6 @@
                                       ItemsSource="{Binding}"
                                       DisplayMemberPath="AccessLevel1"
                                       SelectedValuePath="AccessLevelId"/>
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" Name="Lbl_UpdateUserErrorLabel"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="Red"
-                                   Content="Error Creating Admin Level Dropdown"
-                                   Visibility="Hidden"
-                                   HorizontalAlignment="Center"/>
                 <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserUpdateSuccessLabel"
                                    FontSize="16"
                                    FontWeight="Bold"

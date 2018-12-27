@@ -147,16 +147,23 @@
                                         <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Add Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True" Click="MnuIUpdatePupilAbsence_Click" >
-                                    <MenuItem.Icon>
-                                        <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
                                 <MenuItem Header="Delete Pupil" Name="MnuIDeletePupil" IsEnabled="True" Click="MnuIDeletePupil_Click">
                                     <MenuItem.Icon>
                                         <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem Header="Absence Options">
+                                    <MenuItem Header="Add Pupil Absence" Name="MnuAddPupilAbsence" IsEnabled="True" Click="MnuIUpdatePupilAbsence_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="View Pupil Absences" Name="MnuViewPupilAbsence" IsEnabled="True" Click="MnuViewPupilAbsence_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>                                
                             </ContextMenu>
                         </ListView.ContextMenu>
                     </ListView>
@@ -299,6 +306,140 @@
                
             </Grid>
         </StackPanel>
+        <!-- StackPanel contain the PupilAbsence search view-->
+        <StackPanel Name="Stk_SearchPupilAbsence" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Top"                              
+                              Width="800"
+                              Margin="10,10"
+                              MaxHeight="600">
+                    <ListView Name="LstPupilAbsenceSearch" SelectedValuePath="AbsenceID" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="600">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="AbsenceId" Width="75">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding AbsenceID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="AbsenceDate" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding AbsenceDate}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="AbsenceReason" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding AbsenceReason}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ContextMenu>
+                            <ContextMenu Name="MnuPupilAbsenceSearchContext" IsEnabled="True">
+                                <MenuItem Header="Update Pupil Absence" Name="MnuIUpdatePupilAbsence" IsEnabled="True">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Delete Pupil Absence" Name="MnuIDeletePupilAbsence" IsEnabled="True" Click="MnuIDeletePupilAbsence_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/sick.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+        </StackPanel>
+
+        <!-- Stack Panel containing the Delete Pupil Absence form -->
+        <StackPanel Name="Stk_DeletePupilAbsenceForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name="Lbl_DeletePupilAbsenceLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Content="Select the date of the absence to be deleted"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label Content="Pupil Name:" Margin="0,10"/>
+                    <Label Name="LblAbsenceReason" Content="Absence Reason:" Margin="0,10" />
+                    <Label Content="Date:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxDeletePupilFullName" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                    <TextBox Name="TbxDeleteAbsenceReason" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                    <TextBox Name="TbxDeleteAbsenceDate" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
+                    <Label Content="Class Name:" Margin="0,10"/>
+                    <Label Content="Pupil ID:" Margin="0,10"/>
+                    <Label Content="Absence ID:" Margin="0,10"/>
+                    
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxPupilAbsenceClassID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
+                    <TextBox Name="TbxPupilAbsenceID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                    <TextBox Name="TbxAbsenceID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>                    
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnDeletePupilAbsence" Height="26" Width="150" Content="Delete Pupil Absence" Margin="15,15" Click="BtnDeletePupilAbsence_Click"/>
+                    <Button Name="BtnDeletePupilAbsenceCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnDeletePupilAbsenceCancel_Click"/>
+                    <Button Name="BtnDeletePupilAbsenceReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteAbsenceSuccessLabel"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Content="PupilAbsence Successfully Deleted"
+                                   Visibility="Hidden"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteAbsenceErrorLabel"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Updating the Pupil Absence"
+                                   Visibility="Hidden"/>
+                </StackPanel>
+
+
+            </Grid>
+        </StackPanel>
+
         <!-- Stack Panel containing the Delete Pupil form -->
         <StackPanel Name="Stk_DeletePupilForm" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
             <Grid>

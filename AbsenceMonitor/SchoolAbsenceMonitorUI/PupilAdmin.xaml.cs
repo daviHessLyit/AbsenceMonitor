@@ -28,6 +28,7 @@ namespace SchoolAbsenceMonitorUI
         SystemEventUtils systemEventUtils = new SystemEventUtils();
         ValidationUtils validationUtils = new ValidationUtils();
         PupilUtils pupilUtils = new PupilUtils();
+        Absence pupilAbsence = new Absence();
         public List<AbsenceType> AbsenceTypes { get; set; }
 
 
@@ -368,9 +369,9 @@ namespace SchoolAbsenceMonitorUI
                 // Populate the form with the selected pupil's details and make the form visible
                 var selectedPupil = pupilUtils.GetPupilDetails(Convert.ToInt16(LstPupilSearch.SelectedValue.ToString()));
 
-                TbxUpdatePupilAbsenceGiven.Text = selectedPupil.GivenName.ToString();
-                TbxUpdatePupilAbsenceSurname.Text = selectedPupil.Surname.ToString();
-                TbxUpdatePupilAbsenceClassID.Text = selectedPupil.Class.ClassName.ToString();
+                TbxUpdatePupilAbsenceGiven.Text = selectedPupil.GivenName;
+                TbxUpdatePupilAbsenceSurname.Text = selectedPupil.Surname;
+                TbxUpdatePupilAbsenceClassID.Text = selectedPupil.Class.ClassName;
                 TbxUpdatePupilAbsenceID.Text = selectedPupil.PupilId.ToString();
 
                 Stk_SearchPupil.Visibility = Visibility.Hidden;
@@ -631,10 +632,10 @@ namespace SchoolAbsenceMonitorUI
                         }
                     }
                 }
-                catch (EntityException ex)
+                catch (EntityException)
                 {
                     // Show an error on failure
-                    MessageBox.Show($"System Database Error, Please contact the System Administrator {ex.ToString()}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex1)
                 {
@@ -649,6 +650,155 @@ namespace SchoolAbsenceMonitorUI
                 BtnDeleteCancel.Visibility = Visibility.Collapsed;
                 BtnDeletePupil.Visibility = Visibility.Collapsed;
                 BtnDeleteReturn.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void MnuIDeletePupilAbsence_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Populate the form with the selected pupil's details and make the form visible
+                var selectedPupil = pupilUtils.GetPupilDetails(Convert.ToInt16(LstPupilSearch.SelectedValue.ToString()));
+                // Use the selected AbsenceId to populate the absence related information on the form
+                int selectedAbsenceId = Convert.ToInt16(LstPupilAbsenceSearch.SelectedValue.ToString());
+                pupilAbsence = smaDB.Absences.Where(a => a.AbsenceId == selectedAbsenceId).FirstOrDefault();
+                TbxDeletePupilFullName.Text = selectedPupil.FullName;
+                TbxPupilAbsenceClassID.Text = selectedPupil.Class.ClassName;
+                TbxPupilAbsenceID.Text = selectedPupil.PupilId.ToString();
+                TbxDeleteAbsenceReason.Text = pupilAbsence.AbsenceType.AbsenceType1;
+                TbxDeleteAbsenceDate.Text = pupilAbsence.AbsenceDate.ToShortDateString();
+                TbxAbsenceID.Text = LstPupilAbsenceSearch.SelectedValue.ToString();
+                Stk_SearchPupilAbsence.Visibility = Visibility.Hidden;
+                Stk_SearchPupil.Visibility = Visibility.Hidden;
+                Stk_DeletePupilAbsenceForm.Visibility = Visibility.Visible;
+
+            }
+            catch (Exception)
+            {
+                // Show an erro on failure
+                MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnDeletePupilAbsenceCancel_Click(object sender, RoutedEventArgs e)
+        {
+            // Reset the form data and return to the search view
+            Stk_DeletePupilAbsenceForm.Visibility = Visibility.Hidden;
+            TbxDeletePupilFullName.Clear();
+            TbxDeleteAbsenceReason.Clear();
+            TbxPupilAbsenceClassID.Clear();
+            TbxPupilAbsenceID.Clear();
+            Stk_SearchPupil.Visibility = Visibility.Visible;
+        }
+
+        private void MnuViewPupilAbsence_Click(object sender, RoutedEventArgs e)
+        {
+            // Use the selected pupilId to return a list of absences for that pupil
+            int pupilId = Convert.ToInt16(LstPupilSearch.SelectedValue.ToString());
+
+            if (pupilUtils.CountPupilAbsences(pupilId) > 0)
+            {
+                var pupilAbsences = from _pupilAbsence in smaDB.PupilAbsences.Where(p => p.PupilId == pupilId).ToList()
+                                    join _absence in smaDB.Absences on _pupilAbsence.AbsenceId equals _absence.AbsenceId
+                                    join _absenceReason in smaDB.AbsenceTypes on _absence.AbsenceTypeId equals _absenceReason.AbsenceTypeId
+                                    select new
+                                    {
+                                        AbsenceID = _pupilAbsence.AbsenceId,
+                                        AbsenceDate = _absence.AbsenceDate.ToShortDateString(),
+                                        AbsenceReason = _absenceReason.AbsenceType1
+                                    };               
+
+                LstPupilAbsenceSearch.ItemsSource = pupilAbsences;
+                LstPupilAbsenceSearch.Items.Refresh();
+                Stk_SearchPupilAbsence.Visibility = Visibility.Visible;
+                Stk_SearchPupil.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                // Show a slection error if the pupil has no associated absences
+                MessageBox.Show("There are no absences for the selected pupil", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+        }
+
+        private void BtnDeletePupilAbsence_Click(object sender, RoutedEventArgs e)
+        {
+            // Warn the user that the delete cannot be undone
+            bool confirmDelete = MessageBox.Show("This action cannot be undone", "Confirm Deletion", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
+
+            // Deletion confirmed
+            if (confirmDelete)
+            {
+                try
+                {
+                    int absenceDeleted = pupilUtils.DeletePupilAbsence(Convert.ToInt16(LstPupilAbsenceSearch.SelectedValue.ToString()), Convert.ToInt16(LstPupilSearch.SelectedValue.ToString()), pupilAbsence.AbsenceDate);
+
+                    if (absenceDeleted == 1)
+                    {
+                        Lbl_PupilDeleteAbsenceSuccessLabel.Visibility = Visibility.Visible;
+                        BtnDeletePupilAbsenceReturn.Visibility = Visibility.Visible;
+                        BtnDeletePupilAbsence.Visibility = Visibility.Collapsed;
+                        BtnDeletePupilAbsenceCancel.Visibility = Visibility.Collapsed;
+                        // Update the system logs if the record was successfully deleted
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 6,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"PupilAbsence record deleted at { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            // Show an error on failure
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        // Deletion failed, show the errror and reset the form, try to log the event to the system logs
+                        Lbl_PupilDeleteAbsenceErrorLabel.Visibility = Visibility.Visible;
+                        BtnDeletePupilAbsenceReturn.Visibility = Visibility.Visible;
+
+                        // Update the system logs if the record wasn't successfully deleted
+                        try
+                        {
+                            systemEventUtils.AddSystemEvent(new SystemEvent
+                            {
+                                UserId = systemUser.UserId,
+                                EventTypeId = 1006,
+                                EventDateTime = DateTime.Now,
+                                EventData = $"Error deleting PupilAbsence record { DateTime.Now} , by {systemUser.Username}"
+                            });
+                        }
+                        catch (EntityException)
+                        {
+                            // Show an error on failure
+                            MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // Show an error on failure
+                    MessageBox.Show($"System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                // Reset the delete absence form and return to the main pupil search view
+                TbxDeletePupilFullName.Clear();
+                TbxPupilAbsenceClassID.Clear();
+                TbxPupilAbsenceID.Clear();
+                TbxDeleteAbsenceReason.Clear();
+                TbxDeleteAbsenceDate.Clear();
+                TbxAbsenceID.Clear();
+                Stk_SearchPupilAbsence.Visibility = Visibility.Hidden;               
+                Stk_DeletePupilAbsenceForm.Visibility = Visibility.Hidden;
+                Stk_SearchPupil.Visibility = Visibility.Visible;
             }
         }
     }

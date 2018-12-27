@@ -54,6 +54,73 @@ namespace SMAClassLibrary
             return validData;
         }
 
+        public bool ValidateUserAddInput( string givenName, string surname, string userName, string password)
+        {
+            bool validData = true;
+            try
+            {
+                // Check if the field meets the length requirements
+                if (givenName.Length == 0 || givenName.Length > 30)
+                {
+                    validData = false;
+                }
+                else
+                {
+                    // Check if the field contains chars
+                    foreach (char ch in givenName)
+                    {
+                        if (ch >= '0' && ch <= '9')
+                        {
+                            validData = false;
+                        }
+                    }
+                }
+
+                // Check if the field meets the length requirements
+                if (surname.Length == 0 || surname.Length > 30)
+                {
+                    validData = false;
+                }
+                else
+                {
+                    // Check if the field contains chars
+                    foreach (char ch in surname)
+                    {
+                        if (ch >= '0' && ch <= '9')
+                        {
+                            validData = false;
+                        }
+                    }
+                }
+                // Check if the field meets the length requirements
+                if (userName.Length == 0 || userName.Length > 30)
+                {
+                    validData = false;
+                }
+                // Check if the field contains chars
+                foreach (char ch in userName)
+                {
+                    if (ch >= '0' && ch <= '9')
+                    {
+                        validData = false;
+                    }
+                }
+                // Check if the field meets the length requirements
+                if (password.Length == 0 || password.Length > 30)
+                {
+                    validData = false;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                validData = false;
+            }
+
+            return validData;
+        }
+
         /// <summary>
         /// Method to validate form data
         /// </summary>
