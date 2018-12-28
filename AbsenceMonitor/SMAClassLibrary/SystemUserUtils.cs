@@ -36,7 +36,7 @@ namespace SMAClassLibrary
         {
             SystemUser systemUser = smaDB.SystemUsers.FirstOrDefault(s => s.UserId == systemUserId);
             // Remove the system user from the DataBase
-            smaDB.Entry(systemUser).State = System.Data.Entity.EntityState.Deleted;
+            smaDB.SystemUsers.Remove(systemUser);
             // Save the changes to the database
             return smaDB.SaveChanges();
 

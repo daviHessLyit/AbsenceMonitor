@@ -98,8 +98,8 @@
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Content="Select Date" Margin="10,10" HorizontalAlignment="Left" Width="150"/>
-                        <DatePicker AllowDrop="True" Name="Dp_DateSelector" Grid.Row="0" Margin="10,10" Width="200"/>
+                        <Label Grid.Row="0" Content="Select Date" Margin="10,10" FontFamily="Calibri" FontSize="14" HorizontalAlignment="Left" Width="150"/>
+                        <DatePicker AllowDrop="True" Name="Dp_DateSelector" Grid.Row="0" Margin="10,10" Width="200" FontFamily="Calibri" FontSize="14"/>
                         <Button Name="BtnConfirmAttendance"
                         Grid.Row="1"
                         Height="26"
