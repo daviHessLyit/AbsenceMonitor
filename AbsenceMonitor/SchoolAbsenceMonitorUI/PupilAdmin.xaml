@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="Pupil Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Content="Pupil Admin Page" FontFamily="Calibri" FontWeight="Bold" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
         <!-- Pupil CRUD Options -->
         <!-- Stack Panel containing the Add Pupil form -->
         <StackPanel Name="Stk_AddPupil" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
@@ -46,14 +46,16 @@
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
                            FontSize="20"
+                           FontFamily="Calibri"
+                           FontWeight="Bold"
                            Content="Enter Pupil Details"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label FontSize="14" Content="Given Name:" Margin="0,10"/>
-                    <Label FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label FontSize="14" Content="Guardian ID:" Margin="0,10"/>
-                    <Label Name="LblCmbLabel" Content="Select Class From the List" FontSize="14"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Guardian ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" Name="LblCmbLabel" Content="Select Class From the List" FontSize="14"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -69,6 +71,7 @@
                           TabIndex="3"
                           Visibility="Visible"
                           Margin="10,10"
+                          FontFamily="Calibri" FontSize="14" 
                           Name="CmbBxClassSelector" 
                           ItemsSource="{Binding}"
                           DisplayMemberPath="ClassName"
@@ -101,16 +104,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
-                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="70*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Grid.Row="1"
+                <ScrollViewer Grid.Row="2"
                               Grid.Column="1"
                               VerticalAlignment="Top"                              
                               Width="800"
                               Margin="10,10"
                               MaxHeight="600">
-                    <ListView Name="LstPupilSearch" SelectedValuePath="PupilId" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="800">
+                    <ListView Name="LstPupilSearch" SelectedValuePath="PupilId" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="800" FontFamily="Calibri" FontSize="14">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="PupilID" Width="75">
@@ -203,12 +207,13 @@
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
                            FontSize="20"
+                           FontFamily="Calibri" 
                            Content="Enter Pupil Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Pupil ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -218,8 +223,8 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Class ID:" Margin="0,10"/>
-                    <Label Content="Guardian ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Guardian ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
@@ -235,6 +240,7 @@
                                    FontSize="14"
                                    FontWeight="Bold"
                                    Foreground="Red"
+                                   FontFamily="Calibri"
                                    Content="Error Updating the Pupil"
                                    Visibility="Hidden"/>
                 </StackPanel>
@@ -265,12 +271,13 @@
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
                            FontSize="20"
+                           FontFamily="Calibri"
                            Content="Please Check Pupil Details Before Deletion"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Pupil ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -285,7 +292,7 @@
                     <Button Name="BtnDeleteCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnDeleteCancel_Click"/>
                     <Button Name="BtnDeleteReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnDeleteReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteErrorLabel"
-                                   FontSize="14"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the Pupil"
@@ -315,13 +322,13 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter Pupil Absence Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Absence Reason:" Margin="0,10,10,0"/>
+                    <Label FontFamily="Calibri" FontSize="14"  Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Reason:" Margin="0,10,10,0"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -330,7 +337,7 @@
                     <ComboBox AllowDrop="True"
                               TabIndex="3"
                               Text="Select Class"
-                              Width="200"
+                              Width="200" FontFamily="Calibri" FontSize="14" 
                               Visibility="Visible"
                               Margin="10,10"
                               Name="CmbBxAbsenceTypeSelector"
@@ -340,15 +347,15 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Class Name:" Margin="0,10"/>
-                    <Label Content="Pupil ID:" Margin="0,10"/>
-                    <Label Content="Date:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Date:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxUpdatePupilAbsenceClassID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
-                    <TextBox Name="TbxUpdatePupilAbsenceID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>                    
-                    <DatePicker Name="DatePAbsenceDate" Margin="10,10" AllowDrop="True" Grid.Row="1" Width="150"/>
+                    <TextBox Name="TbxUpdatePupilAbsenceID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
+                    <DatePicker Name="DatePAbsenceDate" Margin="10,10" AllowDrop="True" Grid.Row="1" Width="150" FontFamily="Calibri" FontSize="14"/>
 
                 </StackPanel>
 
@@ -357,7 +364,7 @@
                     <Button Name="BtnUpdatePupilAbsenceCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnUpdatePupilAbsenceCancel_Click"/>
                     <Button Name="BtnUpdatePupilAbsenceReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnUpdatePupilAbsenceReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilAddAbsenceErrorLabel"
-                                   FontSize="14"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Pupil Absence"
@@ -386,7 +393,7 @@
                               Width="800"
                               Margin="10,10"
                               MaxHeight="600">
-                    <ListView Name="LstPupilAbsenceSearch" SelectedValuePath="AbsenceID" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="600">
+                    <ListView Name="LstPupilAbsenceSearch" SelectedValuePath="AbsenceID" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="600" FontFamily="Calibri" FontSize="14">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="AbsenceId" Width="75">
@@ -447,34 +454,28 @@
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-
                 <Label Name="Lbl_DeletePupilAbsenceLabel"
                            Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Check the Absence Details before deleting"/>
-
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Pupil Name:" Margin="0,10"/>
-                    <Label Name="LblAbsenceReason" Content="Absence Reason:" Margin="0,10" />
-                    <Label Content="Date:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Name="LblAbsenceReason" Content="Absence Reason:" Margin="0,10" />
+                    <Label FontFamily="Calibri" FontSize="14" Content="Date:" Margin="0,10"/>
                 </StackPanel>
-
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxDeletePupilFullName" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                     <TextBox Name="TbxDeleteAbsenceReason" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                     <TextBox Name="TbxDeleteAbsenceDate" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                 </StackPanel>
-
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Class Name:" Margin="0,10"/>
-                    <Label Content="Pupil ID:" Margin="0,10"/>
-                    <Label Content="Absence ID:" Margin="0,10"/>
-                    
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence ID:" Margin="0,10"/>                    
                 </StackPanel>
-
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxPupilAbsenceClassID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
                     <TextBox Name="TbxPupilAbsenceID" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
@@ -485,20 +486,18 @@
                     <Button Name="BtnDeletePupilAbsenceCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnDeletePupilAbsenceCancel_Click"/>
                     <Button Name="BtnDeletePupilAbsenceReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnDeletePupilAbsenceReturn_Click" />
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteAbsenceSuccessLabel"
-                                   FontSize="14"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="BlueViolet"
                                    Content="PupilAbsence Successfully Deleted"
                                    Visibility="Hidden"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilDeleteAbsenceErrorLabel"
-                                   FontSize="14"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the Pupil Absence"
                                    Visibility="Hidden"/>
                 </StackPanel>
-
-
             </Grid>
         </StackPanel>
 
@@ -518,41 +517,36 @@
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-
                 <Label Name="Lbl_PupilAbsenceLabel"
                            Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Select an Absence Reason and update"/>
-
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Pupil Name:" Margin="0,10"/>
-                    <Label Content="Date:" Margin="0,10"/>
-                    <Label Content="Absence Reason:" Margin="0,10" />
-                    
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Date:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Reason:" Margin="0,10" />                    
                 </StackPanel>
-
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxPupilFullName" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                     <TextBox Name="TbxAbsenceDate" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                     <ComboBox AllowDrop="True"
                               Text="Select Class"
                               Width="200"
+                              FontFamily="Calibri" FontSize="14" 
                               Visibility="Visible"
                               Margin="10,10"
                               Name="CmbBxUpdateAbsenceTypeSelector"
                               ItemsSource="{Binding}"
                               DisplayMemberPath="AbsenceType1"
-                              SelectedValuePath="AbsenceTypeId"/>
-                    
+                              SelectedValuePath="AbsenceTypeId"/>                    
                 </StackPanel>
-
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Class Name:" Margin="0,10"/>
-                    <Label Content="Pupil ID:" Margin="0,10"/>
-                    <Label Content="Absence ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Pupil ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence ID:" Margin="0,10"/>
 
                 </StackPanel>
 
@@ -566,20 +560,18 @@
                     <Button Name="BtnPupilAbsenceCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnPupilAbsenceCancel_Click"/>
                     <Button Name="BtnPupilAbsenceReturn" Visibility="Collapsed" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnPupilAbsenceReturn_Click" />
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilAbsenceSuccessLabel"
-                                   FontSize="14"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="BlueViolet"
                                    Content="PupilAbsence Successfully Updated"
                                    Visibility="Hidden"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_PupilAbsenceErrorLabel"
-                                   FontSize="14"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Pupil Absence"
                                    Visibility="Hidden"/>
                 </StackPanel>
-
-
             </Grid>
         </StackPanel>       
     </Grid>

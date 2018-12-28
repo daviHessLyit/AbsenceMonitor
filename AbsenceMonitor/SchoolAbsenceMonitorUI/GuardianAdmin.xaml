@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="Guardian Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Content="Guardian Admin Page" FontFamily="Calibri" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
 
         <!-- Guardian CRUD Options -->
         <!-- Stack Panel containing the Add Guardian form -->
@@ -46,16 +46,16 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter Guardian Details"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Address:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Address:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Mobile No:" Margin="0,10"/>
-                    <Label Content="Emergency No:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Mobile No:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Emergency No:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -71,7 +71,7 @@
                         <Button Name="BtnAddGuardianCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnAddGuardianCancel_Click"/>
                         <Button Name="BtnAddGuardianReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnAddGuardianReturn_Click"/>
                         <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_GuardianErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Creating New User"
@@ -95,7 +95,7 @@
                               Width="800"
                               Margin="10,10"
                               MaxHeight="600">
-                    <ListView Name="LstGuardianSearch" SelectedValuePath="GuardianId" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="800">
+                    <ListView Name="LstGuardianSearch" SelectedValuePath="GuardianId" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="800" FontFamily="Calibri" FontSize="14">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="GuardianID" Width="75">
@@ -143,7 +143,7 @@
                         </GridView>
                     </ListView.View>
                     <ListView.ContextMenu>
-                        <ContextMenu Name="MnuGuardianSearchContext" IsEnabled="True">
+                            <ContextMenu Name="MnuGuardianSearchContext" IsEnabled="True" FontFamily="Calibri" FontSize="14" >
                             <MenuItem Header="Update Guardian" Name="MnuIUpdateGuardian" IsEnabled="True" Click="MnuIUpdateGuardian_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill"/>
@@ -181,13 +181,13 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter Guardian Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Address:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Address:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -196,9 +196,9 @@
                     <TextBox Name="TbxUpdateAddress" Grid.Row="1" Grid.Column="1" Height="104" Width="200" Margin="0,10" TabIndex="5" TextWrapping="Wrap" AcceptsReturn="True"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Mobile No:" Margin="0,10"/>
-                    <Label Content="Emergency No:" Margin="0,10"/>
-                    <Label Content="Guardian ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Mobile No:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Emergency No:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Guardian ID:" Margin="0,10"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
                     <TextBox Name="TbxUpdateGuardianMobile" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
@@ -209,7 +209,7 @@
                         <Button Name="BtnUpdateGuardianCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnUpdateGuardianCancel_Click"/>
                         <Button Name="BtnUpdateGuardianReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" Margin="15,15" Click="BtnUpdateGuardianReturn_Click"/>
                         <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_GuardianUpdateErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Guardian"
@@ -240,14 +240,14 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Please Check Guardian Details Before Deletion"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="MobileNo:" Margin="0,10"/>
-                    <Label Content="Guardian ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="MobileNo:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Guardian ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -265,7 +265,7 @@
                 </StackPanel>
 
                 <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_GuardianDeleteErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Guardian"

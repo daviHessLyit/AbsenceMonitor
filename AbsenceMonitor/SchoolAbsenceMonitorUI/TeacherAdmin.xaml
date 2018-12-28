@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="Teacher Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>   
+        <Label Content="Teacher Admin Page" FontFamily="Calibri" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>   
 
         <!-- Teacher CRUD Options -->
         <!-- Stack Panel containing the Add Teacher form -->
@@ -49,9 +49,9 @@
                            FontSize="20"
                            Content="Enter Teacher Details"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Class:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -63,6 +63,7 @@
                               Width="200"
                               Visibility="Visible"
                               Margin="10,10"
+                              FontFamily="Calibri" FontSize="14" 
                               Name="CmbBxClassSelector"
                               ItemsSource="{Binding}"
                               DisplayMemberPath="ClassName"
@@ -74,7 +75,7 @@
                     <Button Name="BtnAddCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnAddCancel_Click"/>
                     <Button Name="BtnAddReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnAddReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Creating New Teacher"
@@ -103,7 +104,7 @@
                               Width="600"
                               Margin="10,10"
                               MaxHeight="600">
-                    <ListView Name="LstTeacherSearch" SelectedValuePath="TeacherId">
+                    <ListView Name="LstTeacherSearch" SelectedValuePath="TeacherId" FontFamily="Calibri" FontSize="14">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="TeacherID" Width="100">
@@ -130,7 +131,7 @@
                             </GridView>
                         </ListView.View>
                         <ListView.ContextMenu>
-                            <ContextMenu Name="MnuTeacherSearchContext" IsEnabled="True">
+                            <ContextMenu Name="MnuTeacherSearchContext" IsEnabled="True" FontFamily="Calibri" FontSize="14">
                                 <MenuItem Header="Update Teacher" Name="MnuIUpdateTeacher" IsEnabled="True" Click="MnuIUpdateTeacher_Click">
                                     <MenuItem.Icon>
                                         <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill"/>
@@ -169,14 +170,14 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter Updated Teacher Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Teacher ID:" Margin="0,10"/>
-                    <Label Content="Class ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Teacher ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -189,6 +190,7 @@
                               Width="200"
                               Visibility="Visible"
                               Margin="10,10"
+                              FontFamily="Calibri" FontSize="14" 
                               Name="CmbBxClassUpdateSelector"
                               ItemsSource="{Binding}"
                               DisplayMemberPath="ClassName"
@@ -199,7 +201,7 @@
                     <Button Name="BtnUpdateCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateCancel_Click"/>
                     <Button Name="BtnUpdateReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateReturn_Click"/>
                     <Label Grid.ColumnSpan="2" Name="Lbl_TeacherUpdateErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Teacher"
@@ -231,14 +233,14 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Please Check Teacher Details Before Deletion"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="Teacher ID:" Margin="0,10"/>
-                    <Label Content="Class ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Teacher ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -252,7 +254,7 @@
                     <Button Name="BtnDeleteCancel" Height="26" Width="150" Content="Cancel"  VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteCancel_Click"/>
                     <Button Name="BtnDeleteReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed"  VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_TeacherDeleteErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the Teacher"

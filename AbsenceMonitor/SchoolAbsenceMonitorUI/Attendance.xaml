@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         
         <!-- Page Title  -->
-        <Label Name="LblPageHeading" Content="Attendance Reporting" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Name="LblPageHeading" Content="Attendance Reporting" FontFamily="Calibri" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
         <!-- Stack Panel containing the Class selection dropdown list  -->
         <StackPanel Name="Stk_MenuPanel" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
             <Grid>
@@ -30,7 +30,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="25*"/>
                 </Grid.RowDefinitions>
-                <Label Content="Select Class From the List" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
+                <Label Content="Select Class From the List" FontFamily="Calibri" FontSize="14" Grid.Row="0" HorizontalAlignment="Left" Visibility="Visible"/>
                 <ComboBox AllowDrop="True"
                           Width="200"                                      
                           Grid.Row="1"
@@ -38,12 +38,13 @@
                           HorizontalAlignment="Left"
                           Visibility="Visible"
                           Margin="10,10"
+                          FontFamily="Calibri" FontSize="14" 
                           Name="CmbBxClassSelector" 
                           ItemsSource="{Binding}"
                           DisplayMemberPath="ClassName"
                           SelectedValuePath="ClassId"
                           SelectionChanged="CmbBxClassSelector_SelectionChanged"/>
-                <Label Name="LblConfirmation" Content="Attendance / Absence Report Committed" FontSize="14" Grid.Row="2" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                <Label Name="LblConfirmation" Content="Attendance / Absence Report Committed" FontFamily="Calibri" FontSize="14" Grid.Row="2" HorizontalAlignment="Left" Visibility="Collapsed"/>
             </Grid>   
         </StackPanel>
         <!-- Stack Panel with dynamically created list of Pupil Names for the selected class -->
@@ -58,7 +59,7 @@
                               Width="800"
                               MaxHeight="600"
                               Grid.Row="1" >
-                    <ListView Name="LstPupilAttendance" SelectedValuePath="PupilId">
+                    <ListView Name="LstPupilAttendance" SelectedValuePath="PupilId" FontFamily="Calibri" FontSize="14" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Pupil Name" Width="250">
@@ -78,6 +79,7 @@
                                                     Tag="{Binding PupilId}"
                                                     IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
                                                     HorizontalAlignment="Right"
+                                                    FontFamily="Calibri" FontSize="14"
                                                     Content="Present"
                                                     Checked="ChkPresent_Checked"
                                                     Unchecked="ChkPresent_Unchecked"/>
@@ -138,7 +140,7 @@
                               MaxHeight="600"
                               Grid.Row="0" 
                               Grid.Column="0">
-                    <ListView Name="LstPupilAbsence" SelectedValuePath="PupilId">
+                    <ListView Name="LstPupilAbsence" SelectedValuePath="PupilId" FontFamily="Calibri" FontSize="14">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Pupil Name" Width="250">
@@ -163,7 +165,7 @@
                             <RowDefinition Height="33*"/>
                             <RowDefinition Height="33*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Absence Type" Margin="10,10" Grid.Row="1" Grid.Column="0"/>
+                        <Label Content="Absence Type" FontFamily="Calibri" FontSize="14" Margin="10,10" Grid.Row="1" Grid.Column="0"/>
                         <ComboBox AllowDrop="True"
                           Grid.Row="1"
                           Grid.Column="1"
@@ -172,6 +174,7 @@
                           VerticalAlignment="Center"
                           HorizontalAlignment="Left"
                           Margin="10,10"
+                          FontFamily="Calibri" FontSize="14" 
                           Name="CmbBxAbsenceTypeSelector"
                           DisplayMemberPath="AbsenceType1"
                           SelectedValuePath="AbsenceTypeId"/>
@@ -179,7 +182,7 @@
                     </Grid>                    
                 </StackPanel>
                 <StackPanel Grid.Row="3">
-                    <Label Margin="10,10" Name="Lbl_ComfirmationLbl" Content="Absence Report for: " FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left"/>
+                    <Label Margin="10,10" Name="Lbl_ComfirmationLbl" Content="Absence Report for: " FontFamily="Calibri" FontSize="14" HorizontalAlignment="Left"/>
                     <ScrollViewer HorizontalAlignment="Right" VerticalAlignment="Top" MinWidth="700" MinHeight="500" MaxHeight="500" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,10">
                    
                     <TextBlock Name="Tblk_ReportBlock"
@@ -188,7 +191,7 @@
                                Visibility="Visible"
                                Background="AliceBlue"
                                Foreground="Black"
-                               FontSize="14"
+                               FontFamily="Calibri" FontSize="14" 
                                Padding="10,10"/>         
                     </ScrollViewer>               
                 </StackPanel>

@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="Administration Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Content="Administration Page" FontFamily="Calibri" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
 
         <!-- Absence CRUD Options -->
         
@@ -47,10 +47,10 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter Absence Type Details"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Absence Type:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -61,7 +61,7 @@
                     <Button Name="BtnAddAbsenceCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnAddAbsenceCancel_Click"/>
                     <Button Name="BtnAddAbsenceReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnAddAbsenceReturn_Click"/>
                 <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_AbsenceErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Creating New Absence"
@@ -90,7 +90,7 @@
                               ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               Width="600"
                               Margin="10,10"
-                              MaxHeight="600" SelectedValuePath="AbsenceTypeId">
+                              MaxHeight="600" SelectedValuePath="AbsenceTypeId" FontFamily="Calibri" FontSize="14" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="AbsenceTypeID" Width="150">
@@ -147,12 +147,12 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter Updated Absence Type Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Absence Type:" Margin="0,10"/>
-                    <Label Content="Absence ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -164,7 +164,7 @@
                     <Button Name="BtnUpdateAbsenceCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateAbsenceCancel_Click"/>
                     <Button Name="BtnUpdateAbsenceReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateAbsenceReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_AbsenceUpdateErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the Absence Type"
@@ -195,12 +195,12 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Please Check Absence Details Before Deletion"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Absence Type:" Margin="0,10"/>
-                    <Label Content="Absence Type ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -212,7 +212,7 @@
                     <Button Name="BtnDeleteAbsenceCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteAbsenceCance_Click"/>
                     <Button Name="BtnDeleteAbsenceReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteAbsenceReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_AbsenceDeleteErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the Absence"

@@ -189,7 +189,6 @@ namespace SchoolAbsenceMonitorUI
             PopulateClassList();
         }
 
-
         private void PopulateClassList()
         {
             // Populate the dropdown menu
@@ -985,6 +984,6 @@ namespace SchoolAbsenceMonitorUI
                 MessageBox.Show("System Database Error, Please contact the System Administrator", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-            
+
     }
 }

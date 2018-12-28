@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="User Admin Page" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Content="User Admin Page" FontFamily="Calibri" FontSize="24"  Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
             
         <!-- User CRUD Options -->
         <!-- Stack Panel containing the Add User form -->
@@ -47,15 +47,15 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter User Details"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
                 </StackPanel >
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="User ID:" Margin="0,10"/>
-                    <Label Content="Password:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="User ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Password:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -76,13 +76,14 @@
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Admin Level:" Grid.Row="0" Grid.Column="0" Margin="0,10" HorizontalAlignment="Left"/>
+                        <Label Content="Admin Level:" Grid.Row="0" FontFamily="Calibri" FontSize="14" Grid.Column="0" Margin="0,10" HorizontalAlignment="Left"/>
                         <ComboBox AllowDrop="True"
                                       TabIndex="4"
                                       Text="Select Access Level"
                                       Width="200"
                                       Grid.Row="0"
                                       Grid.Column="1"
+                                      FontFamily="Calibri" FontSize="14" 
                                       HorizontalAlignment="Right"
                                       Visibility="Visible"
                                       Margin="10,10"
@@ -97,13 +98,13 @@
                     <Button Name="BtnAddUserCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnAddUserCancel_Click"/>
                     <Button Name="BtnAddUserReturn" Height="26" Width="150" Content="Return" Margin="15,15" Visibility="Collapsed" Click="BtnAddUserReturn_Click"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserAddSuccessLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="BlueViolet"
                                    Content="New User added to the System"
                                    Visibility="Collapsed"/>
                     <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserAddErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Username already exists in the System"
@@ -132,7 +133,7 @@
                               Margin="10,10"
                               MaxHeight="600">
                     <ListView Name="LstUserSearch"                          
-                              SelectedValuePath="UserId">
+                              SelectedValuePath="UserId" FontFamily="Calibri" FontSize="14" >
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Username" Width="150">
@@ -173,7 +174,7 @@
                         </GridView>   
                     </ListView.View>
                     <ListView.ContextMenu>
-                        <ContextMenu Name="MnuUserSearchContext" IsEnabled="True">
+                            <ContextMenu Name="MnuUserSearchContext" IsEnabled="True" FontFamily="Calibri" FontSize="14">
                             <MenuItem Header="Update User" Name="MnuIUpdateUser" IsEnabled="True" Click="MnuIUpdateUser_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Images/icon.png"  Width="20" Height="20" Stretch="UniformToFill" />                                    
@@ -212,13 +213,13 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Enter User Details"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="UserID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="UserID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -228,9 +229,9 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label Content="Password:" Margin="0,10"/>
-                    <Label Content="UserID:" Margin="0,10"/>
-                    <Label Name="LblAccLvlId" Content="AccessLevelID" Margin="0,10" Visibility="Hidden"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Password:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="UserID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Name="LblAccLvlId" Content="AccessLevelID" Margin="0,10" Visibility="Hidden"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
@@ -249,7 +250,7 @@
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Name="LblAccessLevelDrp" Content="Admin Level:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"/>
+                        <Label Name="LblAccessLevelDrp" Content="Admin Level:" FontFamily="Calibri" FontSize="14" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"/>
                         <ComboBox AllowDrop="True"
                                       TabIndex="4"
                                       Text="Select Access Level"
@@ -259,18 +260,19 @@
                                       HorizontalAlignment="Left"
                                       Visibility="Visible"
                                       Margin="0,5"
+                                      FontFamily="Calibri" FontSize="14" 
                                       Name="CmbBxUpdateAdminLevel"                                      
                                       ItemsSource="{Binding}"
                                       DisplayMemberPath="AccessLevel1"
                                       SelectedValuePath="AccessLevelId"/>
                 <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserUpdateSuccessLabel"
-                                   FontSize="16"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="BlueViolet"
                                    Content="User details successfully updated"
                                    Visibility="Collapsed"/>
                 <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_UserUpdateErrorLabel"
-                                   FontSize="16"
+                                   FontFamily="Calibri" FontSize="14" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Updating the User"
@@ -307,14 +309,14 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            HorizontalAlignment="Center"
-                           FontSize="20"
+                           FontFamily="Calibri" FontSize="20" 
                            Content="Please Check User Details Before Deletion"/>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-                    <Label Content="Given Name:" Margin="0,10"/>
-                    <Label Content="Surname:" Margin="0,10"/>
-                    <Label Content="UserName:" Margin="0,10"/>
-                    <Label Content="User ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Given Name:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Surname:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="UserName:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="User ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
@@ -330,13 +332,13 @@
                     <Button Name="BtnDeleteUserCancel" Height="26" Width="150" Content="Cancel" Margin="15,15" Click="BtnDeleteUserCancel_Click"/>
                     <Button Name="BtnDeleteUserReturn" Height="26" Width="150" Content="Return" Margin="15,15" Click="BtnDeleteUserReturn_Click" Visibility="Collapsed"/>
                     <Label Grid.Row="1" Grid.Column="2" Name="Lbl_UserDeleteSuccessLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="BlueViolet"
                                    Content="User details successfully deleted"
                                    Visibility="Collapsed"/>
                     <Label Grid.Row="1" Grid.Column="2" Name="Lbl_UserDeleteErrorLabel"
-                                   FontSize="20"
+                                   FontFamily="Calibri" FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="Red"
                                    Content="Error Deleting the User"
