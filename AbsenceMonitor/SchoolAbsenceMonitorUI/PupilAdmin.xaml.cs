@@ -194,6 +194,7 @@ namespace SchoolAbsenceMonitorUI
             // Populate the dropdown menu
             SchoolClasses = smaDB.Classes.ToList();
             CmbBxClassSelector.ItemsSource = SchoolClasses;
+            CmbBxUpdateClassSelector.ItemsSource = SchoolClasses;
         }
 
         private void PopulateComboBox()
@@ -233,7 +234,6 @@ namespace SchoolAbsenceMonitorUI
                 // Populate the update form with the selected pupil's details
                 TbxUpdatePupilGiven.Text = selectedPupil.GivenName.ToString();
                 TbxUpdatePupilSurname.Text = selectedPupil.Surname.ToString();
-                TbxUpdatePupilClassID.Text = selectedPupil.ClassId.ToString();
                 TbxUpdatePupilID.Text = selectedPupil.PupilId.ToString();
                 TbxUpdatePupilGuardianID.Text = selectedPupil.GuardianId.ToString();
                 Stk_SearchPupil.Visibility = Visibility.Hidden;
@@ -256,7 +256,7 @@ namespace SchoolAbsenceMonitorUI
                 {
                     GivenName = TbxUpdatePupilGiven.Text.Trim(),
                     Surname = TbxUpdatePupilSurname.Text.Trim(),
-                    ClassId = Convert.ToInt16(TbxUpdatePupilClassID.Text.ToString()),
+                    ClassId = Convert.ToInt16(CmbBxUpdateClassSelector.SelectedValue.ToString()),
                     GuardianId = Convert.ToInt16(TbxUpdatePupilGuardianID.Text.ToString()),
                     PupilId = Convert.ToInt16(TbxUpdatePupilID.Text.ToString())
 
@@ -270,7 +270,6 @@ namespace SchoolAbsenceMonitorUI
                     BtnUpdatePupilReturn.Visibility = Visibility.Visible;
                     TbxUpdatePupilGiven.IsReadOnly = true;
                     TbxUpdatePupilSurname.IsReadOnly = true;
-                    TbxUpdatePupilClassID.IsReadOnly = true;
                     TbxUpdatePupilID.IsReadOnly = true;
                     TbxUpdatePupilGuardianID.IsReadOnly = true;
                     Lbl_UpdatePupilLabel.Content = "Pupil details Successfully Updated";
@@ -335,7 +334,6 @@ namespace SchoolAbsenceMonitorUI
             // Reset form data and return to the search view
             RefreshPupilList();
             TbxUpdatePupilGiven.Text = "";
-            TbxUpdatePupilClassID.Text = "";
             TbxUpdatePupilSurname.Text = "";
             TbxUpdatePupilGuardianID.Text = "";
             TbxUpdatePupilID.Text = "";
@@ -352,13 +350,11 @@ namespace SchoolAbsenceMonitorUI
             BtnUpdatePupilCancel.Visibility = Visibility.Visible;
             BtnUpdatePupilReturn.Visibility = Visibility.Hidden;
             TbxUpdatePupilGiven.Text = "";
-            TbxUpdatePupilClassID.Text = "";
             TbxUpdatePupilSurname.Text = "";
             TbxUpdatePupilGuardianID.Text = "";
             TbxUpdatePupilID.Text = "";
             TbxUpdatePupilGiven.IsReadOnly = false;
             TbxUpdatePupilSurname.IsReadOnly = false;
-            TbxUpdatePupilClassID.IsReadOnly = false;
             TbxUpdatePupilID.IsReadOnly = false;
             TbxUpdatePupilGuardianID.IsReadOnly = false;            
             Stk_SearchPupil.Visibility = Visibility.Visible;

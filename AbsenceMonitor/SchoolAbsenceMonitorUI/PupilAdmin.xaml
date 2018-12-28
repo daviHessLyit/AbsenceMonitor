@@ -222,14 +222,25 @@
                     <TextBox Name="TbxUpdatePupilID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
-                    <Label FontFamily="Calibri" FontSize="14" Content="Class ID:" Margin="0,10"/>
+                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">                    
                     <Label FontFamily="Calibri" FontSize="14" Content="Guardian ID:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Class ID:" Margin="0,10"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
-                    <TextBox Name="TbxUpdatePupilClassID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="3"/>
                     <TextBox Name="TbxUpdatePupilGuardianID" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="4"/>
+                    <ComboBox AllowDrop="True"
+                          Width="200"                                      
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          TabIndex="3"
+                          Visibility="Visible"
+                          Margin="10,10"
+                          FontFamily="Calibri" FontSize="14" 
+                          Name="CmbBxUpdateClassSelector" 
+                          ItemsSource="{Binding}"
+                          DisplayMemberPath="ClassName"
+                          SelectedValuePath="ClassId"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
