@@ -7,12 +7,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Width="1250"
-        MaxWidth="1250"
-        MinWidth="1250"
-        Height="1050"
-        MaxHeight="1050"
-        MinHeight="1050"        
+        WindowState="Maximized"
+        Loaded="Window_Loaded"
         Title="SchoolAbsenceMonitor">
     <Grid>
         <!-- Add the column and row definitions for the main dashboard--> 
@@ -48,16 +44,70 @@
         </StackPanel>
         <!-- Main dashboard menu bar - Attendance enabled by default -->
         <TabControl Name="Tab_MainTabControl" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="12" FontWeight="Medium">
-            <TabItem Name="Tbi_Attendance" Height="26" Width="100" Header="Attendance" IsEnabled="True" IsSelected="True" MouseLeftButtonUp="Tbi_Attendance_MouseLeftButtonDown" >
+            <TabItem Name="Tbi_Attendance" Height="26" Width="100" Header="Attendance" Visibility="Visible" MouseLeftButtonUp="Tbi_Attendance_MouseLeftButtonDown" >
+                <Grid Background="#FFE5E5E5"/>
+             </TabItem>
+            <TabItem Name="Tbi_Reporting" Height="26" Width="100" Header="Reports" Visibility="Collapsed" MouseLeftButtonUp="Tbi_Reporting_MouseLeftButtonDown"   >
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Name="Tbi_Reporting" Height="26" Width="100" Header="Reports" IsEnabled="True" MouseLeftButtonUp="Tbi_Reporting_MouseLeftButtonDown"   >
+            <TabItem Name="Tbi_Admin" Height="26" Width="100" Header="Administration" Visibility="Visible" AllowDrop="True">
                 <Grid Background="#FFE5E5E5"/>
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Admin Options" FontFamily="Calibri" FontSize="14" FontWeight="Bold">
+                            <MenuItem Header="User" Name="MenuItemUser">
+                                <Button Name="BtnUserAdd" Click="BtnUserAdd_Click" ToolTip="Add User">
+                                    <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                                <Button Name="BtnUserUpdate" Click="BtnUserUpdate_Click" ToolTip="View Users">
+                                    <Image Source="Images/magnifying-glass.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                            </MenuItem>
+                            <MenuItem Header="Guardian" Name="MenuItemGuardian">
+                                <Button Name="BtnGuardAdd" ToolTip="Add Guardian" Click="BtnGuardAdd_Click">
+                                    <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                                <Button Name="BtnGuardUpdate" ToolTip="View Guardians" Click="BtnGuardUpdate_Click">
+                                    <Image Source="Images/magnifying-glass.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                            </MenuItem>
+                            <MenuItem Header="Pupil" Name="MenuItemPupil">
+                                <Button Name="BtnPupilAdd" ToolTip="Add Pupil" Click="BtnPupilAdd_Click">
+                                    <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                                <Button Name="BtnPupilUpdate" ToolTip="View Pupils" Click="BtnPupilUpdate_Click">
+                                    <Image Source="Images/magnifying-glass.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                            </MenuItem>
+                            <MenuItem Header="Teacher" Name="MenuItemTeacher">
+                                <Button Name="BtnTeacherAdd" ToolTip="Add Teacher" Click="BtnTeacherAdd_Click">
+                                    <Image Source="Images/new-user.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                                <Button Name="BtnTeacherUpdate" ToolTip="View Teachers" Click="BtnTeacherUpdate_Click">
+                                    <Image Source="Images/magnifying-glass.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                            </MenuItem>
+                            <MenuItem Header="Absence Type" Name="MenuItemAbsence">
+                                <Button Name="BtnAbsenceAdd" ToolTip="Add Absence" Click="BtnAbsenceAdd_Click">
+                                    <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                                <Button Name="BtnAbsenceUpdate" ToolTip="View Absences" Click="BtnAbsenceUpdate_Click">
+                                    <Image Source="Images/magnifying-glass.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                            </MenuItem>
+                            <MenuItem Header="Class" Name="MenuItemClass">
+                                <Button Name="BtnClassAdd" ToolTip="Add Class" Click="BtnClassAdd_Click">
+                                    <Image Source="Images/plus.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                                <Button Name="BtnClassUpdate" ToolTip="View School Classes" Click="BtnClassUpdate_Click">
+                                    <Image Source="Images/magnifying-glass.png" Width="20" Height="20" Stretch="Uniform"/>
+                                </Button>
+                            </MenuItem>
+                        </MenuItem>
+                    </ContextMenu>                   
+                </TabItem.ContextMenu>
             </TabItem>
-            <TabItem Name="Tbi_Admin" Height="26" Width="100" Header="Administration" IsEnabled="True" MouseLeftButtonUp="Tbi_Admin_MouseLeftButtonDown">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Name="Tbi_ApplicationLogs" Height="26" Width="100" Header="System" IsEnabled="True" MouseLeftButtonUp="Tbi_ApplicationLogs_MouseLeftButtonDown">
+            <TabItem Name="Tbi_ApplicationLogs" Height="26" Width="100" Header="System" Visibility="Collapsed" MouseLeftButtonUp="Tbi_ApplicationLogs_MouseLeftButtonDown">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>

@@ -6,22 +6,23 @@
       xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
       Title="ApplicationLogs">
 
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="80*"/>
             <ColumnDefinition Width="10*"/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="75*"/>
-            <RowDefinition Height="15*"/>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
         <!-- Page Title  -->
-        <Label Content="System Log Events" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <Label Content="System Log Events" FontFamily="Calibri" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
 
         <!-- Stack Panel in which system reports will be generated, contain a list view for the reports and buttons to filter each column -->
         <StackPanel Name="Stk_SytemLogReports" Visibility="Visible" Grid.Column="1" Grid.Row="1" >
@@ -33,43 +34,79 @@
                 </Grid.RowDefinitions>                
                 <Label Name="LblSystemLogError" 
                        Content="Unable to populate System Logs" 
-                       FontSize="14" 
+                       FontFamily="Calibri" FontSize="14"  
                        Grid.Row="0" 
                        HorizontalAlignment="Left" 
                        FontWeight="Bold"
                        Foreground="Red"
                        Visibility="Hidden"/>
-                <ListView Name="LstSystemEvents" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="800" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="10,10">
+                <ScrollViewer Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Top"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              Width="800"
+                              Margin="10,10"
+                              MaxHeight="500">
+                    <ListView Name="LstSystemEvents" Width="800" MaxHeight="500" FontFamily="Calibri" FontSize="14" >
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Date / Time" Width="150"  DisplayMemberBinding="{Binding DateTime}">
+                            <GridViewColumn Header="Date / Time" Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center"  TextWrapping="Wrap" Height="26"/>
+                                        <TextBlock HorizontalAlignment="Stretch" Text="{Binding EventDateTime}"  TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="System Event" Width="450"  DisplayMemberBinding="{Binding SystemEvent}">
+                            <GridViewColumn Header="System Event" Width="450">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Height="26"/>
+                                        <TextBlock HorizontalAlignment="Stretch" Text="{Binding EventData}" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="UserName" Width="150"  DisplayMemberBinding="{Binding UserName}">
+                            <GridViewColumn Header="UserName" Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Height="26"/>
+                                            <TextBlock HorizontalAlignment="Stretch" Text="{Binding SystemUser.Username}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                        </GridView>
+                            <GridViewColumn Header="EventTypeID" Width="75">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Center" Text="{Binding EventTypeId}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            </GridView>
                     </ListView.View>
                 </ListView>
-                <StackPanel Name="Stk_FilterButtons" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10">
+                </ScrollViewer>
+                <StackPanel Name="Stk_UserSelector" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10" Visibility="Collapsed">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="450"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Name="Tbx_UserNameSelector" Grid.Column="1" Grid.Row="1" Margin="10,10" Width="150" Height="26" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+                        <Button Name="Btn_SelectUser" Grid.Column="1" Grid.Row="1" Height="26" Width="100" Content="Select User" Margin="10,10" HorizontalAlignment="Right" Click="Btn_SelectUser_Click"/>
+                        <Button Name="Btn_SelectReset" Grid.Column="2" Grid.Row="1" Height="26" Width="100" Content="Reset Search" Margin="10,10" Visibility="Collapsed" HorizontalAlignment="Left" Click="Btn_SelectReset_Click"/>
+                        <Button Name="Btn_ResetForm" Grid.Column="1" Grid.Row="2" Height="26" Width="100" Content="Return" Margin="10,10" Visibility="Visible" HorizontalAlignment="Left" Click="Btn_ResetForm_Click"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Name="Stk_FilterSelector" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -79,20 +116,49 @@
                         <Button Grid.Column="0" Name="Btn_Date" Height="26" Width="100" Content="FilterByDate" Click="Btn_Date_Click" HorizontalAlignment="Center"/>
                         <Button Grid.Column="1" Name="Btn_Event" Height="26" Width="100" Content="FilterByEvent" Click="Btn_Event_Click"  HorizontalAlignment="Center"/>
                         <Button Grid.Column="2" Name="Btn_User" Height="26" Width="100" Content="FilterByUser" Click="Btn_User_Click"  HorizontalAlignment="Center"/>
+                        <Button Name="Btn_FilterFormReset" Grid.Column="0" Grid.Row="2" Height="26" Width="100" Content="Return" Margin="10,10" Visibility="Visible" HorizontalAlignment="Left" Click="Btn_ResetForm_Click"/>
                     </Grid>
                 </StackPanel>
-            </Grid>
-        </StackPanel>
+                <StackPanel Name="Stk_DateSelector" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="450"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Select Date" FontFamily="Calibri" FontSize="14" Margin="10,10"/>
+                        <DatePicker AllowDrop="True" Name="Dp_DateSelector" Grid.Row="1" Grid.Column="1" FontFamily="Calibri" FontSize="14"/>
+                        <Button Name="Btn_DateSelect" Grid.Column="2" Grid.Row="1" Height="26" Width="100" Content="Select Date" Margin="10,10" Visibility="Visible" HorizontalAlignment="Right" Click="Btn_DateSelect_Click"/>
+                        <Button Name="Btn_DateResetForm" Grid.Column="0" Grid.Row="2" Height="26" Width="100" Content="Return" Margin="10,10" Visibility="Visible" HorizontalAlignment="Left" Click="Btn_ResetForm_Click"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Name="Stk_SearchSelector" Grid.Row="2" HorizontalAlignment="Center" Margin="10,10" Visibility="Visible">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="450"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="1" Grid.Row="1" Name="Cmb_SearchSelector" SelectedIndex="0" AllowDrop="True" HorizontalAlignment="Left" Height="26" Width="150" FontFamily="Calibri" FontSize="14">
+                            <ComboBoxItem Content="Select Search Option"/>
+                            <ComboBoxItem Content="Grouping Filters"/>
+                            <ComboBoxItem Content="Search by Username"/>
+                            <ComboBoxItem Content="Search by Date"/>
+                        </ComboBox>
+                        <Button Name="Btn_SelectSearch" Grid.Column="2" Grid.Row="1" Height="26" Width="100" Content="Select Option" Margin="10,10" Visibility="Visible" HorizontalAlignment="Left" Click="Btn_SelectSearch_Click"/>
+                    </Grid>
+                </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
-                <Button Grid.Column="0" Content="Reset" Height="26" Width="150" Name="BtnReset" Click="BtnReset_Click" Margin="10,0"/>
             </Grid>
         </StackPanel>
     </Grid>

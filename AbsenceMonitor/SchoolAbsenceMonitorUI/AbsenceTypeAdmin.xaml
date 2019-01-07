@@ -1,0 +1,224 @@
+﻿<Page x:Class="SchoolAbsenceMonitorUI.AbsenceTypeAdmin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolAbsenceMonitorUI"
+      mc:Ignorable="d"  
+      d:DesignHeight="650" d:DesignWidth="1050"
+      Loaded="Page_Loaded"
+      Title="AbsenceTypeAdmin">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Page Title  -->
+        <Label Content="Administration Page" FontFamily="Calibri" FontSize="24" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+
+        <!-- Absence CRUD Options -->
+        
+        <!-- Stack Panel containing the Add Absence form -->
+        <StackPanel Name="Stk_AddAbsence" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Label Name="Lbl_AbsenceLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontFamily="Calibri" FontSize="20" 
+                           Content="Enter Absence Type Details"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxAbsenceTypeDesc" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnAddAbsence" Height="26" Width="150" Content="Add Absence" VerticalAlignment="Center" Margin="10,10" Click="BtnAddAbsence_Click"/>
+                    <Button Name="BtnAddAbsenceCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnAddAbsenceCancel_Click"/>
+                    <Button Name="BtnAddAbsenceReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnAddAbsenceReturn_Click"/>
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_AbsenceErrorLabel"
+                                   FontFamily="Calibri" FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Creating New Absence"
+                                   Visibility="Collapsed"/>
+                </StackPanel>
+
+                
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Search Absence Type form -->
+        <StackPanel Name="Stk_SearchAbsenceType" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                    <ListView Name="LstAbsenceTypeSearch" Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Top"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              Width="600"
+                              Margin="10,10"
+                              MaxHeight="600" SelectedValuePath="AbsenceTypeId" FontFamily="Calibri" FontSize="14" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="AbsenceTypeID" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding AbsenceTypeId}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Absence Type" Width="350">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding AbsenceType1}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>                               
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ContextMenu>
+                            <ContextMenu Name="MnuAbsenceTypeSearchContext" IsEnabled="True">
+                                <MenuItem Header="Update AbsenceType" Name="MnuIUpdateAbsenceType" IsEnabled="True" Click="MnuIUpdateAbsenceType_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/update-arrow.png"  Width="20" Height="20" Stretch="UniformToFill"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Delete AbsenceType" Name="MnuIDeleteAbsenceType" IsEnabled="True" Click="MnuIDeleteAbsenceType_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/rubbish-bin.png" Width="20" Height="20" Stretch="UniformToFill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Update Absence form -->
+        <StackPanel Name="Stk_UpdateAbsence" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Label Name="Lbl_UpdateAbsenceLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontFamily="Calibri" FontSize="20" 
+                           Content="Enter Updated Absence Type Details"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxUpdateAbsenceDescription" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxUpdateAbsenceAbsenceID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnUpdateAbsence" Height="26" Width="150" Content="Update Absence" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateAbsence_Click"/>
+                    <Button Name="BtnUpdateAbsenceCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateAbsenceCancel_Click"/>
+                    <Button Name="BtnUpdateAbsenceReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnUpdateAbsenceReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_AbsenceUpdateErrorLabel"
+                                   FontFamily="Calibri" FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Updating the Absence Type"
+                                   Visibility="Collapsed"/>
+                </StackPanel>
+
+                
+            </Grid>
+        </StackPanel>
+        <!-- Stack Panel containing the Delete Absence form -->
+        <StackPanel Name="Stk_DeleteAbsence" Visibility="Hidden" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Label Name="Lbl_DeleteAbsenceLabel"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           HorizontalAlignment="Center"
+                           FontFamily="Calibri" FontSize="20" 
+                           Content="Please Check Absence Details Before Deletion"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type:" Margin="0,10"/>
+                    <Label FontFamily="Calibri" FontSize="14" Content="Absence Type ID:" Margin="0,10"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,20">
+                    <TextBox Name="TbxDeleteAbsenceType" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                    <TextBox Name="TbxDeleteAbsenceID" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="26" Width="200" Margin="0,10" VerticalContentAlignment="Center" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="10,0,0,20">
+                    <Button Name="BtnDeleteAbsence" Height="26" Width="150" Content="Delete Absence" VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteAbsence_Click"/>
+                    <Button Name="BtnDeleteAbsenceCancel" Height="26" Width="150" Content="Cancel" VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteAbsenceCance_Click"/>
+                    <Button Name="BtnDeleteAbsenceReturn" Height="26" Width="150" Content="Return" Visibility="Collapsed" VerticalAlignment="Center" Margin="10,10" Click="BtnDeleteAbsenceReturn_Click"/>
+                    <Label Grid.Row="2" Grid.ColumnSpan="2" Name="Lbl_AbsenceDeleteErrorLabel"
+                                   FontFamily="Calibri" FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="Red"
+                                   Content="Error Deleting the Absence"
+                                   Visibility="Collapsed"/>
+                </StackPanel>                
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

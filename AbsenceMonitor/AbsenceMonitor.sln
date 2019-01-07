@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolAbsenceMonitorUI", "SchoolAbsenceMonitorUI\SchoolAbsenceMonitorUI.csproj", "{E687F820-7663-4E6C-B89C-40315A5B6A99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAClassLibrary", "SMAClassLibrary\SMAClassLibrary.csproj", "{195159BD-1C47-448C-BDC1-4607340A1583}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAClassLibrary.Tests", "SMAClassLibrary.Tests\SMAClassLibrary.Tests.csproj", "{3810433B-1D16-4776-A224-F18533FF0077}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{E687F820-7663-4E6C-B89C-40315A5B6A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E687F820-7663-4E6C-B89C-40315A5B6A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E687F820-7663-4E6C-B89C-40315A5B6A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195159BD-1C47-448C-BDC1-4607340A1583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195159BD-1C47-448C-BDC1-4607340A1583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195159BD-1C47-448C-BDC1-4607340A1583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195159BD-1C47-448C-BDC1-4607340A1583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3810433B-1D16-4776-A224-F18533FF0077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3810433B-1D16-4776-A224-F18533FF0077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3810433B-1D16-4776-A224-F18533FF0077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3810433B-1D16-4776-A224-F18533FF0077}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
